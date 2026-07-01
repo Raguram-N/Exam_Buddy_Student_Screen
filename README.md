@@ -69,7 +69,7 @@ Carbon Dioxide + Water + Sunlight
 
 ✅ **Memory Trick**
 
-> **"Sun + Water + CO₂ = Plant Food + O₂"**
+> **"Sun + Water + CO₂ = Glucose (Plant Food) + O₂"**
 
 ---
 
