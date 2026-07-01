@@ -663,21 +663,19 @@
   .choice-row .diagram-btn{background:transparent; border:1.5px solid var(--line); color:var(--ink);}
   .choice-row .continue-btn{background:var(--ink); border:1.5px solid var(--ink); color:var(--paper);}
 
-  /* call-credit badge in chat header */
-  .credit-badge{
-    display:flex; align-items:center; gap:6px;
-    border:1.5px solid var(--stamp);
-    color:var(--stamp);
-    background:var(--stamp-10);
-    font-family:var(--mono);
-    font-size:11px;
-    font-weight:600;
-    padding:6px 10px;
-    border-radius:999px;
+  /* call icon button in chat header */
+  .call-cta{
+    position:relative;
+    width:36px;height:36px;
+    border-radius:50%;
+    border:1.5px solid var(--line);
+    background:var(--card);
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;
     cursor:pointer;
-    white-space:nowrap;
+    flex:none;
   }
-  .credit-badge:hover{background:var(--stamp); color:var(--paper);}
+  .call-cta:hover{border-color:var(--stamp);}
 
   /* wrong-answer retry ladder */
   .nudge-tag{
@@ -1081,7 +1079,7 @@
             <div class="ic">💬</div>
             <div>
               <div class="nm">Concept Clarity</div>
-              <div class="dsc">Chat it through with ExamBuddy, unlimited. Want to talk instead? Start a call — you get 2 free calls a week.</div>
+              <div class="dsc">Chat it through with ExamBuddy, or start a live call to talk it out loud — both unlimited.</div>
             </div>
           </div>
 
@@ -1137,7 +1135,9 @@
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
           <div class="title">Concept Clarity</div>
-          <button class="credit-badge" onclick="go('call')">📞 2 calls left</button>
+          <button class="call-cta" onclick="go('call')" aria-label="Start a call">
+            📞
+          </button>
         </div>
         <div class="inner">
           <div class="progress-track">
@@ -1149,11 +1149,11 @@
             <div class="bubble me">I will cook by myself</div>
             <div class="bubble ai">Exactly! Just like you, plants also cook their own food. This process is called <b>photosynthesis</b>.</div>
             <div class="bubble ai">Now, what <b>3 things</b> would plants need to cook their food?</div>
-            <div class="bubble me">I think, one is Sunlight.</div>
-            <div class="bubble ai">Correct! plants need energy to cook, and sunlight is free energy ☀️</div>
+            <div class="bubble me">Sunlight.</div>
+            <div class="bubble ai">Correct! You need energy to cook, and sunlight is free energy ☀️</div>
             <div class="progress-note">1 / 3 inputs identified</div>
 
-            <div class="bubble ai">Now, Imagine plant as chefs. They mix ingredients. Sunlight is the stove. What gas from the air do you think is their main ingredient?
+            <div class="bubble ai">Now, plants are chefs. They mix ingredients. Sunlight is the stove. What gas from the air do you think is their main ingredient?
               <span class="hint">Hint: we breathe it out when we exercise.</span>
             </div>
 
@@ -1214,7 +1214,7 @@
           <div class="spacer"></div>
         </div>
         <div class="inner">
-          <div class="call-credit">1 of 2 weekly calls used</div>
+          <div class="call-credit">🔴 Live call</div>
           <div class="call-avatar">🌿</div>
           <div class="h2">ExamBuddy</div>
           <div class="call-sub">Photosynthesis in Plants · 04:12</div>
