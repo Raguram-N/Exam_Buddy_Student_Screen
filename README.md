@@ -114,6 +114,14 @@ Update Mastery Progress
 >
 > Before we break it down: imagine you're a plant stuck in one place all day. You can't order Swiggy. How would you make your own food? What **3 things** would you need from around you?
 
+**Student:**
+
+> I will cook by myself
+
+**ExamBuddy:**
+
+> Exactly! What **3 things** would you need from around you?
+
 
 **Student:**
 
@@ -121,7 +129,7 @@ Update Mastery Progress
 
 **ExamBuddy:**
 
-> Exactly! You need energy, and sunlight is free energy ☀️
+> correct! You need energy to cook, and sunlight is free energy ☀️
 
 **Progress:** `1 / 3 inputs identified`
 
