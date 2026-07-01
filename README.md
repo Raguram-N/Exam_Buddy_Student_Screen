@@ -112,7 +112,7 @@ Update Mastery Progress
 
 > Good question — this one shows up in every exam.
 >
-> Before we break it down: imagine you're a plant stuck in one place all day. You can't order Swiggy. How would you make your own food? What **3 things** would you need from around you?
+> Before we break it down: imagine you're a plant stuck in one place all day. You can't order Swiggy. How would you make your own food?
 
 **Student:**
 
