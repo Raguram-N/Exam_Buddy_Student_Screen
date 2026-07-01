@@ -137,7 +137,7 @@ Update Mastery Progress
 
 **Progress:** `1 / 3 inputs identified`
 
-> Now, plants are chefs. They mix ingredients. Sunlight is the stove.
+> Now, Imagine plant as chefs. They mix ingredients. Sunlight is the stove.
 >
 > What gas from the air do you think is their main ingredient?
 >
