@@ -133,7 +133,7 @@ Update Mastery Progress
 
 **ExamBuddy:**
 
-> correct! You need energy to cook, and sunlight is free energy ☀️
+> correct! Plants need energy to cook, and sunlight is free energy ☀️
 
 **Progress:** `1 / 3 inputs identified`
 
