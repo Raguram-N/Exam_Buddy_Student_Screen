@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ExamBuddy — Student Prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--paper:#F5EFE0;
+--paper-2:#EFE7D3;
+--ink:#1B2A4A;
+--ink-70:rgba(27,42,74,.7);
+--ink-45:rgba(27,42,74,.45);
+--stamp:#B23A2E;
+--stamp-10:rgba(178,58,46,.08);
+--line:#D8CFB8;
+--good:#3F6B4A;
+--good-10:rgba(63,107,74,.1);
+--highlight:#F0DA9E;
+--card:#FBF8EF;
+--radius:14px;
+--disp:'Fraunces', serif;
+--body:'IBM Plex Sans', sans-serif;
+--mono:'IBM Plex Mono', monospace;
+--hand:'Caveat', cursive;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+background:#E4DCC6;
+background-image:
+radial-gradient(circle at 1px 1px, rgba(27,42,74,.06) 1px, transparent 0);
+background-size:22px 22px;
+font-family:var(--body);
+color:var(--ink);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:28px 16px 60px;
+}
+@media (prefers-reduced-motion: reduce){
+*{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
+
+/* ---------- top control strip (for the design team, not the app) ---------- */
+.lab-bar{
+width:100%;
+max-width:1040px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:16px;
+margin-bottom:22px;
+flex-wrap:wrap;
+}
+.lab-title{
+font-family:var(--disp);
+font-size:20px;
+font-weight:600;
+letter-spacing:.2px;
+}
+.lab-title span{color:var(--stamp);}
+.lab-nav{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:999px;
+padding:5px;
+}
+.lab-nav button{
+font-family:var(--mono);
+font-size:11.5px;
+letter-spacing:.03em;
+text-transform:uppercase;
+border:none;
+background:transparent;
+color:var(--ink-70);
+padding:8px 13px;
+border-radius:999px;
+cursor:pointer;
+transition:background .15s ease, color .15s ease;
+white-space:nowrap;
+}
+.lab-nav button:hover{background:var(--stamp-10);}
+.lab-nav button.active{background:var(--ink); color:var(--paper);}
+.lab-nav button:focus-visible, .device *:focus-visible{
+outline:2px solid var(--stamp);
+outline-offset:2px;
+}
+
+/* ---------- device frame ---------- */
+.device-wrap{
+display:flex;
+justify-content:center;
+}
+.device{
+width:390px;
+height:820px;
+background:var(--paper);
+border-radius:40px;
+border:10px solid var(--ink);
+position:relative;
+overflow:hidden;
+box-shadow:0 30px 60px -20px rgba(27,42,74,.45), 0 2px 0 rgba(0,0,0,.05);
+}
+.notch{
+position:absolute;
+top:0; left:50%; transform:translateX(-50%);
+width:130px; height:24px;
+background:var(--ink);
+border-radius:0 0 16px 16px;
+z-index:50;
+}
+.statusbar{
+height:40px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 26px;
+font-family:var(--mono);
+font-size:12px;
+color:var(--ink);
+}
+.screen{
+position:absolute;
+inset:0;
+top:40px;
+opacity:0;
+pointer-events:none;
+transform:translateY(6px);
+transition:opacity .22s ease, transform .22s ease;
+overflow-y:auto;
+-ms-overflow-style:none;
+scrollbar-width:none;
+}
+.screen::-webkit-scrollbar{display:none;}
+.screen.active{
+opacity:1;
+pointer-events:auto;
+transform:translateY(0);
+}
+
+/* ---------- shared bits ---------- */
+.app-header{
+padding:6px 20px 14px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+.app-header .back{
+font-family:var(--mono);
+font-size:12px;
+color:var(--ink-70);
+display:flex;
+align-items:center;
+gap:5px;
+cursor:pointer;
+background:none;
+border:none;
+padding:4px 0;
+}
+.app-header .title{
+font-family:var(--disp);
+font-weight:600;
+font-size:17px;
+}
+.app-header .spacer{width:40px;}
+
+.eyebrow{
+font-family:var(--mono);
+font-size:10.5px;
+letter-spacing:.09em;
+text-transform:uppercase;
+color:var(--stamp);
+}
+.h1{
+font-family:var(--disp);
+font-weight:600;
+font-size:26px;
+line-height:1.15;
+margin:4px 0 0;
+}
+.h2{
+font-family:var(--disp);
+font-weight:600;
+font-size:19px;
+margin:0 0 2px;
+}
+.muted{color:var(--ink-45); font-size:13px;}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:var(--radius);
+padding:16px;
+}
+.btn-primary{
+background:var(--ink);
+color:var(--paper);
+border:none;
+font-family:var(--body);
+font-weight:600;
+font-size:14.5px;
+padding:14px 18px;
+border-radius:11px;
+width:100%;
+cursor:pointer;
+transition:transform .12s ease, background .15s ease;
+}
+.btn-primary:hover{background:#2A3E68;}
+.btn-primary:active{transform:scale(.98);}
+.btn-ghost{
+background:transparent;
+border:1.5px solid var(--line);
+color:var(--ink);
+font-family:var(--body);
+font-weight:600;
+font-size:14.5px;
+padding:13px 18px;
+border-radius:11px;
+width:100%;
+cursor:pointer;
+}
+.btn-ghost:hover{border-color:var(--ink);}
+.stamp-badge{
+font-family:var(--hand);
+font-size:22px;
+color:var(--stamp);
+border:2.5px solid var(--stamp);
+border-radius:8px;
+padding:1px 10px;
+display:inline-block;
+transform:rotate(-4deg);
+line-height:1.3;
+}
+
+/* ===================== LOGIN ===================== */
+#screen-login .inner{
+padding:60px 26px 26px;
+display:flex;
+flex-direction:column;
+height:100%;
+}
+.brandmark{
+font-family:var(--disp);
+font-weight:700;
+font-size:30px;
+letter-spacing:-.5px;
+}
+.brandmark .dot{color:var(--stamp);}
+.brand-line{
+font-family:var(--hand);
+font-size:19px;
+color:var(--ink-70);
+margin-top:2px;
+}
+.field{
+margin-top:18px;
+}
+.field label{
+font-family:var(--mono);
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.06em;
+color:var(--ink-70);
+display:block;
+margin-bottom:6px;
+}
+.field input{
+width:100%;
+border:1.5px solid var(--line);
+background:var(--card);
+border-radius:10px;
+padding:13px 14px;
+font-family:var(--body);
+font-size:14.5px;
+color:var(--ink);
+}
+.field input:focus{outline:none; border-color:var(--ink);}
+#screen-login .cta{margin-top:26px;}
+#screen-login .foot{
+margin-top:auto;
+text-align:center;
+font-size:12.5px;
+color:var(--ink-45);
+padding-top:20px;
+}
+#screen-login .foot b{color:var(--ink); font-weight:600;}
+
+/* ===================== HOME ===================== */
+#screen-home .inner{padding:18px 20px 30px;}
+.home-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+.avatar{
+width:38px; height:38px; border-radius:50%;
+background:var(--highlight);
+display:flex; align-items:center; justify-content:center;
+font-family:var(--disp); font-weight:600; font-size:15px;
+}
+.bell{
+width:34px;height:34px;border-radius:50%;
+border:1.5px solid var(--line);
+display:flex;align-items:center;justify-content:center;
+position:relative;
+}
+.bell::after{
+content:'';
+position:absolute; top:6px; right:7px;
+width:6px; height:6px; border-radius:50%;
+background:var(--stamp);
+}
+.welcome-card{
+margin-top:16px;
+background:var(--ink);
+color:var(--paper);
+border-radius:16px;
+padding:18px;
+position:relative;
+overflow:hidden;
+}
+.welcome-card .eyebrow{color:var(--highlight);}
+.welcome-card h3{
+font-family:var(--disp);
+font-weight:600;
+font-size:20px;
+margin:6px 0 10px;
+}
+.streak-row{display:flex; gap:18px; margin-top:6px;}
+.streak-item .num{font-family:var(--mono); font-size:18px; font-weight:600;}
+.streak-item .lab{font-family:var(--mono); font-size:10px; opacity:.65; text-transform:uppercase;}
+.notif-strip{
+margin-top:14px;
+display:flex;
+align-items:center;
+gap:10px;
+background:var(--stamp-10);
+border:1px dashed var(--stamp);
+border-radius:10px;
+padding:10px 12px;
+font-size:12.5px;
+}
+.notif-strip .dot-red{width:6px;height:6px;border-radius:50%;background:var(--stamp); flex:none;}
+.section-lab{
+font-family:var(--mono);
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.06em;
+color:var(--ink-45);
+margin:22px 0 10px;
+}
+.subject-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+.subject-card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:14px;
+padding:14px;
+cursor:pointer;
+transition:border-color .15s ease, transform .12s ease;
+}
+.subject-card:hover{border-color:var(--ink); transform:translateY(-2px);}
+.subject-card .ic{font-size:22px;}
+.subject-card .nm{font-family:var(--disp); font-weight:600; font-size:14.5px; margin-top:8px;}
+.subject-card .prog-bar{
+height:5px; background:var(--line); border-radius:3px; margin-top:10px; overflow:hidden;
+}
+.subject-card .prog-fill{height:100%; background:var(--good);}
+.subject-card .prog-lab{font-family:var(--mono); font-size:10px; color:var(--ink-45); margin-top:5px;}
+
+/* ===================== CHAPTER LIST ===================== */
+#screen-chapters .inner{padding:0 20px 24px;}
+.chapter-row{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+padding:14px 4px;
+border-bottom:1px solid var(--line);
+cursor:pointer;
+}
+.chapter-row:hover .nm{color:var(--stamp);}
+.chapter-row .left{display:flex; align-items:center; gap:12px;}
+.chapter-num{
+font-family:var(--mono); font-size:11px; color:var(--ink-45);
+width:20px;
+}
+.chapter-row .nm{font-weight:600; font-size:14.5px; transition:color .12s ease;}
+.chapter-row .sub{font-size:11.5px; color:var(--ink-45); margin-top:2px;}
+.mastery-ring{
+width:36px;height:36px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-family:var(--mono); font-size:10px; font-weight:600;
+border:2.5px solid var(--good);
+color:var(--good);
+flex:none;
+}
+.mastery-ring.low{border-color:var(--line); color:var(--ink-45);}
+.mastery-ring.mid{border-color:var(--stamp); color:var(--stamp);}
+
+/* ===================== MODE SELECT ===================== */
+#screen-modes .inner{padding:0 20px 24px;}
+.mode-card{
+display:flex;
+gap:14px;
+align-items:flex-start;
+background:var(--card);
+border:1.5px solid var(--line);
+border-radius:16px;
+padding:16px;
+margin-bottom:12px;
+cursor:pointer;
+transition:border-color .15s ease, transform .12s ease;
+}
+.mode-card:hover{border-color:var(--ink); transform:translateY(-2px);}
+.mode-card .ic{
+width:42px;height:42px;border-radius:11px;
+display:flex;align-items:center;justify-content:center;
+font-size:19px; flex:none;
+}
+.mode-card.a .ic{background:var(--highlight);}
+.mode-card.b .ic{background:var(--stamp-10); color:var(--stamp);}
+.mode-card.c .ic{background:var(--good-10); color:var(--good);}
+.mode-card .nm{font-family:var(--disp); font-weight:600; font-size:16px;}
+.mode-card .dsc{font-size:12.5px; color:var(--ink-70); margin-top:3px; line-height:1.4;}
+
+/* ===================== REVISION ===================== */
+#screen-revision .inner{padding:0 20px 26px;}
+.recap-list{list-style:none; margin:10px 0 0; padding:0;}
+.recap-list li{
+display:flex; gap:10px;
+font-size:14px; line-height:1.55;
+padding:9px 0;
+border-bottom:1px solid var(--line);
+}
+.recap-list li:last-child{border-bottom:none;}
+.recap-list li::before{
+content:'✓';
+color:var(--good); font-weight:700; flex:none;
+}
+.formula-box{
+margin-top:14px;
+background:var(--ink);
+color:var(--highlight);
+border-radius:12px;
+padding:18px;
+font-family:var(--mono);
+font-size:13px;
+text-align:center;
+line-height:2;
+}
+.formula-box .op{color:var(--paper); opacity:.5; display:block;}
+.mnemonic-card{
+margin-top:14px;
+background:var(--highlight);
+border-radius:12px;
+padding:16px 18px;
+position:relative;
+transform:rotate(-1deg);
+}
+.mnemonic-card .tag{
+font-family:var(--mono); font-size:10px; text-transform:uppercase;
+letter-spacing:.06em; color:var(--ink-70);
+}
+.mnemonic-card p{
+font-family:var(--hand);
+font-size:23px;
+margin:4px 0 0;
+line-height:1.3;
+color:var(--ink);
+}
+
+/* ===================== CONCEPT CLARITY (chat) ===================== */
+#screen-concept .inner{
+display:flex; flex-direction:column; height:calc(100% - 40px);
+}
+.progress-track{
+display:flex; gap:6px; padding:0 20px 12px;
+}
+.progress-track .seg{
+flex:1; height:4px; border-radius:3px; background:var(--line);
+}
+.progress-track .seg.done{background:var(--good);}
+.chat-scroll{
+flex:1; overflow-y:auto; padding:4px 20px 14px;
+}
+.bubble{
+max-width:84%;
+padding:11px 14px;
+border-radius:16px;
+font-size:13.5px;
+line-height:1.55;
+margin-bottom:10px;
+}
+.bubble.ai{
+background:var(--card);
+border:1px solid var(--line);
+border-bottom-left-radius:4px;
+}
+.bubble.me{
+background:var(--ink);
+color:var(--paper);
+margin-left:auto;
+border-bottom-right-radius:4px;
+}
+.bubble .hint{
+display:block; margin-top:6px; font-size:11.5px; color:var(--ink-45);
+font-family:var(--mono);
+}
+.progress-note{
+font-family:var(--mono);
+font-size:10.5px;
+color:var(--good);
+text-align:center;
+margin:2px 0 12px;
+}
+.summary-card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:14px;
+padding:14px;
+margin:6px 0 12px;
+}
+.correction-note{
+display:flex; gap:10px;
+margin-top:10px;
+padding-top:10px;
+border-top:1px dashed var(--line);
+}
+.correction-note .pen{color:var(--stamp); font-family:var(--hand); font-size:20px; flex:none;}
+.correction-note p{margin:0; font-size:12.5px; line-height:1.5; color:var(--ink-70);}
+.correction-note b{color:var(--stamp); font-weight:600;}
+.mastery-toast{
+display:flex; align-items:center; gap:10px;
+background:var(--good-10);
+border:1px solid var(--good);
+border-radius:12px;
+padding:12px 14px;
+margin:6px 0 12px;
+}
+.mastery-toast .stamp-mini{
+font-family:var(--hand); color:var(--good); font-size:19px;
+border:2px solid var(--good); border-radius:6px; padding:0 7px; transform:rotate(-5deg); flex:none;
+}
+.mastery-toast p{margin:0; font-size:12px; line-height:1.5;}
+.chat-input-row{
+display:flex; gap:8px;
+padding:12px 20px 18px;
+border-top:1px solid var(--line);
+background:var(--paper);
+}
+.chat-input-row .fake-input{
+flex:1;
+border:1.5px solid var(--line);
+border-radius:999px;
+padding:11px 16px;
+font-size:13px;
+color:var(--ink-45);
+background:var(--card);
+}
+.mic-btn{
+width:42px;height:42px;border-radius:50%;
+background:var(--ink); color:var(--paper);
+display:flex;align-items:center;justify-content:center;
+flex:none; cursor:pointer; border:none; font-size:16px;
+}
+.choice-row{display:flex; gap:8px; padding:0 20px 14px;}
+.choice-row button{
+flex:1;
+font-family:var(--body); font-size:12.5px; font-weight:600;
+padding:10px; border-radius:10px; cursor:pointer;
+}
+.choice-row .diagram-btn{background:transparent; border:1.5px solid var(--line); color:var(--ink);}
+.choice-row .continue-btn{background:var(--ink); border:1.5px solid var(--ink); color:var(--paper);}
+
+/* ===================== MCQ ===================== */
+#screen-mcq .inner{padding:0 20px 24px;}
+.qcounter{font-family:var(--mono); font-size:11px; color:var(--ink-45);}
+.q-text{
+font-family:var(--disp); font-weight:600; font-size:18px;
+margin:8px 0 18px; line-height:1.35;
+}
+.opt{
+display:flex; align-items:center; gap:12px;
+border:1.5px solid var(--line);
+border-radius:12px;
+padding:13px 14px;
+margin-bottom:10px;
+font-size:14px;
+cursor:pointer;
+}
+.opt .letter{
+width:26px;height:26px;border-radius:50%;
+border:1.5px solid var(--line);
+display:flex; align-items:center; justify-content:center;
+font-family:var(--mono); font-size:11.5px; flex:none;
+}
+.opt.correct{
+border-color:var(--good);
+background:var(--good-10);
+}
+.opt.correct .letter{background:var(--good); border-color:var(--good); color:#fff;}
+.explain-card{
+margin-top:6px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:12px;
+padding:14px;
+}
+.explain-card .tag{
+font-family:var(--mono); font-size:10.5px; text-transform:uppercase;
+letter-spacing:.06em; color:var(--good);
+}
+.explain-card p{font-size:13px; line-height:1.55; margin:6px 0 0;}
+
+/* ===================== SHORT ANSWER ===================== */
+#screen-short .inner{padding:0 20px 24px;}
+.rec-card{
+background:var(--ink);
+color:var(--paper);
+border-radius:16px;
+padding:20px;
+text-align:center;
+margin-top:14px;
+}
+.waveform{
+display:flex; align-items:flex-end; justify-content:center; gap:3px;
+height:34px; margin:14px 0;
+}
+.waveform span{
+width:3px; background:var(--highlight); border-radius:2px;
+}
+.rec-card .tscript{
+font-size:12.5px; color:var(--paper); opacity:.85; line-height:1.5;
+text-align:left; margin-top:10px;
+background:rgba(255,255,255,.06);
+border-radius:8px; padding:10px 12px;
+}
+.score-row{
+display:flex; align-items:center; justify-content:space-between;
+margin-top:16px;
+}
+.score-row .big{font-family:var(--disp); font-weight:600; font-size:22px;}
+.fb-list{list-style:none; margin:12px 0 0; padding:0;}
+.fb-list li{
+display:flex; gap:9px; font-size:13px; line-height:1.5;
+padding:7px 0; border-bottom:1px solid var(--line);
+}
+.fb-list li:last-child{border-bottom:none;}
+.fb-list li.good::before{content:'✔'; color:var(--good); font-weight:700;}
+.fb-list li.bad::before{content:'✕'; color:var(--stamp); font-weight:700;}
+.missing-note{
+margin-top:12px;
+background:var(--stamp-10);
+border:1px dashed var(--stamp);
+border-radius:10px;
+padding:12px 14px;
+font-size:12.5px;
+line-height:1.55;
+}
+.missing-note b{color:var(--stamp);}
+</style>
+</head>
+<body>
+
+<div class="lab-bar">
+<div class="lab-title">ExamBuddy <span>·</span> student flow</div>
+<div class="lab-nav" id="labNav"></div>
+</div>
+
+<div class="device-wrap">
+<div class="device">
+<div class="notch"></div>
+<div class="statusbar">
+<span>9:41</span>
+<span>ExamBuddy</span>
+<span>●●●</span>
+</div>
+
+<!-- ===================== LOGIN ===================== -->
+<div class="screen active" id="screen-login">
+<div class="inner">
+<div class="brandmark">Exam<span class="dot">·</span>Buddy</div>
+<div class="brand-line">your 24/7 study partner</div>
+
+<div class="field">
+<label>Mobile number</label>
+<input type="text" value="98840 xxxxx" readonly>
+</div>
+<div class="field">
+<label>School code</label>
+<input type="text" value="DAV-CHN-014" readonly>
+</div>
+
+<div class="cta">
+<button class="btn-primary" onclick="go('home')">Continue</button>
+</div>
+
+<div class="foot">Class 8 · <b>D.A.V. Public School, Chennai</b></div>
+</div>
+</div>
+
+<!-- ===================== HOME ===================== -->
+<div class="screen" id="screen-home">
+<div class="inner">
+<div class="home-top">
+<div style="display:flex; align-items:center; gap:10px;">
+<div class="avatar">A</div>
+<div>
+<div style="font-weight:600; font-size:14px;">Aditi Krishnan</div>
+<div class="muted">Class 8 · Section B</div>
+</div>
+</div>
+<div class="bell"></div>
+</div>
+
+<div class="welcome-card">
+<div class="eyebrow">Good morning</div>
+<h3>Ready for today's session?</h3>
+<div class="streak-row">
+<div class="streak-item"><div class="num">12</div><div class="lab">Day streak</div></div>
+<div class="streak-item"><div class="num">68%</div><div class="lab">Science mastery</div></div>
+<div class="streak-item"><div class="num">4</div><div class="lab">Due today</div></div>
+</div>
+</div>
+
+<div class="notif-strip">
+<div class="dot-red"></div>
+<div><b>Life Processes</b> chapter test is due tomorrow — revise today to stay ahead.</div>
+</div>
+
+<div class="section-lab">Your subjects</div>
+<div class="subject-grid">
+<div class="subject-card" onclick="go('chapters')">
+<div class="ic">🌿</div>
+<div class="nm">Science</div>
+<div class="prog-bar"><div class="prog-fill" style="width:68%"></div></div>
+<div class="prog-lab">68% mastered</div>
+</div>
+<div class="subject-card">
+<div class="ic">📐</div>
+<div class="nm">Mathematics</div>
+<div class="prog-bar"><div class="prog-fill" style="width:41%"></div></div>
+<div class="prog-lab">41% mastered</div>
+</div>
+<div class="subject-card">
+<div class="ic">🏛️</div>
+<div class="nm">Social Science</div>
+<div class="prog-bar"><div class="prog-fill" style="width:55%"></div></div>
+<div class="prog-lab">55% mastered</div>
+</div>
+<div class="subject-card">
+<div class="ic">✏️</div>
+<div class="nm">English</div>
+<div class="prog-bar"><div class="prog-fill" style="width:74%"></div></div>
+<div class="prog-lab">74% mastered</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===================== CHAPTERS ===================== -->
+<div class="screen" id="screen-chapters">
+<div class="app-header">
+<button class="back" onclick="go('home')">← Back</button>
+<div class="title">Science</div>
+<div class="spacer"></div>
+</div>
+<div class="inner">
+<div class="chapter-row" onclick="go('modes')">
+<div class="left">
+<div class="chapter-num">06</div>
+<div>
+<div class="nm">Photosynthesis in Plants</div>
+<div class="sub">Life Processes · 3 concepts</div>
+</div>
+</div>
+<div class="mastery-ring mid">62%</div>
+</div>
+<div class="chapter-row">
+<div class="left">
+<div class="chapter-num">07</div>
+<div>
+<div class="nm">Respiration in Organisms</div>
+<div class="sub">Life Processes · 4 concepts</div>
+</div>
+</div>
+<div class="mastery-ring low">18%</div>
+</div>
+<div class="chapter-row">
+<div class="left">
+<div class="chapter-num">08</div>
+<div>
+<div class="nm">Transportation in Animals</div>
+<div class="sub">Life Processes · 5 concepts</div>
+</div>
+</div>
+<div class="mastery-ring low">0%</div>
+</div>
+<div class="chapter-row">
+<div class="left">
+<div class="chapter-num">09</div>
+<div>
+<div class="nm">Reproduction in Plants</div>
+<div class="sub">Life Processes · 4 concepts</div>
+</div>
+</div>
+<div class="mastery-ring">91%</div>
+</div>
+</div>
+</div>
+
+<!-- ===================== MODE SELECT ===================== -->
+<div class="screen" id="screen-modes">
+<div class="app-header">
+<button class="back" onclick="go('chapters')">← Back</button>
+<div class="title">Photosynthesis</div>
+<div class="spacer"></div>
+</div>
+<div class="inner">
+<div class="muted" style="padding:0 0 16px;">Choose how you'd like to study this chapter.</div>
+
+<div class="mode-card a" onclick="go('revision')">
+<div class="ic">⚡</div>
+<div>
+<div class="nm">Revision</div>
+<div class="dsc">Quick recap cards, formulas and memory tricks — for a fast refresh before class.</div>
+</div>
+</div>
+
+<div class="mode-card b" onclick="go('concept')">
+<div class="ic">💬</div>
+<div>
+<div class="nm">Concept Clarity</div>
+<div class="dsc">Talk it through with ExamBuddy and build the idea step by step, at your own pace.</div>
+</div>
+</div>
+
+<div class="mode-card c" onclick="go('mcq')">
+<div class="ic">🎯</div>
+<div>
+<div class="nm">Knowledge Tester</div>
+<div class="dsc">Answer questions, speak your answers, and get instant, exam-style feedback.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===================== REVISION ===================== -->
+<div class="screen" id="screen-revision">
+<div class="app-header">
+<button class="back" onclick="go('modes')">← Back</button>
+<div class="title">Revision</div>
+<div class="spacer"></div>
+</div>
+<div class="inner">
+<div class="eyebrow">Photosynthesis in Plants</div>
+<div class="h1">Quick recap</div>
+
+<ul class="recap-list">
+<li>Photosynthesis is the process by which green plants prepare their own food.</li>
+<li>Chlorophyll in the leaves traps sunlight energy.</li>
+<li>Carbon dioxide enters the leaf through tiny pores called stomata.</li>
+<li>Water is absorbed from the soil by the roots.</li>
+<li>The process produces glucose for the plant and releases oxygen.</li>
+</ul>
+
+<div class="section-lab" style="margin-top:20px;">Formula</div>
+<div class="formula-box">
+Carbon Dioxide + Water + Sunlight
+<span class="op">↓</span>
+Glucose + Oxygen
+</div>
+
+<div class="mnemonic-card">
+<div class="tag">Memory trick</div>
+<p>"Sun + Water + CO₂ = Plant Food + O₂"</p>
+</div>
+
+<div style="margin-top:20px;">
+<button class="btn-primary" onclick="go('modes')">Mark as revised</button>
+</div>
+</div>
+</div>
+
+<!-- ===================== CONCEPT CLARITY ===================== -->
+<div class="screen" id="screen-concept">
+<div class="app-header">
+<button class="back" onclick="go('modes')">← Back</button>
+<div class="title">Concept Clarity</div>
+<div class="spacer"></div>
+</div>
+<div class="inner">
+<div class="progress-track">
+<div class="seg done"></div><div class="seg done"></div><div class="seg done"></div>
+</div>
+
+<div class="chat-scroll">
+<div class="bubble ai">Good question — this one shows up in every exam. Before we break it down: imagine you're a plant stuck in one place all day. How would you get your own food? You can't order from Swiggy 😀</div>
+<div class="bubble me">I will cook by myself</div>
+<div class="bubble ai">Exactly! What <b>3 things</b> would you need from around you?</div>
+<div class="bubble me">Sunlight.</div>
+<div class="bubble ai">Correct! You need energy to cook, and sunlight is free energy ☀️</div>
+<div class="progress-note">1 / 3 inputs identified</div>
+
+<div class="bubble ai">Now, plants are chefs. They mix ingredients. Sunlight is the stove. What gas from the air do you think is their main ingredient?
+<span class="hint">Hint: we breathe it out when we exercise.</span>
+</div>
+<div class="bubble me">Carbon dioxide.</div>
+<div class="bubble ai">Perfect! CO₂ in, O₂ out — that's why plants are called Earth's lungs.</div>
+<div class="progress-note">2 / 3 inputs identified</div>
+
+<div class="bubble ai">Last one: the stove and gas aren't enough. A chef needs water too. Plants don't have taps — where do they secretly pull water from?</div>
+<div class="bubble me">Through their roots.</div>
+<div class="bubble ai">Nailed it! 🌱 Roots are like the plant's straws.</div>
+<div class="progress-note">3 / 3 inputs identified</div>
+
+<div class="bubble ai">Quick check — don't look at your textbook. Can you tell me the <b>three things</b> a plant needs for photosynthesis, in your own words?</div>
+<div class="bubble me">Sunlight, carbon dioxide from the air, and water from the roots.</div>
+
+<div class="summary-card">
+<div class="eyebrow">Summary</div>
+<p style="font-size:13px; line-height:1.6; margin:6px 0 0;">Plants use <b>sunlight, carbon dioxide and water</b> to produce <b>glucose (food)</b> and release <b>oxygen</b>. This process is called photosynthesis.</p>
+<div class="correction-note">
+<div class="pen">✎</div>
+<p><b>Common exam mistake</b> — many students write "plants make oxygen for humans." That's true, but not the main purpose. In exams, write: <i>"The primary purpose of photosynthesis is to produce glucose for the plant. Oxygen is a by-product."</i></p>
+</div>
+</div>
+
+<div class="bubble ai">Final challenge — if I cover a plant's leaves with black paper for <b>3 days</b>, will photosynthesis happen? Why?</div>
+<div class="bubble me">No, because the leaves won't receive sunlight.</div>
+
+<div class="mastery-toast">
+<div class="stamp-mini">✓</div>
+<p><b>Mastered!</b> Your Life Processes Mastery Map is updated. ExamBuddy will remind you to revise this in 2 days.</p>
+</div>
+</div>
+
+<div class="choice-row">
+<button class="diagram-btn" onclick="go('modes')">📊 Show diagram</button>
+<button class="continue-btn" onclick="go('modes')">Continue →</button>
+</div>
+</div>
+</div>
+
+<!-- ===================== MCQ ===================== -->
+<div class="screen" id="screen-mcq">
+<div class="app-header">
+<button class="back" onclick="go('modes')">← Back</button>
+<div class="title">Knowledge Tester</div>
+<div class="spacer"></div>
+</div>
+<div class="inner">
+<div class="qcounter">Question 3 of 10</div>
+<div class="q-text">Which gas is absorbed by plants during photosynthesis?</div>
+
+<div class="opt"><div class="letter">A</div> Oxygen</div>
+<div class="opt"><div class="letter">B</div> Nitrogen</div>
+<div class="opt correct"><div class="letter">C</div> Carbon Dioxide</div>
+<div class="opt"><div class="letter">D</div> Hydrogen</div>
+
+<div class="explain-card">
+<div class="tag">✔ Correct</div>
+<p>Plants absorb carbon dioxide from the atmosphere through stomata to prepare glucose during photosynthesis.</p>
+</div>
+
+<div style="margin-top:18px;">
+<button class="btn-primary" onclick="go('short')">Next question</button>
+</div>
+</div>
+</div>
+
+<!-- ===================== SHORT ANSWER ===================== -->
+<div class="screen" id="screen-short">
+<div class="app-header">
+<button class="back" onclick="go('mcq')">← Back</button>
+<div class="title">Knowledge Tester</div>
+<div class="spacer"></div>
+</div>
+<div class="inner">
+<div class="qcounter">Question 4 of 10 · Short answer</div>
+<div class="q-text">Explain the role of stomata in the process of photosynthesis.</div>
+
+<div class="rec-card">
+<div class="eyebrow" style="color:var(--highlight);">Your recorded answer</div>
+<div class="waveform" id="waveform"></div>
+<div class="tscript">"Stomata are tiny pores on the leaves which take in carbon dioxide from the air and release oxygen."</div>
+</div>
+
+<div class="score-row">
+<div>
+<div class="muted">Score</div>
+<div class="big">1.5 / 2 marks</div>
+</div>
+<div class="stamp-badge">good!</div>
+</div>
+
+<ul class="fb-list">
+<li class="good">Correctly mentioned gas exchange</li>
+<li class="good">Explained carbon dioxide intake</li>
+<li class="good">Mentioned oxygen release</li>
+<li class="bad">Missing: role in regulating water loss</li>
+</ul>
+
+<div class="missing-note">
+To score full marks, also mention that <b>stomata regulate water loss through transpiration</b> — an important function described in the textbook.
+</div>
+
+<div style="margin-top:18px;">
+<button class="btn-primary" onclick="go('modes')">Next question</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+const screens = ['login','home','chapters','modes','revision','concept','mcq','short'];
+const labels = {
+login:'Login', home:'Home', chapters:'Chapters', modes:'Mode select',
+revision:'Revision', concept:'Concept Clarity', mcq:'Tester · MCQ', short:'Tester · Short answer'
+};
+const nav = document.getElementById('labNav');
+screens.forEach(id=>{
+const b = document.createElement('button');
+b.textContent = labels[id];
+b.onclick = ()=>go(id);
+b.id = 'nav-'+id;
+nav.appendChild(b);
+});
+
+function go(id){
+screens.forEach(s=>{
+document.getElementById('screen-'+s).classList.toggle('active', s===id);
+document.getElementById('nav-'+s).classList.toggle('active', s===id);
+});
+const scr = document.getElementById('screen-'+id);
+const sc = scr.querySelector('.chat-scroll');
+if(sc) sc.scrollTop = 0;
+scr.scrollTop = 0;
+}
+go('login');
+
+// waveform bars
+const wf = document.getElementById('waveform');
+for(let i=0;i<28;i++){
+const bar = document.createElement('span');
+bar.style.height = (6 + Math.random()*28) + 'px';
+wf.appendChild(bar);
+}
+</script>
+</body>
+</html>
