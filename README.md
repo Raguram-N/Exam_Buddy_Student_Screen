@@ -360,3 +360,9 @@ Learning Mode
           │
           └── Voice Answer → Speech-to-Text → RAG → LLM → Evaluation & Feedback
 ```
+
+---
+
+# Prototype 
+
+- [link](https://raguram-n.github.io/Exam_Buddy_Student_Screen/)
