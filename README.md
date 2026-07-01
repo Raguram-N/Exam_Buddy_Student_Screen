@@ -112,7 +112,9 @@ Update Mastery Progress
 
 > Good question — this one shows up in every exam.
 >
-> Before we break it down: imagine you're a plant stuck in one place all day. You can't order from Swiggy. How would you make your own food?
+> Before we break it down: imagine you're a plant stuck in one place all day. How would you get your own food?
+>
+> You can't order from Swiggy!
 
 **Student:**
 
