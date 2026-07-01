@@ -122,12 +122,14 @@ Update Mastery Progress
 
 **ExamBuddy:**
 
-> Exactly! What **3 things** would you need from around you?
+> Exactly! Just like you, plants also cook their own food. That cooking process is called **photosynthesis**.
+
+> What three things would a plant need to cook its food?
 
 
 **Student:**
 
-> Sunlight.
+> I think, one is Sunlight.
 
 **ExamBuddy:**
 
