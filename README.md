@@ -26,7 +26,7 @@ Revision   Concept Clarity   Knowledge Tester
 
 ---
 
-# 📚 Revision mode
+# 📚 Revision mode - for tomorrow's class test
 
 ```text
 Select Chapter
@@ -73,7 +73,7 @@ Carbon Dioxide + Water + Sunlight
 
 ---
 
-# 💡 Concept Clarity mode
+# 💡 Concept Clarity mode - Dive deep
 
 ```text
 Select Chapter
@@ -237,7 +237,7 @@ Update Mastery Progress
 
 ---
 
-# 🧠 Knowledge Tester mode
+# 🧠 Knowledge Tester mode 
 
 ## MCQ
 
