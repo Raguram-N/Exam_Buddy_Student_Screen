@@ -114,7 +114,7 @@ Update Mastery Progress
 >
 > Before we break it down: imagine you're a plant stuck in one place all day. How would you get your own food?
 >
-> You can't order from Swiggy!
+> You can't order from Swiggy 😀!
 
 **Student:**
 
