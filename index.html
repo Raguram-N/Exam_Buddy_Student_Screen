@@ -563,7 +563,7 @@
   }
 
   /* ===================== CONCEPT NOTES (Rules Implementation) ===================== */
-  #screen-notes .inner{padding:0 20px 26px;}
+  #screen-notes .inner{padding:0 20px 100px; /* Extra padding for FAB */}
   .topic-title {
     font-family: var(--disp);
     font-weight: 600;
@@ -769,46 +769,110 @@
 
   /* call icon button in chat header */
   .call-cta{
-    position:relative;
-    width:36px;height:36px;
-    border-radius:50%;
-    border:1.5px solid var(--line);
-    background:var(--card);
-    display:flex;align-items:center;justify-content:center;
-    font-size:15px;
-    cursor:pointer;
-    flex:none;
+    position:relative; width:36px;height:36px; border-radius:50%;
+    border:1.5px solid var(--line); background:var(--card);
+    display:flex;align-items:center;justify-content:center; font-size:15px; cursor:pointer; flex:none;
   }
   .call-cta:hover{border-color:var(--stamp);}
 
   /* wrong-answer retry ladder */
   .nudge-tag{
-    font-family:var(--mono);
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color:var(--stamp);
-    margin:2px 0 6px 2px;
+    font-family:var(--mono); font-size:10px; text-transform:uppercase;
+    letter-spacing:.06em; color:var(--stamp); margin:2px 0 6px 2px;
   }
   .bubble.me.wrong{
-    background:var(--stamp-10);
-    color:var(--ink);
-    border:1.5px solid var(--stamp);
-    margin-left:auto;
-    border-bottom-right-radius:4px;
+    background:var(--stamp-10); color:var(--ink); border:1.5px solid var(--stamp);
+    margin-left:auto; border-bottom-right-radius:4px;
   }
-  .bubble.ai.nudge{
-    border-color:var(--stamp);
-    background:var(--card);
-  }
+  .bubble.ai.nudge{border-color:var(--stamp); background:var(--card);}
 
   /* chat input row + send */
   .chat-input-row .fake-input.editable{color:var(--ink);}
   .send-btn{
-    width:42px;height:42px;border-radius:50%;
-    background:var(--stamp); color:#fff;
-    display:flex;align-items:center;justify-content:center;
-    flex:none; cursor:pointer; border:none; font-size:15px;
+    width:42px;height:42px;border-radius:50%; background:var(--stamp); color:#fff;
+    display:flex;align-items:center;justify-content:center; flex:none; cursor:pointer; border:none; font-size:15px;
+  }
+
+  /* ===================== HYBRID "ASK BUDDY" FLOATING PANEL ===================== */
+  .fab-ask {
+    position: absolute;
+    bottom: 24px;
+    right: 20px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 24px rgba(27,42,74, .25);
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .fab-ask:hover { transform: translateY(-2px); }
+
+  .overlay-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border-radius: 0 0 30px 30px; /* matches device curve at bottom */
+  }
+  .overlay-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .bottom-sheet {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 65%;
+    background: var(--paper);
+    border-radius: 24px 24px 30px 30px;
+    z-index: 210;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+  }
+  .bottom-sheet.active {
+    transform: translateY(0);
+  }
+  .sheet-handle {
+    width: 40px;
+    height: 5px;
+    background: var(--line);
+    border-radius: 3px;
+    margin: 12px auto;
+  }
+  .sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sheet-title {
+    font-family: var(--disp);
+    font-weight: 600;
+    font-size: 17px;
+  }
+  .sheet-close {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: var(--ink-45);
+    cursor: pointer;
+    padding: 4px;
   }
 
   /* ===================== HOME: teacher-assigned card ===================== */
@@ -838,160 +902,61 @@
   #screen-call{background:var(--ink);}
   #screen-call .app-header .back, #screen-call .app-header .title{color:var(--paper);}
   #screen-call .inner{
-    padding:30px 26px 26px;
-    display:flex; flex-direction:column; align-items:center;
-    height:calc(100% - 100px);
-    color:var(--paper);
-    text-align:center;
+    padding:30px 26px 26px; display:flex; flex-direction:column; align-items:center;
+    height:calc(100% - 100px); color:var(--paper); text-align:center;
   }
   .call-credit{
-    font-family:var(--mono); font-size:11px;
-    color:var(--highlight);
-    border:1px solid var(--highlight);
-    border-radius:999px;
-    padding:5px 12px;
-    margin-bottom:18px;
+    font-family:var(--mono); font-size:11px; color:var(--highlight);
+    border:1px solid var(--highlight); border-radius:999px; padding:5px 12px; margin-bottom:18px;
   }
   .call-avatar{
-    width:88px;height:88px;border-radius:50%;
-    background:var(--highlight);
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--disp); font-weight:600; font-size:28px; color:var(--ink);
-    margin-bottom:14px;
+    width:88px;height:88px;border-radius:50%; background:var(--highlight);
+    display:flex;align-items:center;justify-content:center; font-family:var(--disp); font-weight:600; font-size:28px; color:var(--ink); margin-bottom:14px;
   }
   #screen-call .h2{color:var(--paper); font-size:20px;}
   #screen-call .call-sub{color:rgba(245,239,224,.6); font-size:12.5px; margin-top:4px;}
   .call-transcript{
-    flex:1;
-    width:100%;
-    margin-top:22px;
-    text-align:left;
-    font-size:13px;
-    line-height:1.7;
-    color:rgba(245,239,224,.9);
-    overflow-y:auto;
+    flex:1; width:100%; margin-top:22px; text-align:left; font-size:13px; line-height:1.7; color:rgba(245,239,224,.9); overflow-y:auto;
   }
   .call-transcript .turn{margin-bottom:14px;}
   .call-transcript .who{
-    font-family:var(--mono); font-size:10px; text-transform:uppercase;
-    letter-spacing:.06em; color:var(--highlight); display:block; margin-bottom:3px;
+    font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--highlight); display:block; margin-bottom:3px;
   }
-  .call-waveform{
-    display:flex; align-items:flex-end; justify-content:center; gap:3px;
-    height:26px; margin:6px 0 0;
-  }
+  .call-waveform{display:flex; align-items:flex-end; justify-content:center; gap:3px; height:26px; margin:6px 0 0;}
   .call-waveform span{width:3px; background:var(--highlight); border-radius:2px;}
   .record-btn{
-    width:66px;height:66px;border-radius:50%;
-    background:var(--stamp);
-    border:4px solid rgba(245,239,224,.25);
-    display:flex;align-items:center;justify-content:center;
-    color:#fff; font-size:24px;
-    cursor:pointer;
-    margin-top:20px;
-    flex:none;
+    width:66px;height:66px;border-radius:50%; background:var(--stamp); border:4px solid rgba(245,239,224,.25);
+    display:flex;align-items:center;justify-content:center; color:#fff; font-size:24px; cursor:pointer; margin-top:20px; flex:none;
   }
-  .record-label{
-    font-family:var(--mono); font-size:10.5px;
-    color:rgba(245,239,224,.6);
-    margin-top:10px;
-    text-transform:uppercase;
-    letter-spacing:.05em;
-  }
-  .end-call{
-    margin-top:18px;
-    background:transparent;
-    border:1.5px solid rgba(245,239,224,.3);
-    color:var(--paper);
-    font-family:var(--body); font-weight:600; font-size:13px;
-    padding:11px 22px; border-radius:999px; cursor:pointer;
-  }
+  .record-label{font-family:var(--mono); font-size:10.5px; color:rgba(245,239,224,.6); margin-top:10px; text-transform:uppercase; letter-spacing:.05em;}
+  .end-call{margin-top:18px; background:transparent; border:1.5px solid rgba(245,239,224,.3); color:var(--paper); font-family:var(--body); font-weight:600; font-size:13px; padding:11px 22px; border-radius:999px; cursor:pointer;}
 
   /* ===================== MCQ ===================== */
   #screen-mcq .inner{padding:0 20px 24px;}
   .qcounter{font-family:var(--mono); font-size:11px; color:var(--ink-45);}
-  .q-text{
-    font-family:var(--disp); font-weight:600; font-size:18px;
-    margin:8px 0 18px; line-height:1.35;
-  }
-  .opt{
-    display:flex; align-items:center; gap:12px;
-    border:1.5px solid var(--line);
-    border-radius:12px;
-    padding:13px 14px;
-    margin-bottom:10px;
-    font-size:14px;
-    cursor:pointer;
-  }
-  .opt .letter{
-    width:26px;height:26px;border-radius:50%;
-    border:1.5px solid var(--line);
-    display:flex; align-items:center; justify-content:center;
-    font-family:var(--mono); font-size:11.5px; flex:none;
-  }
-  .opt.correct{
-    border-color:var(--good);
-    background:var(--good-10);
-  }
+  .q-text{font-family:var(--disp); font-weight:600; font-size:18px; margin:8px 0 18px; line-height:1.35;}
+  .opt{display:flex; align-items:center; gap:12px; border:1.5px solid var(--line); border-radius:12px; padding:13px 14px; margin-bottom:10px; font-size:14px; cursor:pointer;}
+  .opt .letter{width:26px;height:26px;border-radius:50%; border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11.5px; flex:none;}
+  .opt.correct{border-color:var(--good); background:var(--good-10);}
   .opt.correct .letter{background:var(--good); border-color:var(--good); color:#fff;}
-  .explain-card{
-    margin-top:6px;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:12px;
-    padding:14px;
-  }
-  .explain-card .tag{
-    font-family:var(--mono); font-size:10.5px; text-transform:uppercase;
-    letter-spacing:.06em; color:var(--good);
-  }
+  .explain-card{margin-top:6px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px;}
+  .explain-card .tag{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--good);}
   .explain-card p{font-size:13px; line-height:1.55; margin:6px 0 0;}
 
   /* ===================== SHORT ANSWER ===================== */
   #screen-short .inner{padding:0 20px 24px;}
-  .rec-card{
-    background:var(--ink);
-    color:var(--paper);
-    border-radius:16px;
-    padding:20px;
-    text-align:center;
-    margin-top:14px;
-  }
-  .waveform{
-    display:flex; align-items:flex-end; justify-content:center; gap:3px;
-    height:34px; margin:14px 0;
-  }
-  .waveform span{
-    width:3px; background:var(--highlight); border-radius:2px;
-  }
-  .rec-card .tscript{
-    font-size:12.5px; color:var(--paper); opacity:.85; line-height:1.5;
-    text-align:left; margin-top:10px;
-    background:rgba(255,255,255,.06);
-    border-radius:8px; padding:10px 12px;
-  }
-  .score-row{
-    display:flex; align-items:center; justify-content:space-between;
-    margin-top:16px;
-  }
+  .rec-card{background:var(--ink); color:var(--paper); border-radius:16px; padding:20px; text-align:center; margin-top:14px;}
+  .waveform{display:flex; align-items:flex-end; justify-content:center; gap:3px; height:34px; margin:14px 0;}
+  .waveform span{width:3px; background:var(--highlight); border-radius:2px;}
+  .rec-card .tscript{font-size:12.5px; color:var(--paper); opacity:.85; line-height:1.5; text-align:left; margin-top:10px; background:rgba(255,255,255,.06); border-radius:8px; padding:10px 12px;}
+  .score-row{display:flex; align-items:center; justify-content:space-between; margin-top:16px;}
   .score-row .big{font-family:var(--disp); font-weight:600; font-size:22px;}
   .fb-list{list-style:none; margin:12px 0 0; padding:0;}
-  .fb-list li{
-    display:flex; gap:9px; font-size:13px; line-height:1.5;
-    padding:7px 0; border-bottom:1px solid var(--line);
-  }
+  .fb-list li{display:flex; gap:9px; font-size:13px; line-height:1.5; padding:7px 0; border-bottom:1px solid var(--line);}
   .fb-list li:last-child{border-bottom:none;}
   .fb-list li.good::before{content:'✔'; color:var(--good); font-weight:700;}
   .fb-list li.bad::before{content:'✕'; color:var(--stamp); font-weight:700;}
-  .missing-note{
-    margin-top:12px;
-    background:var(--stamp-10);
-    border:1px dashed var(--stamp);
-    border-radius:10px;
-    padding:12px 14px;
-    font-size:12.5px;
-    line-height:1.55;
-  }
+  .missing-note{margin-top:12px; background:var(--stamp-10); border:1px dashed var(--stamp); border-radius:10px; padding:12px 14px; font-size:12.5px; line-height:1.55;}
   .missing-note b{color:var(--stamp);}
 </style>
 </head>
@@ -1015,6 +980,7 @@
         <span>●●●</span>
       </div>
 
+      <!-- ===================== LOGIN ===================== -->
       <div class="screen active" id="screen-login">
         <div class="inner">
           <div class="brandmark">DAV <span class="dot"></span>Public School</div>
@@ -1037,6 +1003,7 @@
         </div>
       </div>
 
+      <!-- ===================== HOME ===================== -->
       <div class="screen" id="screen-home">
         <div class="inner">
           <div class="home-top">
@@ -1103,6 +1070,7 @@
         </div>
       </div>
 
+      <!-- ===================== CHAPTERS ===================== -->
       <div class="screen" id="screen-chapters">
         <div class="app-header">
           <button class="back" onclick="go('home')">← Back</button>
@@ -1170,6 +1138,7 @@
         </div>
       </div>
 
+      <!-- ===================== MODE SELECT ===================== -->
       <div class="screen" id="screen-modes">
         <div class="app-header">
           <button class="back" onclick="go('chapters')">← Back</button>
@@ -1213,6 +1182,7 @@
         </div>
       </div>
 
+      <!-- ===================== REVISION ===================== -->
       <div class="screen" id="screen-revision">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
@@ -1249,6 +1219,7 @@
         </div>
       </div>
 
+      <!-- ===================== CONCEPT NOTES (Water Pollution) ===================== -->
       <div class="screen" id="screen-notes">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
@@ -1258,8 +1229,9 @@
         <div class="inner">
           <div class="eyebrow">Chapter 14</div>
           <div class="h1" style="margin-bottom: 2px;">Water Pollution</div>
-          <div class="topic-title">🌊 What is Water Pollution?</div>
           
+          <!-- Example 1: Water Pollution -->
+          <div class="topic-title">🌊 What is Water Pollution?</div>
           <div class="note-prompt">
             <b>💭 Think about this...</b>
             <p style="margin: 0 0 10px 0;">Imagine a beautiful lake after the rainy season. The water is crystal clear.</p>
@@ -1287,7 +1259,6 @@
 
             <div class="sub-h highlight-text">🌍 Remember</div>
             <p class="clean-text">Clean water supports life. Polluted water spreads disease.</p>
-
             
             <div class="summary-box">
               <b>⚡ One-line Summary</b>
@@ -1297,8 +1268,8 @@
 
           <hr class="topic-div">
 
+          <!-- Example 2: Oil Spills -->
           <div class="topic-title">🛢 Oil Spills</div>
-
           <div class="note-prompt">
             <b>💭 Imagine this...</b>
             <p style="margin: 0 0 10px 0;">Try holding your nose for one minute.</p>
@@ -1321,13 +1292,12 @@
 
             <div class="sub-h highlight-text">🌍 Real-life Connection</div>
             <p class="clean-text">One oil tanker accident can affect thousands of marine animals.</p>
-
           </div>
 
           <hr class="topic-div">
 
+          <!-- Example 3: Household Detergents -->
           <div class="topic-title">🧼 Household Detergents</div>
-
           <div class="note-prompt">
             <b>💭 Think about this...</b>
             <p style="margin: 0 0 10px 0;">You finish washing your clothes. Where does that dirty water go?</p>
@@ -1338,14 +1308,12 @@
           <div class="note-block">
             <div class="sub-h">📘 Textbook Point</div>
             <p class="clean-text">Synthetic detergents do not break down easily and pollute surface water and groundwater.</p>
-
-            
           </div>
 
           <hr class="topic-div">
 
+          <!-- Example 4: Microbeads -->
           <div class="topic-title">🔬 Microbeads</div>
-
           <div class="note-prompt">
             <b>💭 Can you even see them?</b>
             <p style="margin: 0 0 10px 0;">Microbeads are tiny plastic particles. They're so small that you may not even notice them while using:</p>
@@ -1365,14 +1333,12 @@
 
             <div class="sub-h">📘 Textbook Point</div>
             <p class="clean-text">Microbeads pollute water bodies and are accidentally eaten by aquatic organisms.</p>
-
-            
           </div>
 
           <hr class="topic-div">
 
+          <!-- Example 5: Agricultural Activities -->
           <div class="topic-title">🌾 Agricultural Activities</div>
-
           <div class="note-prompt">
             <b>💭 Imagine a rainy day...</b>
             <p style="margin: 0 0 10px 0;">A farmer has just sprayed fertilizers and pesticides.</p>
@@ -1384,8 +1350,6 @@
           <div class="note-block">
             <div class="sub-h">📘 Textbook Point</div>
             <p class="clean-text">Fertilizers and pesticides increase nitrates and phosphates in water, causing eutrophication.</p>
-
-            
           </div>
 
           <div style="margin-top:32px;">
@@ -1394,6 +1358,7 @@
         </div>
       </div>
 
+      <!-- ===================== CONCEPT CLARITY (chat) ===================== -->
       <div class="screen" id="screen-concept">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
@@ -1469,6 +1434,7 @@
         </div>
       </div>
 
+      <!-- ===================== CALL MODE (voice, credit-metered) ===================== -->
       <div class="screen" id="screen-call">
         <div class="app-header">
           <button class="back" onclick="go('concept')">← Back to chat</button>
@@ -1503,6 +1469,7 @@
         </div>
       </div>
 
+      <!-- ===================== MCQ ===================== -->
       <div class="screen" id="screen-mcq">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
@@ -1529,6 +1496,7 @@
         </div>
       </div>
 
+      <!-- ===================== SHORT ANSWER ===================== -->
       <div class="screen" id="screen-short">
         <div class="app-header">
           <button class="back" onclick="go('mcq')">← Back</button>
@@ -1567,6 +1535,29 @@
           <div style="margin-top:18px;">
             <button class="btn-primary" onclick="go('modes')">Next question</button>
           </div>
+        </div>
+      </div>
+
+      <!-- ===================== FLOATING "ASK BUDDY" BUTTON ===================== -->
+      <button class="fab-ask" id="fab-ask" onclick="toggleDoubtPanel(true)" style="display: none;">
+        🤔 Ask Buddy
+      </button>
+
+      <!-- ===================== ASK BUDDY BOTTOM SHEET ===================== -->
+      <div class="overlay-backdrop" id="doubt-backdrop" onclick="toggleDoubtPanel(false)"></div>
+      <div class="bottom-sheet" id="doubt-panel">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+          <div class="sheet-title">Ask Buddy</div>
+          <button class="sheet-close" onclick="toggleDoubtPanel(false)">✕</button>
+        </div>
+        <div class="chat-scroll" style="flex:1; padding-top:16px;">
+          <div class="bubble ai">I'm right here! Got a question about what you're reading? Just ask! 💡</div>
+        </div>
+        <div class="chat-input-row" style="border-top:none; padding-bottom:30px;">
+          <div class="fake-input">Type your doubt…</div>
+          <button class="mic-btn">🎤</button>
+          <button class="send-btn">➤</button>
         </div>
       </div>
 
@@ -1623,17 +1614,41 @@
       const navEl = document.getElementById('nav-'+s);
       if (navEl) navEl.classList.toggle('active', s===id);
     });
+    
     document.getElementById('stageCaption').textContent = captionOf[id];
+    
+    // Reset scroll position
     const scr = document.getElementById('screen-'+id);
     if(scr) {
         const sc = scr.querySelector('.chat-scroll');
         if(sc) sc.scrollTop = 0;
         scr.scrollTop = 0;
     }
-  }
-  go('login'); // Keeping login as the starting screen for the demo flow!
 
-  // waveform bars
+    // Show FAB only on reading-heavy screens
+    const fab = document.getElementById('fab-ask');
+    if(fab) {
+      if (id === 'notes' || id === 'revision') {
+        fab.style.display = 'flex';
+        // subtle pop-in animation
+        fab.style.opacity = '0';
+        setTimeout(() => fab.style.opacity = '1', 100);
+      } else {
+        fab.style.display = 'none';
+        toggleDoubtPanel(false); // Close panel if navigating away
+      }
+    }
+  }
+
+  // Hybrid Approach: Quick Doubt Bottom Sheet Toggle
+  function toggleDoubtPanel(show) {
+    document.getElementById('doubt-backdrop').classList.toggle('active', show);
+    document.getElementById('doubt-panel').classList.toggle('active', show);
+  }
+
+  go('notes'); // Open Notes first to see the new feature!
+
+  // waveform bars for Short Answer Screen
   const wf = document.getElementById('waveform');
   if(wf) {
     for(let i=0;i<28;i++){
