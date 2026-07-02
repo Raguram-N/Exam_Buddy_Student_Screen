@@ -4,11 +4,10 @@
 Start
   │
   ▼
-Login / Sign Up
+Login
   │
   ▼
 Home Dashboard
-(Welcome Card + Notifications)
   │
   ▼
 Select Subject
@@ -17,16 +16,19 @@ Select Subject
 Select Chapter
   │
   ▼
-Choose Learning Mode
+Select topic
   │
-  ├──────────────┬───────────────┐
-  ▼              ▼               ▼
-Revision   Concept Clarity   Knowledge Tester
+  ▼
+Select Mode
+  │
+  ├──────────────┬──────────────────┬───────────────┬
+  ▼              ▼                  ▼               ▼
+Revision    Concept Notes    Concept Clarity   Knowledge Tester
 ```
 
 ---
 
-# 📚 Revision mode - for tomorrow's class test
+# 📚 Mode 1: Revision  - Quick recap
 
 ```text
 Select Chapter
@@ -70,6 +72,100 @@ Carbon Dioxide + Water + Sunlight
 ✅ **Memory Trick**
 
 > **"Sun + Water + CO₂ = Glucose (Plant Food) + O₂"**
+
+---
+
+# 📖 Mode 2 — Concept Notes
+
+```text
+Select Chapter
+      │
+      ▼
+Select topic
+      │
+      ▼
+Retrieve textbook content (RAG)
+      │
+      ▼
+LLM transforms textbook into
+student-friendly notes
+      │
+      ▼
+Generate
+
+• Clean headings
+• Better formatting
+• Visual thinking prompts
+• Simplified explanations
+• Important keywords
+• One-minute chapter summary
+      │
+      ▼
+Study Complete
+```
+
+---
+
+## Example Selected topic: Water Pollution
+
+### Our concept notes
+
+> **🌊 Stop for a second...**
+
+Imagine a clean lake.
+
+Fish are swimming.
+
+Birds are drinking water.
+
+Now imagine people throwing plastic, sewage and chemicals into the same lake.
+
+Would you still drink that water?
+
+Probably not.
+
+That is exactly what **Water Pollution** means.
+
+---
+
+### Definition
+
+Water pollution is the contamination of water bodies due to human activities.
+
+It occurs when harmful substances like chemicals, sewage and waste are released into water bodies.
+
+Result
+
+- Water quality changes
+- Water becomes toxic
+- Drinking polluted water affects human health
+
+---
+
+### Sources
+
+Household detergents
+
+Domestic sewage
+
+Agriculture
+
+Industrial waste
+
+Oil spills
+
+Thermal pollution
+
+---
+
+### Exam Keywords
+
+- Pollutants
+- Aquifers
+- Domestic Sewage
+- Eutrophication
+- Oil Spill
+- Thermal Pollution
 
 ---
 
@@ -172,70 +268,7 @@ Update Mastery Progress
 > Roots are like the plant's straws.
 
 
-### 🧠 Active Recall
-
-**ExamBuddy:**
-
-> Quick check — don't look at your textbook.
->
-> Can you tell me the **three things** a plant needs for photosynthesis in your own words?
-
-**Student:**
-
-> Sunlight, carbon dioxide from the air, and water from the roots.
-
-
-### ✅ Summary + Misconception Guard
-
-**ExamBuddy:**
-
-> Excellent! That's 100% correct.
->
-> Plants use **sunlight, carbon dioxide, and water** to produce **glucose (food)** and release **oxygen**.
->
-> This process is called **photosynthesis**.
-
-**Common Exam Mistake**
-
-> Many students write:
->
-> *"Plants make oxygen for humans."*
->
-> While that's true, it isn't the main purpose.
->
-> In exams, write:
->
-> **"The primary purpose of photosynthesis is to produce glucose (food) for the plant. Oxygen is a by-product."**
-
-### 🎯 Exit Ticket
-
-**ExamBuddy:**
-
-> Final challenge...
->
-> If I cover a plant's leaves with black paper for **3 days**, will photosynthesis happen?
->
-> Why?
-
-**Student:**
-
-> No, because the leaves won't receive sunlight.
-
-**ExamBuddy:**
-
-> ✅ Mastered!
->
-> I've updated your **Life Processes Mastery Map**.
->
-> I'll remind you to revise this chapter again in **2 days** using spaced repetition so you remember it before your exams.
-
-**Next Option**
-
-> 📊 Show a 10-second concept diagram
->
-> **OR**
->
-> Continue to the next concept.
+The conversation continues naturally until the student fully understands the concept.
 
 ---
 
