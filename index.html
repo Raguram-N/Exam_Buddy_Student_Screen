@@ -511,6 +511,8 @@
   .mode-card.a .ic{background:var(--highlight);}
   .mode-card.b .ic{background:var(--stamp-10); color:var(--stamp);}
   .mode-card.c .ic{background:var(--good-10); color:var(--good);}
+  .mode-card.d .ic{background:var(--sky-10); color:var(--sky);}
+  
   .mode-card .nm{font-family:var(--disp); font-weight:600; font-size:16px;}
   .mode-card .dsc{font-size:12.5px; color:var(--ink-70); margin-top:3px; line-height:1.4;}
 
@@ -558,6 +560,108 @@
     margin:4px 0 0;
     line-height:1.3;
     color:var(--ink);
+  }
+
+  /* ===================== CONCEPT NOTES (Rules Implementation) ===================== */
+  #screen-notes .inner{padding:0 20px 26px;}
+  .topic-title {
+    font-family: var(--disp);
+    font-weight: 600;
+    font-size: 19px;
+    margin: 32px 0 14px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .topic-title:first-of-type { margin-top: 6px; }
+  .topic-div {
+    border: 0;
+    border-top: 2px dashed var(--line);
+    margin: 32px 0;
+  }
+  
+  .note-prompt { 
+    background: var(--sky-10); 
+    border: 1px dashed var(--sky); 
+    border-radius: 12px; 
+    padding: 16px; 
+    margin-bottom: 14px; 
+    font-size: 13.5px; 
+    line-height: 1.6; 
+  }
+  .note-prompt b { 
+    color: var(--sky); 
+    font-family:var(--disp); 
+    font-size: 15px; 
+    display:block; 
+    margin-bottom:8px;
+  }
+  
+  .note-block { 
+    background: var(--card); 
+    border: 1px solid var(--line); 
+    border-radius: 12px; 
+    padding: 16px; 
+    margin-bottom: 14px; 
+  }
+  
+  .sub-h {
+    font-family: var(--disp);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 18px 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sub-h:first-child { margin-top: 0; }
+  .sub-h.highlight-text { color: var(--stamp); }
+  
+  .clean-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .clean-list li { margin-bottom: 6px; }
+  
+  .chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .keyword-chip { 
+    display: inline-block; 
+    background: var(--ink); 
+    color: var(--paper); 
+    padding: 5px 10px; 
+    border-radius: 6px; 
+    font-size: 11px; 
+    font-family: var(--mono); 
+  }
+  
+  .summary-box {
+    background: var(--good-10);
+    border: 1px dashed var(--good);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 20px;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .summary-box b { 
+    color: var(--good); 
+    font-family: var(--disp); 
+    font-size: 15px; 
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px; 
   }
 
   /* ===================== CONCEPT CLARITY (chat) ===================== */
@@ -911,7 +1015,6 @@
         <span>●●●</span>
       </div>
 
-      <!-- ===================== LOGIN ===================== -->
       <div class="screen active" id="screen-login">
         <div class="inner">
           <div class="brandmark">DAV <span class="dot"></span>Public School</div>
@@ -934,7 +1037,6 @@
         </div>
       </div>
 
-      <!-- ===================== HOME ===================== -->
       <div class="screen" id="screen-home">
         <div class="inner">
           <div class="home-top">
@@ -1001,7 +1103,6 @@
         </div>
       </div>
 
-      <!-- ===================== CHAPTERS ===================== -->
       <div class="screen" id="screen-chapters">
         <div class="app-header">
           <button class="back" onclick="go('home')">← Back</button>
@@ -1014,6 +1115,7 @@
             <span><i class="dot mid"></i>Getting there</span>
             <span><i class="dot high"></i>Mastered</span>
           </div>
+          
           <div class="chapter-row" onclick="go('modes')">
             <div class="left">
               <div class="chapter-num">06</div>
@@ -1054,14 +1156,24 @@
             </div>
             <div class="mastery-ring">91%</div>
           </div>
+          <div class="chapter-row" onclick="go('notes')">
+            <div class="left">
+              <div class="chapter-num">14</div>
+              <div>
+                <div class="nm">Water: A Precious Resource</div>
+                <div class="sub">Environment · 5 concepts</div>
+              </div>
+            </div>
+            <div class="mastery-ring mid">42%</div>
+          </div>
+
         </div>
       </div>
 
-      <!-- ===================== MODE SELECT ===================== -->
       <div class="screen" id="screen-modes">
         <div class="app-header">
           <button class="back" onclick="go('chapters')">← Back</button>
-          <div class="title">Photosynthesis</div>
+          <div class="title">Chapter Modes</div>
           <div class="spacer"></div>
         </div>
         <div class="inner">
@@ -1072,6 +1184,14 @@
             <div>
               <div class="nm">Revision</div>
               <div class="dsc">Quick recap cards, formulas and memory tricks — for a fast refresh before class.</div>
+            </div>
+          </div>
+
+          <div class="mode-card d" onclick="go('notes')">
+            <div class="ic">📝</div>
+            <div>
+              <div class="nm">Concept Notes</div>
+              <div class="dsc">Clean headings, visual thinking prompts, and simplified textbook notes.</div>
             </div>
           </div>
 
@@ -1093,7 +1213,6 @@
         </div>
       </div>
 
-      <!-- ===================== REVISION ===================== -->
       <div class="screen" id="screen-revision">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
@@ -1130,7 +1249,151 @@
         </div>
       </div>
 
-      <!-- ===================== CONCEPT CLARITY (chat) ===================== -->
+      <div class="screen" id="screen-notes">
+        <div class="app-header">
+          <button class="back" onclick="go('modes')">← Back</button>
+          <div class="title">Concept Notes</div>
+          <div class="spacer"></div>
+        </div>
+        <div class="inner">
+          <div class="eyebrow">Chapter 14</div>
+          <div class="h1" style="margin-bottom: 2px;">Water Pollution</div>
+          <div class="topic-title">🌊 What is Water Pollution?</div>
+          
+          <div class="note-prompt">
+            <b>💭 Think about this...</b>
+            <p style="margin: 0 0 10px 0;">Imagine a beautiful lake after the rainy season. The water is crystal clear.</p>
+            <div style="margin-bottom: 10px; line-height: 1.6;">
+              🐟 Fish are swimming.<br>
+              🦆 Birds are drinking water.<br>
+              👨‍👩‍👧 Families come to enjoy the view.
+            </div>
+            <p style="margin: 0 0 10px 0;">Now imagine people throwing <br>
+🗑 Plastic, 🚽 Sewage, 🧪 Chemicals<br>into the same lake.</p>
+            <p style="margin: 0;">Would you drink that water? Probably not. That clean lake slowly becomes unsafe for fish, animals and even humans. This is called Water Pollution.</p>
+          </div>
+
+          <div class="note-block">
+            <div class="sub-h">📘 Definition</div>
+            <p class="clean-text">Water pollution is the contamination of water bodies due to human activities. It produces physical, chemical and biological changes in water quality and makes water toxic to living organisms.</p>
+            
+            <div class="sub-h">💡 Simple</div>
+            <p class="clean-text" style="margin-bottom:8px;">When harmful substances enter water:</p>
+            <ul class="clean-list">
+              <li>➡️ Water quality changes.</li>
+              <li>➡️ Living organisms become affected.</li>
+              <li>➡️ Humans can also become sick by drinking polluted water.</li>
+            </ul>
+
+            <div class="sub-h highlight-text">🌍 Remember</div>
+            <p class="clean-text">Clean water supports life. Polluted water spreads disease.</p>
+
+            
+            <div class="summary-box">
+              <b>⚡ One-line Summary</b>
+              Human activities → Pollutants → Water pollution → Harm to living organisms
+            </div>
+          </div>
+
+          <hr class="topic-div">
+
+          <div class="topic-title">🛢 Oil Spills</div>
+
+          <div class="note-prompt">
+            <b>💭 Imagine this...</b>
+            <p style="margin: 0 0 10px 0;">Try holding your nose for one minute.</p>
+            <p style="margin: 0 0 10px 0;">😟 Breathing suddenly becomes difficult.</p>
+            <p style="margin: 0;">Marine animals experience something similar during an oil spill.</p>
+          </div>
+
+          <div class="note-block">
+            <div class="sub-h">🌊 What happens?</div>
+            <p class="clean-text" style="margin-bottom:8px;">When oil spreads over the sea, it forms a thin layer on the water surface. This layer:</p>
+            <ul class="clean-list">
+              <li>☀️ blocks sunlight</li>
+              <li>💧 reduces dissolved oxygen</li>
+              <li>🐠 makes it difficult for marine organisms to survive</li>
+            </ul>
+            <p class="clean-text">Some organisms slowly suffocate.</p>
+
+            <div class="sub-h">📘 Textbook Point</div>
+            <p class="clean-text">Oil spills block sunshine, reduce dissolved oxygen and harm aquatic life.</p>
+
+            <div class="sub-h highlight-text">🌍 Real-life Connection</div>
+            <p class="clean-text">One oil tanker accident can affect thousands of marine animals.</p>
+
+          </div>
+
+          <hr class="topic-div">
+
+          <div class="topic-title">🧼 Household Detergents</div>
+
+          <div class="note-prompt">
+            <b>💭 Think about this...</b>
+            <p style="margin: 0 0 10px 0;">You finish washing your clothes. Where does that dirty water go?</p>
+            <p style="margin: 0 0 10px 0;">🚰 Down the drain.</p>
+            <p style="margin: 0;">But the journey doesn't stop there. Many drains finally connect to rivers and lakes. The chemicals from detergents travel with the water. They slowly pollute our water bodies.</p>
+          </div>
+
+          <div class="note-block">
+            <div class="sub-h">📘 Textbook Point</div>
+            <p class="clean-text">Synthetic detergents do not break down easily and pollute surface water and groundwater.</p>
+
+            
+          </div>
+
+          <hr class="topic-div">
+
+          <div class="topic-title">🔬 Microbeads</div>
+
+          <div class="note-prompt">
+            <b>💭 Can you even see them?</b>
+            <p style="margin: 0 0 10px 0;">Microbeads are tiny plastic particles. They're so small that you may not even notice them while using:</p>
+            <div style="margin-bottom: 10px; line-height: 1.6;">
+              🧴 Face wash<br>
+              🪥 Toothpaste<br>
+              🧼 Shower gel<br>
+              🚿 Shampoo
+            </div>
+            <p style="margin: 0;">After washing your face... they go straight into rivers and lakes.</p>
+          </div>
+
+          <div class="note-block">
+            <div class="sub-h">🐟 Then what happens?</div>
+            <p class="clean-text" style="margin-bottom: 8px;">Fish cannot tell the difference between food and plastic. They accidentally eat the microbeads. The plastic stays inside their bodies.</p>
+            <p class="clean-text">Later, bigger fish eat smaller fish. Eventually, these plastics move through the food chain.</p>
+
+            <div class="sub-h">📘 Textbook Point</div>
+            <p class="clean-text">Microbeads pollute water bodies and are accidentally eaten by aquatic organisms.</p>
+
+            
+          </div>
+
+          <hr class="topic-div">
+
+          <div class="topic-title">🌾 Agricultural Activities</div>
+
+          <div class="note-prompt">
+            <b>💭 Imagine a rainy day...</b>
+            <p style="margin: 0 0 10px 0;">A farmer has just sprayed fertilizers and pesticides.</p>
+            <p style="margin: 0 0 10px 0;">Suddenly, 🌧 Heavy rain begins.</p>
+            <p style="margin: 0 0 10px 0;">The rainwater carries these chemicals into nearby rivers and lakes. The water now contains too many nutrients.</p>
+            <p style="margin: 0;">Soon, 🟢 algae begin to grow rapidly. This process is called Eutrophication.</p>
+          </div>
+
+          <div class="note-block">
+            <div class="sub-h">📘 Textbook Point</div>
+            <p class="clean-text">Fertilizers and pesticides increase nitrates and phosphates in water, causing eutrophication.</p>
+
+            
+          </div>
+
+          <div style="margin-top:32px;">
+            <button class="btn-primary" onclick="go('modes')">Mark Chapter as read</button>
+          </div>
+        </div>
+      </div>
+
       <div class="screen" id="screen-concept">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
@@ -1206,7 +1469,6 @@
         </div>
       </div>
 
-      <!-- ===================== CALL MODE (voice, credit-metered) ===================== -->
       <div class="screen" id="screen-call">
         <div class="app-header">
           <button class="back" onclick="go('concept')">← Back to chat</button>
@@ -1241,7 +1503,6 @@
         </div>
       </div>
 
-      <!-- ===================== MCQ ===================== -->
       <div class="screen" id="screen-mcq">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
@@ -1268,7 +1529,6 @@
         </div>
       </div>
 
-      <!-- ===================== SHORT ANSWER ===================== -->
       <div class="screen" id="screen-short">
         <div class="app-header">
           <button class="back" onclick="go('mcq')">← Back</button>
@@ -1328,6 +1588,7 @@
     ]},
     { label:'Study modes', items:[
       {id:'revision', label:'Revision', icon:'⚡'},
+      {id:'notes', label:'Concept Notes', icon:'📝'},
       {id:'concept', label:'Concept Clarity — chat', icon:'💬'},
       {id:'call', label:'Concept Clarity — call', icon:'📞'},
     ]},
@@ -1357,23 +1618,29 @@
 
   function go(id){
     screens.forEach(s=>{
-      document.getElementById('screen-'+s).classList.toggle('active', s===id);
-      document.getElementById('nav-'+s).classList.toggle('active', s===id);
+      const el = document.getElementById('screen-'+s);
+      if (el) el.classList.toggle('active', s===id);
+      const navEl = document.getElementById('nav-'+s);
+      if (navEl) navEl.classList.toggle('active', s===id);
     });
     document.getElementById('stageCaption').textContent = captionOf[id];
     const scr = document.getElementById('screen-'+id);
-    const sc = scr.querySelector('.chat-scroll');
-    if(sc) sc.scrollTop = 0;
-    scr.scrollTop = 0;
+    if(scr) {
+        const sc = scr.querySelector('.chat-scroll');
+        if(sc) sc.scrollTop = 0;
+        scr.scrollTop = 0;
+    }
   }
-  go('login');
+  go('login'); // Keeping login as the starting screen for the demo flow!
 
   // waveform bars
   const wf = document.getElementById('waveform');
-  for(let i=0;i<28;i++){
-    const bar = document.createElement('span');
-    bar.style.height = (6 + Math.random()*28) + 'px';
-    wf.appendChild(bar);
+  if(wf) {
+    for(let i=0;i<28;i++){
+      const bar = document.createElement('span');
+      bar.style.height = (6 + Math.random()*28) + 'px';
+      wf.appendChild(bar);
+    }
   }
   // call-screen waveform
   const cwf = document.querySelector('.call-waveform');
