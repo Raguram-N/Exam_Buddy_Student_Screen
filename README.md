@@ -104,8 +104,6 @@ Generate
 Study Complete
 ```
 
----
-
 ## Example Selected topic: Water Pollution
 
 ### Our concept notes
@@ -318,7 +316,6 @@ D. Hydrogen
 
 Plants absorb carbon dioxide from the atmosphere through stomata to prepare glucose during photosynthesis.
 
----
 
 ## Short Answer
 
