@@ -23,7 +23,8 @@ Select Mode
   │
   ├──────────────┬──────────────────┬───────────────┬
   ▼              ▼                  ▼               ▼
-Revision    Concept Notes    Concept Clarity   Knowledge Tester
+Revision Mode    Concept Notes    Concept Clarity   Knowledge Tester
+(Offline)        (Offline)          (Online)            (Online)
 ```
 
 ---
