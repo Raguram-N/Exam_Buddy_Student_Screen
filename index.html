@@ -91,6 +91,12 @@
   .app-header .back{ font-family:var(--mono); font-size:12px; color:var(--ink-70); display:flex; align-items:center; gap:5px; cursor:pointer; background:none; border:none; padding:4px 0; }
   .app-header .title{ font-family:var(--disp); font-weight:600; font-size:17px; }
   .app-header .spacer{width:40px;}
+  .header-action-btn { 
+    background: transparent; border: 1.5px solid var(--line); color: var(--ink); font-family: var(--body); 
+    font-weight: 600; font-size: 11.5px; padding: 5px 10px; border-radius: 999px; cursor: pointer; 
+    display: flex; align-items: center; gap: 4px; transition: border-color 0.15s ease, background 0.15s ease; 
+  }
+  .header-action-btn:hover { border-color: var(--ink); background: var(--card); }
   .eyebrow{ font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--stamp); }
   .h1{ font-family:var(--disp); font-weight:600; font-size:26px; line-height:1.15; margin:4px 0 0; }
   .h2{ font-family:var(--disp); font-weight:600; font-size:19px; margin:0 0 2px; }
@@ -170,28 +176,34 @@
   .mode-card .nm{font-family:var(--disp); font-weight:600; font-size:16px;}
   .mode-card .dsc{font-size:12.5px; color:var(--ink-70); margin-top:3px; line-height:1.4;}
   #screen-revision .inner{padding:0 20px 26px;}
+  
+  /* Classic, Premium Bulleting */
+  .clean-list { list-style: none; padding-left: 18px; margin: 0 0 16px 0; font-size: 13.5px; line-height: 1.6; }
+  .clean-list li { margin-bottom: 10px; position: relative; }
+  .clean-list > li::before { content: '•'; position: absolute; left: -18px; color: var(--stamp); font-weight: bold; font-size: 16px; top: -1px; }
+  .clean-list li ul { list-style: none; padding-left: 20px; margin-top: 8px; margin-bottom: 4px; }
+  .clean-list li ul > li::before { content: '◦'; position: absolute; left: -16px; color: var(--ink-45); font-weight: bold; font-size: 14px; top: 0px; }
+  
   .recap-list{list-style:none; margin:10px 0 0; padding:0;}
   .recap-list li{ display:flex; gap:10px; font-size:14px; line-height:1.55; padding:9px 0; border-bottom:1px solid var(--line); }
   .recap-list li:last-child{border-bottom:none;}
   .recap-list li::before{ content:'✓'; color:var(--good); font-weight:700; flex:none; }
+  
   .formula-box{ margin-top:14px; background:var(--ink); color:var(--highlight); border-radius:12px; padding:18px; font-family:var(--mono); font-size:13px; text-align:center; line-height:2; }
   .formula-box .op{color:var(--paper); opacity:.5; display:block;}
   .mnemonic-card{ margin-top:14px; background:var(--highlight); border-radius:12px; padding:16px 18px; position:relative; transform:rotate(-1deg); }
   .mnemonic-card .tag{ font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-70); }
   .mnemonic-card p{ font-family:var(--hand); font-size:23px; margin:4px 0 0; line-height:1.3; color:var(--ink); }
-  #screen-notes .inner{padding:0 20px 100px;}
+  #screen-notes .inner{padding:0 20px 40px;}
   .topic-title { font-family: var(--disp); font-weight: 600; font-size: 19px; margin: 32px 0 14px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
   .topic-title:first-of-type { margin-top: 6px; }
   .topic-div { border: 0; border-top: 2px dashed var(--line); margin: 32px 0; }
   .note-prompt { background: var(--sky-10); border: 1px dashed var(--sky); border-radius: 12px; padding: 16px; margin-bottom: 14px; font-size: 13.5px; line-height: 1.6; }
   .note-prompt b { color: var(--sky); font-family:var(--disp); font-size: 15px; display:block; margin-bottom:8px; }
-  .note-block { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
-  .sub-h { font-family: var(--disp); font-size: 15px; font-weight: 600; color: var(--ink); margin: 18px 0 6px; display: flex; align-items: center; gap: 6px; }
+  .note-block { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 16px; margin-bottom: 14px; }
+  .sub-h { font-family: var(--disp); font-size: 16px; font-weight: 600; color: var(--ink); margin: 18px 0 10px; display: flex; align-items: center; gap: 6px; }
   .sub-h:first-child { margin-top: 0; }
   .sub-h.highlight-text { color: var(--stamp); }
-  .clean-text { font-size: 13.5px; line-height: 1.6; margin: 0; }
-  .clean-list { list-style: none; padding: 0; margin: 0 0 12px 0; font-size: 13.5px; line-height: 1.6; }
-  .clean-list li { margin-bottom: 6px; }
   .chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .keyword-chip { display: inline-block; background: var(--ink); color: var(--paper); padding: 5px 10px; border-radius: 6px; font-size: 11px; font-family: var(--mono); }
   .summary-box { background: var(--good-10); border: 1px dashed var(--good); border-radius: 10px; padding: 14px; margin-top: 20px; font-size: 13.5px; line-height: 1.5; }
@@ -228,8 +240,7 @@
   .bubble.ai.nudge{border-color:var(--stamp); background:var(--card);}
   .chat-input-row .fake-input.editable{color:var(--ink);}
   .send-btn{ width:42px;height:42px;border-radius:50%; background:var(--stamp); color:#fff; display:flex;align-items:center;justify-content:center; flex:none; cursor:pointer; border:none; font-size:15px; }
-  .fab-ask { position: absolute; bottom: 24px; right: 20px; background: var(--ink); color: var(--paper); border: none; padding: 12px 18px; border-radius: 999px; font-family: var(--body); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; box-shadow: 0 8px 24px rgba(27,42,74, .25); cursor: pointer; z-index: 100; transition: transform 0.2s ease, opacity 0.2s ease; }
-  .fab-ask:hover { transform: translateY(-2px); }
+  
   .overlay-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; border-radius: 0 0 30px 30px; }
   .overlay-backdrop.active { opacity: 1; pointer-events: auto; }
   .bottom-sheet { position: absolute; left: 0; right: 0; bottom: 0; height: 65%; background: var(--paper); border-radius: 24px 24px 30px 30px; z-index: 210; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1); display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.15); }
@@ -238,6 +249,7 @@
   .sheet-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px 14px; border-bottom: 1px solid var(--line); }
   .sheet-title { font-family: var(--disp); font-weight: 600; font-size: 17px; }
   .sheet-close { background: transparent; border: none; font-size: 18px; color: var(--ink-45); cursor: pointer; padding: 4px; }
+  
   .teacher-strip{ margin-top:10px; display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--ink); border-radius:10px; padding:10px 12px; font-size:12.5px; }
   .teacher-strip .tavatar{ width:26px;height:26px;border-radius:50%; background:var(--ink); color:var(--paper); display:flex;align-items:center;justify-content:center; font-family:var(--disp); font-size:11px; font-weight:600; flex:none; }
   .teacher-strip .ttag{ font-family:var(--mono); font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-45); display:block; margin-bottom:1px; }
@@ -281,6 +293,23 @@
   .missing-note{margin-top:12px; background:var(--stamp-10); border:1px dashed var(--stamp); border-radius:10px; padding:12px 14px; font-size:12.5px; line-height:1.55;}
   .missing-note b{color:var(--stamp);}
 
+  /* ===================== REVISION anchor highlight (auto-scroll landing) ===================== */
+  .rev-anchor{ scroll-margin-top:14px; border-radius:8px; transition:background .5s ease; }
+  .rev-anchor.flash{ background:var(--highlight); padding:4px 8px; margin-left:-8px; }
+
+  /* ===================== CONCEPT NOTES pager (swipeable single-topic view) ===================== */
+  #screen-notes .inner{padding:0 20px 20px; display:flex; flex-direction:column; height:calc(100% - 40px);}
+  .notes-pager{ display:flex; flex-direction:column; height:100%; min-height:0; }
+  .notes-pager-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; padding-top:2px; }
+  .notes-dots{ display:flex; gap:5px; padding-top:8px; flex:none; }
+  .notes-dots .dot{ width:6px; height:6px; border-radius:50%; background:var(--line); }
+  .notes-dots .dot.active{ background:var(--stamp); width:16px; border-radius:3px; }
+  .notes-slide-wrap{ flex:1; min-height:0; overflow-y:auto; margin-top:14px; -ms-overflow-style:none; scrollbar-width:none; padding-bottom: 24px;}
+  .notes-slide-wrap::-webkit-scrollbar{display:none;}
+  .notes-slide{ animation:notesFadeIn .22s ease; padding-bottom:16px; }
+  @keyframes notesFadeIn{ from{opacity:0; transform:translateX(8px);} to{opacity:1; transform:translateX(0);} }
+  .notes-slide .topic-title{ margin-top:6px; }
+
   /* ===================== TOPICS (new screen) ===================== */
   #screen-topics .inner{padding:0 20px 24px;}
   .topic-row{
@@ -317,7 +346,6 @@
         <span>●●●</span>
       </div>
 
-      <!-- ===================== LOGIN ===================== -->
       <div class="screen active" id="screen-login">
         <div class="inner">
           <div class="brandmark">DAV <span class="dot"></span>Public School</div>
@@ -340,7 +368,6 @@
         </div>
       </div>
 
-      <!-- ===================== HOME ===================== -->
       <div class="screen" id="screen-home">
         <div class="inner">
           <div class="home-top">
@@ -366,14 +393,14 @@
 
           <div class="notif-strip">
             <div class="dot-red"></div>
-            <div><b>Force and Pressure</b> chapter test is due tomorrow — revise today to stay ahead.</div>
+            <div><b>Measurement</b> chapter test is due tomorrow — revise today to stay ahead.</div>
           </div>
 
           <div class="teacher-strip" onclick="go('chapters')">
             <div class="tavatar">P</div>
             <div>
               <span class="ttag">Assigned by Ms. Priya</span>
-              <div><b>Concept Clarity</b> — Chapter 2: Force and Pressure, due by Friday</div>
+              <div><b>Revision</b> — Chapter 1: Measurement, due by Friday</div>
             </div>
           </div>
 
@@ -407,7 +434,6 @@
         </div>
       </div>
 
-      <!-- ===================== CHAPTERS ===================== -->
       <div class="screen" id="screen-chapters">
         <div class="app-header">
           <button class="back" onclick="go('home')">← Back</button>
@@ -424,7 +450,6 @@
         </div>
       </div>
 
-      <!-- ===================== TOPICS (new, sits between Chapters and Mode select) ===================== -->
       <div class="screen" id="screen-topics">
         <div class="app-header">
           <button class="back" onclick="go('chapters')">← Back</button>
@@ -438,7 +463,6 @@
         </div>
       </div>
 
-      <!-- ===================== MODE SELECT ===================== -->
       <div class="screen" id="screen-modes">
         <div class="app-header">
           <button class="back" onclick="go('topics')">← Back</button>
@@ -482,183 +506,218 @@
         </div>
       </div>
 
-      <!-- ===================== REVISION ===================== -->
       <div class="screen" id="screen-revision">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
           <div class="title">Revision</div>
-          <div class="spacer"></div>
+          <button class="header-action-btn" onclick="toggleDoubtPanel(true)">🤔 Ask</button>
         </div>
         <div class="inner">
-          <div class="eyebrow">Photosynthesis in Plants</div>
-          <div class="h1">Quick recap</div>
+          <div class="eyebrow">Chapter 1</div>
+          <div class="h1" style="margin-bottom:2px;">Measurement</div>
+          <div class="muted" style="margin-top:4px;">Topic-wise quick recap</div>
 
+          <div class="topic-title" style="margin-top:26px;">📏 Introduction · What is Measurement?</div>
           <ul class="recap-list">
-            <li>Photosynthesis is the process by which green plants prepare their own food.</li>
-            <li>Chlorophyll in the leaves traps sunlight energy.</li>
-            <li>Carbon dioxide enters the leaf through tiny pores called stomata.</li>
-            <li>Water is absorbed from the soil by the roots.</li>
-            <li>The process produces glucose for the plant and releases oxygen.</li>
+            <li>Measurement = comparing an unknown quantity with a known standard quantity of the same kind.</li>
+            <li>Without measurement, words like "far", "some", "hot" create confusion.</li>
+            <li>Ancient units like foot, cubit varied person to person — standard units were needed.</li>
           </ul>
-
-          <div class="section-lab" style="margin-top:20px;">Formula</div>
+          <div class="section-lab" style="margin-top:16px;">Formula</div>
           <div class="formula-box">
-            Carbon Dioxide + Water + Sunlight
-            <span class="op">↓</span>
-            Glucose + Oxygen
+            Physical Quantity
+            <span class="op">=</span>
+            Numerical Value × Unit
           </div>
-
           <div class="mnemonic-card">
             <div class="tag">Memory trick</div>
-            <p>"Sun + Water + CO₂ = Glucose + O₂" 
-              <div class="sub-h highlight-text">Glucose = plant food</div>
-</p>
+            <p>"No Unit = No Meaning"<br><span style="font-family:var(--body); font-size:12.5px; color:var(--ink-70);">10 means nothing. 10 m, 10 kg makes sense.</span></p>
           </div>
 
-          
+          <hr class="topic-div">
+
+          <div class="topic-title rev-anchor" id="rev-t0">⚖️ 1.1 Unit Systems</div>
+          <ul class="recap-list">
+            <li>Old systems created confusion because each country used different units.</li>
+            <li><b>CGS</b> — Centimetre, Gram, Second — used in small science work.</li>
+            <li><b>FPS</b> — Foot, Pound, Second — used in Britain/USA earlier.</li>
+            <li><b>MKS</b> — Metre, Kilogram, Second — basis for SI.</li>
+            <li><b>SI</b> — improved MKS, accepted worldwide now.</li>
+          </ul>
+          <div class="mnemonic-card">
+            <div class="tag">Memory trick</div>
+            <p>"Come From My School"<br><span style="font-family:var(--body); font-size:12.5px; color:var(--ink-70);">CGS, FPS, MKS, SI</span></p>
+          </div>
+          <div class="summary-box">
+            <b>🌍 Key Point</b>
+            SI solved confusion in trade and science worldwide.
+          </div>
+
+          <hr class="topic-div">
+
+          <div class="topic-title rev-anchor" id="rev-t1">🌐 1.2 International System of Units (SI)</div>
+          <ul class="recap-list">
+            <li>Adopted in 1960 by the 11th General Conference on Weights and Measures.</li>
+            <li>One common system for all countries — no conversion needed.</li>
+            <li>Structure: 7 Base Quantities + 7 Base Units + 2 Supplementary Units.</li>
+            <li>All other units like area (m²), speed (m/s) are derived from these 7.</li>
+          </ul>
+          <div class="mnemonic-card">
+            <div class="tag">Memory trick</div>
+            <p>"Mr. K Sat At Kerala Mall Calmly"<br><span style="font-family:var(--body); font-size:12.5px; color:var(--ink-70);">Metre, Kg, Second, Ampere, Kelvin, Mole, Candela</span></p>
+          </div>
+
+          <div class="sub-h" style="margin-top:22px;">1.2.1 Temperature</div>
+          <ul class="recap-list">
+            <li>SI unit = kelvin (K). No degree symbol.</li>
+            <li>0 K = −273.15°C = Absolute Zero = no heat at all.</li>
+            <li>Used in science and space; daily life uses °C.</li>
+          </ul>
+          <div class="formula-box">
+            K
+            <span class="op">=</span>
+            °C + 273.15
+          </div>
+          <div class="mnemonic-card">
+            <div class="tag">Memory trick</div>
+            <p>"Kelvin starts from 273"<br><span style="font-family:var(--body); font-size:12.5px; color:var(--ink-70);">Body temp 37°C = 310.15 K</span></p>
+          </div>
+
+          <div class="sub-h" style="margin-top:22px;">1.2.2 Electric Current (I)</div>
+          <ul class="recap-list">
+            <li>SI unit = ampere (A), named after André-Marie Ampère.</li>
+            <li>1 A = 1 coulomb of charge flowing per second.</li>
+            <li>Examples: phone charger ≈ 2 A, house MCB = 5 A or 15 A.</li>
+          </ul>
+
+          <div class="sub-h" style="margin-top:22px;">1.2.3 Amount of Substance</div>
+          <ul class="recap-list">
+            <li>SI unit = mole (mol).</li>
+            <li>1 mole = 6.022 × 10²³ particles = Avogadro Number.</li>
+            <li>Like 1 dozen = 12, 1 mole = 6.022 × 10²³ atoms/molecules.</li>
+          </ul>
+
+          <div class="sub-h" style="margin-top:22px;">1.2.4 Luminous Intensity</div>
+          <ul class="recap-list">
+            <li>SI unit = candela (cd) — measures "brightness" of a light source.</li>
+            <li>1 cd ≈ brightness of one common wax candle.</li>
+            <li>Examples: mobile torch ≈ 40 cd, car headlight ≈ 1,00,000 cd.</li>
+          </ul>
+
+          <div class="sub-h" style="margin-top:22px;">1.2.5 Plane Angle</div>
+          <ul class="recap-list">
+            <li>Unit = radian (rad) — a supplementary unit.</li>
+            <li>1 rad = angle when arc length equals the radius of a circle.</li>
+            <li>Full circle = 2π rad = 360° → 1 rad ≈ 57.3°.</li>
+          </ul>
+
+          <div class="sub-h" style="margin-top:22px;">1.2.6 Solid Angle</div>
+          <ul class="recap-list">
+            <li>Unit = steradian (sr) — a supplementary unit.</li>
+            <li>3D angle made at the centre of a sphere, like a cone of torch light.</li>
+            <li>Full sphere = 4π sr.</li>
+          </ul>
+
+          <hr class="topic-div">
+
+          <div class="topic-title rev-anchor" id="rev-t2">⏰ 1.3 Clocks</div>
+          <ul class="recap-list">
+            <li>Device to measure time intervals accurately.</li>
+            <li><b>Sundial</b> — uses sun's shadow, fails at night.</li>
+            <li><b>Water/Sand clock</b> — measures flow of water/sand.</li>
+            <li><b>Pendulum clock</b> — pendulum swings once per second.</li>
+            <li><b>Quartz clock</b> — quartz crystal vibrates 32,768 times/sec; used in wall clocks.</li>
+            <li><b>Atomic clock</b> — counts Cesium-133 atom vibrations; most accurate (error = 1 s in 3 lakh years).</li>
+          </ul>
+          <div class="summary-box">
+            <b>🛰️ Key Point</b>
+            GPS and ISRO satellites use atomic clocks — a 0.001 s error means a 300 km location error.
+          </div>
+
+          <div class="sub-h" style="margin-top:22px;">1.3.1 Types of Clock — By Display</div>
+          <ul class="recap-list">
+            <li><b>Analog</b> — circular dial, 3 hands, angle tells time. Ex: school wall clock.</li>
+            <li><b>Digital</b> — LED/LCD display, 24-hour or 12-hour format. Ex: mobile, microwave.</li>
+          </ul>
+
+          <div class="sub-h" style="margin-top:22px;">1.3.2 Types of Clock — By Mechanism</div>
+          <ul class="recap-list">
+            <li><b>Quartz</b> — battery makes quartz vibrate → very accurate for daily use.</li>
+            <li><b>Atomic</b> — uses atom vibrations → super accurate for science, GPS.</li>
+          </ul>
+
+          <hr class="topic-div">
+
+          <div class="topic-title rev-anchor" id="rev-t3">🎯 1.4 Accuracy in Measurements</div>
+          <ul class="recap-list">
+            <li>Accuracy = how close a measured value is to the true value.</li>
+            <li>Least Count = smallest value an instrument can measure — scale 0.1 cm, vernier 0.01 cm, screw gauge 0.001 cm.</li>
+            <li><b>Zero Error</b> — 0 mark worn out, so all readings go wrong.</li>
+            <li><b>Parallax Error</b> — seeing the scale from an angle gives a wrong reading; eye must be vertical to the mark.</li>
+          </ul>
+          <div class="summary-box">
+            <b>⚡ To increase accuracy</b>
+            Use a better instrument, take the average of many readings, and avoid parallax.
+          </div>
+
+          <hr class="topic-div">
+
+          <div class="topic-title rev-anchor" id="rev-t4">🔢 1.5 Approximation</div>
+          <ul class="recap-list">
+            <li>Writing a number to the nearest 10, 100, or 1000 for fast calculation.</li>
+            <li>Not exact, but useful for estimates — e.g. budget planning, mental maths, big data.</li>
+            <li>Examples: 8274 ≈ 8000, 63 ≈ 60, population ≈ 1 crore.</li>
+          </ul>
+
+          <hr class="topic-div">
+
+          <div class="topic-title rev-anchor" id="rev-t5">➗ 1.6 Rounding Off</div>
+          <ul class="recap-list">
+            <li>Reducing digits after the decimal to match instrument accuracy.</li>
+            <li>Example: 22 ÷ 7 = 3.142857… — we can't write all the digits, so we round off.</li>
+          </ul>
+
+          <div class="sub-h" style="margin-top:22px;">1.6.1 Rules for Rounding Off</div>
+          <ul class="recap-list">
+            <li>Rule 1 — dropped digit &lt; 5 → keep last digit same. 7.32 → 7.3</li>
+            <li>Rule 2 — dropped digit &gt; 5 → add 1 to last digit. 7.36 → 7.4</li>
+            <li>Rule 3 — dropped digit = 5 → if last digit even, keep same (7.25 → 7.2); if odd, add 1 (7.35 → 7.4).</li>
+          </ul>
+          <div class="mnemonic-card">
+            <div class="tag">Memory trick</div>
+            <p>"5 wants an Even friend"<br><span style="font-family:var(--body); font-size:12.5px; color:var(--ink-70);">5 rounds so the last digit becomes even.</span></p>
+          </div>
+          <div class="summary-box">
+            <b>📘 Key Point</b>
+            Always check how many decimal places the question asks for before rounding.
+          </div>
+
         </div>
       </div>
 
-      <!-- ===================== CONCEPT NOTES (Water Pollution) ===================== -->
       <div class="screen" id="screen-notes">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
           <div class="title">Concept Notes</div>
-          <div class="spacer"></div>
+          <button class="header-action-btn" onclick="toggleDoubtPanel(true)">🤔 Ask Buddy</button>
         </div>
         <div class="inner">
-          <div class="eyebrow">Chapter 14</div>
-          <div class="h1" style="margin-bottom: 2px;">Water Pollution</div>
-          
-          <!-- Example 1: Water Pollution -->
-          <div class="topic-title">🌊 What is Water Pollution?</div>
-          <div class="note-prompt">
-            <b>💭 Think about this...</b>
-            <p style="margin: 0 0 10px 0;">Imagine a beautiful lake after the rainy season. The water is crystal clear.</p>
-            <div style="margin-bottom: 10px; line-height: 1.6;">
-              🐟 Fish are swimming.<br>
-              🦆 Birds are drinking water.<br>
-              👨‍👩‍👧 Families come to enjoy the view.
+          <div class="notes-pager">
+            <div class="notes-pager-top">
+              <div>
+                <div class="eyebrow" id="notesEyebrow">Chapter 1</div>
+                <div class="h1" id="notesTopicTitle" style="margin-bottom:2px;">Topic</div>
+              </div>
+              <div class="notes-dots" id="notesDots"></div>
             </div>
-            <p style="margin: 0 0 10px 0;">Now imagine people throwing <br>
-🗑 Plastic, 🚽 Sewage, 🧪 Chemicals<br>into the same lake.</p>
-            <p style="margin: 0;">Would you drink that water? Probably not. That clean lake slowly becomes unsafe for fish, animals and even humans. This is called Water Pollution.</p>
-          </div>
 
-          <div class="note-block">
-            <div class="sub-h">📘 Definition</div>
-            <p class="clean-text">Water pollution is the contamination of water bodies due to human activities. It produces physical, chemical and biological changes in water quality and makes water toxic to living organisms.</p>
-            
-            <div class="sub-h">💡 Simple</div>
-            <p class="clean-text" style="margin-bottom:8px;">When harmful substances enter water:</p>
-            <ul class="clean-list">
-              <li>➡️ Water quality changes.</li>
-              <li>➡️ Living organisms become affected.</li>
-              <li>➡️ Humans can also become sick by drinking polluted water.</li>
-            </ul>
-
-            <div class="sub-h highlight-text">🌍 Remember</div>
-            <p class="clean-text">Clean water supports life. Polluted water spreads disease.</p>
-            
-            <div class="summary-box">
-              <b>⚡ One-line Summary</b>
-              Human activities → Pollutants → Water pollution → Harm to living organisms
+            <div class="notes-slide-wrap" id="notesSlideWrap">
+              <div class="notes-slide" id="notesSlide"></div>
             </div>
-          </div>
-
-          <hr class="topic-div">
-
-          <!-- Example 2: Oil Spills -->
-          <div class="topic-title">🛢 Oil Spills</div>
-          <div class="note-prompt">
-            <b>💭 Imagine this...</b>
-            <p style="margin: 0 0 10px 0;">Try holding your nose for one minute.</p>
-            <p style="margin: 0 0 10px 0;">😟 Breathing suddenly becomes difficult.</p>
-            <p style="margin: 0;">Marine animals experience something similar during an oil spill.</p>
-          </div>
-
-          <div class="note-block">
-            <div class="sub-h">🌊 What happens?</div>
-            <p class="clean-text" style="margin-bottom:8px;">When oil spreads over the sea, it forms a thin layer on the water surface. This layer:</p>
-            <ul class="clean-list">
-              <li>☀️ blocks sunlight</li>
-              <li>💧 reduces dissolved oxygen</li>
-              <li>🐠 makes it difficult for marine organisms to survive</li>
-            </ul>
-            <p class="clean-text">Some organisms slowly suffocate.</p>
-
-            <div class="sub-h">📘 Textbook Point</div>
-            <p class="clean-text">Oil spills block sunshine, reduce dissolved oxygen and harm aquatic life.</p>
-
-            <div class="sub-h highlight-text">🌍 Real-life Connection</div>
-            <p class="clean-text">One oil tanker accident can affect thousands of marine animals.</p>
-          </div>
-
-          <hr class="topic-div">
-
-          <!-- Example 3: Household Detergents -->
-          <div class="topic-title">🧼 Household Detergents</div>
-          <div class="note-prompt">
-            <b>💭 Think about this...</b>
-            <p style="margin: 0 0 10px 0;">You finish washing your clothes. Where does that dirty water go?</p>
-            <p style="margin: 0 0 10px 0;">🚰 Down the drain.</p>
-            <p style="margin: 0;">But the journey doesn't stop there. Many drains finally connect to rivers and lakes. The chemicals from detergents travel with the water. They slowly pollute our water bodies.</p>
-          </div>
-
-          <div class="note-block">
-            <div class="sub-h">📘 Textbook Point</div>
-            <p class="clean-text">Synthetic detergents do not break down easily and pollute surface water and groundwater.</p>
-          </div>
-
-          <hr class="topic-div">
-
-          <!-- Example 4: Microbeads -->
-          <div class="topic-title">🔬 Microbeads</div>
-          <div class="note-prompt">
-            <b>💭 Can you even see them?</b>
-            <p style="margin: 0 0 10px 0;">Microbeads are tiny plastic particles. They're so small that you may not even notice them while using:</p>
-            <div style="margin-bottom: 10px; line-height: 1.6;">
-              🧴 Face wash<br>
-              🪥 Toothpaste<br>
-              🧼 Shower gel<br>
-              🚿 Shampoo
-            </div>
-            <p style="margin: 0;">After washing your face... they go straight into rivers and lakes.</p>
-          </div>
-
-          <div class="note-block">
-            <div class="sub-h">🐟 Then what happens?</div>
-            <p class="clean-text" style="margin-bottom: 8px;">Fish cannot tell the difference between food and plastic. They accidentally eat the microbeads. The plastic stays inside their bodies.</p>
-            <p class="clean-text">Later, bigger fish eat smaller fish. Eventually, these plastics move through the food chain.</p>
-
-            <div class="sub-h">📘 Textbook Point</div>
-            <p class="clean-text">Microbeads pollute water bodies and are accidentally eaten by aquatic organisms.</p>
-          </div>
-
-          <hr class="topic-div">
-
-          <!-- Example 5: Agricultural Activities -->
-          <div class="topic-title">🌾 Agricultural Activities</div>
-          <div class="note-prompt">
-            <b>💭 Imagine a rainy day...</b>
-            <p style="margin: 0 0 10px 0;">A farmer has just sprayed fertilizers and pesticides.</p>
-            <p style="margin: 0 0 10px 0;">Suddenly, 🌧 Heavy rain begins.</p>
-            <p style="margin: 0 0 10px 0;">The rainwater carries these chemicals into nearby rivers and lakes. The water now contains too many nutrients.</p>
-            <p style="margin: 0;">Soon, 🟢 algae begin to grow rapidly. This process is called Eutrophication.</p>
-          </div>
-
-          <div class="note-block">
-            <div class="sub-h">📘 Textbook Point</div>
-            <p class="clean-text">Fertilizers and pesticides increase nitrates and phosphates in water, causing eutrophication.</p>
-          </div>
-
-          <div style="margin-top:32px;">
-            <button class="btn-primary" onclick="go('modes')">Mark Chapter as read</button>
           </div>
         </div>
       </div>
 
-      <!-- ===================== CONCEPT CLARITY (chat) ===================== -->
       <div class="screen" id="screen-concept">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
@@ -734,7 +793,6 @@
         </div>
       </div>
 
-      <!-- ===================== CALL MODE (voice, credit-metered) ===================== -->
       <div class="screen" id="screen-call">
         <div class="app-header">
           <button class="back" onclick="go('concept')">← Back to chat</button>
@@ -769,7 +827,6 @@
         </div>
       </div>
 
-      <!-- ===================== MCQ ===================== -->
       <div class="screen" id="screen-mcq">
         <div class="app-header">
           <button class="back" onclick="go('modes')">← Back</button>
@@ -796,7 +853,6 @@
         </div>
       </div>
 
-      <!-- ===================== SHORT ANSWER ===================== -->
       <div class="screen" id="screen-short">
         <div class="app-header">
           <button class="back" onclick="go('mcq')">← Back</button>
@@ -838,12 +894,6 @@
         </div>
       </div>
 
-      <!-- ===================== FLOATING "ASK BUDDY" BUTTON ===================== -->
-      <button class="fab-ask" id="fab-ask" onclick="toggleDoubtPanel(true)" style="display: none;">
-        🤔 Ask Buddy
-      </button>
-
-      <!-- ===================== ASK BUDDY BOTTOM SHEET ===================== -->
       <div class="overlay-backdrop" id="doubt-backdrop" onclick="toggleDoubtPanel(false)"></div>
       <div class="bottom-sheet" id="doubt-panel">
         <div class="sheet-handle"></div>
@@ -949,6 +999,423 @@
   ];
 
   let activeChapterIdx = 0;
+  let activeTopicIdx = 0;
+
+  /* ================= CONCEPT NOTES DATA — Bulleted Hierarchy Updates ================= */
+  const notesData = {
+    0: { num:'1.1', title:'Unit Systems', html:`
+      <div class="topic-title">📏 What is Measurement?</div>
+      <div class="note-prompt">
+        <b>💭 Think about this...</b>
+        <ul class="clean-list">
+          <li>Imagine going to a tailor:
+            <ul>
+              <li>Asking for "some" cloth creates confusion.</li>
+              <li>Asking for "2 metres" gives exact, clear requirements.</li>
+            </ul>
+          </li>
+          <li>Measurement is essential. Without it, everyday processes like trade, science, and cooking fail entirely.</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <div class="sub-h">📘 Definition</div>
+        <ul class="clean-list">
+          <li><b>Measurement</b> is a fundamental process of comparison:
+            <ul>
+              <li>It takes an unknown physical quantity.</li>
+              <li>It compares it with a known, standard quantity of the same kind.</li>
+              <li>This standardized quantity is called the <b>unit</b>.</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="sub-h">💡 Core Components</div>
+        <ul class="clean-list">
+          <li><b>Physical Quantity:</b> Anything we can physically measure (e.g., length, mass, time, temperature).</li>
+          <li><b>Unit:</b> A fixed standard amount that everyone globally agrees on (e.g., metre, kilogram).</li>
+          <li><b>Numerical Value:</b> Denotes how many times the unit fits into the physical quantity.</li>
+        </ul>
+        <div class="sub-h highlight-text">🌍 The Need for Standards</div>
+        <ul class="clean-list">
+          <li>Historically, measurement units varied significantly from person to person:
+            <ul>
+              <li><b>Cubit:</b> Length from the elbow to the fingertip.</li>
+              <li><b>Foot:</b> The physical length of the ruling monarch's foot.</li>
+              <li><b>Handspan:</b> The width of an outstretched palm.</li>
+            </ul>
+          </li>
+          <li>These inconsistencies caused errors, cheating in trade, and scientific miscalculations.</li>
+          <li>Therefore, standardized units were strictly fixed by law, making them identical for everyone globally.</li>
+        </ul>
+        <div class="summary-box">
+          <b>⚡ One-line Summary</b>
+          Physical Quantity = n × u, where 'n' represents the numerical value and 'u' represents the unit.
+        </div>
+      </div>
+
+      <hr class="topic-div">
+
+      <div class="topic-title">⚖️ 1.1 Unit Systems</div>
+      <div class="note-prompt">
+        <b>💭 Historical Context</b>
+        <ul class="clean-list">
+          <li>In the past, different countries developed entirely distinct measurement systems.</li>
+          <li>This acted much like having different languages, causing confusion in international trade.</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <div class="sub-h">📘 4 Main Systems of Units</div>
+        <ul class="clean-list">
+          <li><b>CGS System:</b>
+            <ul>
+              <li>Stands for Centimetre, Gram, Second.</li>
+              <li>Primarily used for very small scientific measurements.</li>
+            </ul>
+          </li>
+          <li><b>FPS System:</b>
+            <ul>
+              <li>Stands for Foot, Pound, Second.</li>
+              <li>Historically used for engineering in Britain and the USA.</li>
+            </ul>
+          </li>
+          <li><b>MKS System:</b>
+            <ul>
+              <li>Stands for Metre, Kilogram, Second.</li>
+              <li>Served as the early foundation for the modern metric system.</li>
+            </ul>
+          </li>
+          <li><b>SI System:</b>
+            <ul>
+              <li>Modern advancement of the MKS system.</li>
+              <li>Adopted globally as the universal modern standard today.</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="sub-h highlight-text">🌍 Real-life connection</div>
+        <ul class="clean-list">
+          <li>Your 30 cm school ruler uses the <b>CGS</b> framework.</li>
+          <li>Calculating your height as 1.5 m falls under <b>MKS/SI</b>.</li>
+          <li>Calling someone a "6 foot tall hero" relies on the <b>FPS</b> system.</li>
+        </ul>
+      </div>
+      <div class="mnemonic-card">
+        <div class="tag">Memory trick</div>
+        <p>"Come From My School"<br><span style="font-family:var(--body); font-size:12.5px; color:var(--ink-70);">CGS, FPS, MKS, SI</span></p>
+      </div>
+    `},
+
+    1: { num:'1.2', title:'International System of Units (SI)', html:`
+      <div class="topic-title">🌐 1.2 International System of Units (SI)</div>
+      <div class="note-prompt">
+        <b>💭 Why SI Was Needed</b>
+        <ul class="clean-list">
+          <li>Imagine a scenario where ISRO tries to collaborate with NASA:
+            <ul>
+              <li>ISRO reports a rocket length as "1000 gaz".</li>
+              <li>NASA doesn't comprehend what a "gaz" is, causing the mission to fail.</li>
+            </ul>
+          </li>
+          <li>To prevent this, scientists globally agreed on one universal system in 1960.</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <div class="sub-h">📘 The SI Framework</div>
+        <ul class="clean-list">
+          <li><b>Origin:</b> "Système International d'Unités" (French for International System of Units).</li>
+          <li><b>Structure:</b> It is comprised of strictly 7 Base Quantities and 2 Supplementary Quantities.</li>
+        </ul>
+        <div class="sub-h">📐 The 7 Base Units</div>
+        <ul class="clean-list">
+          <li><b>Length:</b> metre (m) — The distance light travels in 1/299,792,458 of a second.</li>
+          <li><b>Mass:</b> kilogram (kg) — Approximately the mass of 1 litre of water at 4°C.</li>
+          <li><b>Time:</b> second (s) — Exactly 9,192,631,770 vibrations of a Caesium-133 atom.</li>
+          <li><b>Temperature:</b> kelvin (K) — Where 0 K is equivalent to −273.15°C (absolute zero).</li>
+          <li><b>Electric Current:</b> ampere (A) — The flow rate of 1 coulomb of charge per second.</li>
+          <li><b>Amount of Substance:</b> mole (mol) — Exactly 6.022 × 10²³ particles (Avogadro's number).</li>
+          <li><b>Luminous Intensity:</b> candela (cd) — Roughly equivalent to the brightness of a standard candle.</li>
+        </ul>
+      </div>
+      <div class="mnemonic-card">
+        <div class="tag">Memory trick</div>
+        <p>"Mr. K Sat At Kerala Mall Calmly"<br><span style="font-family:var(--body); font-size:12.5px; color:var(--ink-70);">Metre, Kilogram, Second, Ampere, Kelvin, Mole, Candela</span></p>
+      </div>
+
+      <div class="sub-h" style="margin-top:22px;">1.2.1 Temperature</div>
+      <div class="note-block">
+        <ul class="clean-list">
+          <li><b>SI unit:</b> kelvin (K).
+            <ul>
+              <li>It does not use a degree symbol (not "degree kelvin").</li>
+              <li><b>Zero point:</b> 0°C is equal to 273.15 K.</li>
+              <li><b>Boiling point:</b> 100°C is equal to 373.15 K.</li>
+            </ul>
+          </li>
+          <li><b>Formula to convert:</b> K = °C + 273.15.</li>
+          <li>Kelvin is heavily utilized in laboratory science and space research.</li>
+        </ul>
+      </div>
+
+      <div class="sub-h" style="margin-top:22px;">1.2.2 Electric Current (I)</div>
+      <div class="note-block">
+        <ul class="clean-list">
+          <li><b>SI unit:</b> ampere (A).
+            <ul>
+              <li>1 Ampere represents 6.24 × 10¹⁸ individual electrons flowing every second.</li>
+              <li>A standard phone charger delivers roughly 2 A.</li>
+              <li>A heavy household appliance MCB usually runs at 5 A or 15 A.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sub-h" style="margin-top:22px;">1.2.3 Amount of Substance</div>
+      <div class="note-block">
+        <ul class="clean-list">
+          <li><b>SI unit:</b> mole (mol).
+            <ul>
+              <li>1 mole is strictly equal to 6.022 × 10²³ atomic or molecular particles.</li>
+              <li>This is referred to as the Avogadro number.</li>
+              <li>It acts as a counting unit in chemistry equations, similar to how "1 dozen" always equals 12 items.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sub-h" style="margin-top:22px;">1.2.4 Luminous Intensity</div>
+      <div class="note-block">
+        <ul class="clean-list">
+          <li><b>SI unit:</b> candela (cd).
+            <ul>
+              <li>It is used to measure the objective brightness of a specific light source.</li>
+              <li>1 traditional wax candle emits approximately 1 cd of light.</li>
+              <li>A modern LED bulb generally emits around 100 cd.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sub-h" style="margin-top:22px;">1.2.5 Plane Angle (Supplementary)</div>
+      <div class="note-block">
+        <ul class="clean-list">
+          <li><b>SI unit:</b> radian (rad).
+            <ul>
+              <li>1 radian represents the angle formed when an arc length is perfectly equal to the radius of its circle.</li>
+              <li>A full 360° circle is precisely equal to 2π radians.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sub-h" style="margin-top:22px;">1.2.6 Solid Angle (Supplementary)</div>
+      <div class="note-block">
+        <ul class="clean-list">
+          <li><b>SI unit:</b> steradian (sr).
+            <ul>
+              <li>It calculates a 3-dimensional angle, visually similar to a cone expanding from the center point of a sphere.</li>
+              <li>A full mathematical sphere comprises exactly 4π steradians.</li>
+              <li>It is extensively utilized in calculating light physics and radiation.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="summary-box">
+        <b>🌍 Real-life Connection</b>
+        Your household electricity bill is calculated in kWh, which is a derived unit formulated from Amperes, seconds, metres, and kilograms.
+      </div>
+    `},
+
+    2: { num:'1.3', title:'Clocks', html:`
+      <div class="topic-title">⏰ 1.3 Clocks</div>
+      <div class="note-prompt">
+        <b>💭 The Evolution of Timing</b>
+        <ul class="clean-list">
+          <li>Humanity always needed precision: "When is the optimal time to hunt or sow seeds?"</li>
+          <li>The progression of measurement tools went as follows:
+            <ul>
+              <li>Sundial → Water Clock → Pendulum → Quartz → Atomic Clocks.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sub-h">1.3.1 Clocks Categorized by Display</div>
+      <div class="note-block">
+        <ul class="clean-list">
+          <li><b>Analog Clocks:</b>
+            <ul>
+              <li>Rely on an hour, minute, and second hand.</li>
+              <li>The specific angle of these hands visibly denotes the time.</li>
+            </ul>
+          </li>
+          <li><b>Digital Clocks:</b>
+            <ul>
+              <li>Instantly project numerical digits on an electronic screen (e.g., 10:35 AM).</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sub-h" style="margin-top:22px;">1.3.2 Clocks Categorized by Internal Mechanism</div>
+      <div class="note-block">
+        <ul class="clean-list">
+          <li><b>Sundial:</b> Measures passing time solely using the sun's directional shadow; ceases to work at night.</li>
+          <li><b>Water Clock:</b> Calculates intervals by allowing water to drip away at a mathematically constant rate.</li>
+          <li><b>Pendulum Clock:</b> Utilizes a hanging pendulum that precisely swings once every single second (first conceptualized by Galileo).</li>
+          <li><b>Quartz Clock:</b>
+            <ul>
+              <li>An electronic battery forces a tiny quartz crystal to heavily vibrate.</li>
+              <li>It vibrates exactly 32,768 times per second.</li>
+              <li>These are the most common mechanisms found in daily wristwatches.</li>
+            </ul>
+          </li>
+          <li><b>Atomic Clock:</b>
+            <ul>
+              <li>Counts the literal atomic vibrations of the Caesium-133 element.</li>
+              <li>Contains a phenomenal error rate of only 1 second per 300,000 years.</li>
+              <li>Used as the ultimate timing backbone for GPS satellites and organizations like ISRO.</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="sub-h">💡 Core Concept</div>
+        <ul class="clean-list">
+          <li>Olympic race timing mandates Quartz precision.</li>
+          <li>Global GPS coordination mandates Atomic precision.</li>
+          <li>Increased physical accuracy directly permits superior technological advancement.</li>
+        </ul>
+      </div>
+    `},
+
+    3: { num:'1.4', title:'Accuracy in Measurements', html:`
+      <div class="topic-title">🎯 1.4 Accuracy in Measurements</div>
+      <div class="note-prompt">
+        <b>💭 Consider This Scenario</b>
+        <ul class="clean-list">
+          <li>You attempt to measure a pencil with an old, broken 15 cm scale and deduce it is 7.8 cm.</li>
+          <li>Your friend measures the exact same pencil with a brand-new scale and gets 7.5 cm.</li>
+          <li>To find out who is right, we must understand the fundamental concept of measurement accuracy.</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <div class="sub-h">📘 Textbook Definition</div>
+        <ul class="clean-list">
+          <li><b>Accuracy:</b> Determines how microscopically close your physically measured value is to the object's actual true value.</li>
+          <li><b>Error Formula:</b> Error = (Measured value) − (True value).</li>
+        </ul>
+        <div class="sub-h">Common Types of Errors</div>
+        <ul class="clean-list">
+          <li><b>Least Count Error:</b>
+            <ul>
+              <li>Refers to the smallest physical value an instrument is capable of measuring.</li>
+              <li>A standard 15 cm plastic scale has a Least Count of 0.1 cm (which is 1 mm).</li>
+            </ul>
+          </li>
+          <li><b>Zero Error:</b>
+            <ul>
+              <li>Occurs when the baseline '0' mark on a tool has been worn down or shifted.</li>
+              <li>This inherently causes all subsequent readings to be systematically incorrect.</li>
+            </ul>
+          </li>
+          <li><b>Parallax Error:</b>
+            <ul>
+              <li>Occurs when visually reading a measurement scale from a diagonal angle instead of looking dead-straight.</li>
+              <li>To fix this, the observer's eye must be stationed vertically directly above the scale mark.</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="sub-h highlight-text">🌍 Methods to Maximize Accuracy</div>
+        <ul class="clean-list">
+          <li>Always utilize an instrument sporting a smaller least count (e.g., Vernier caliper = 0.01 cm, Screw gauge = 0.001 cm).</li>
+          <li>Perform multiple repeated readings and mathematically find the final average.</li>
+          <li>Ensure you physically remove zero error before starting, and deliberately avoid parallax while reading.</li>
+        </ul>
+        <div class="summary-box">
+          <b>⚡ One-line Summary</b>
+          A high-quality instrument + an error-free method + repeated readings = a flawless, accurate measurement.
+        </div>
+      </div>
+    `},
+
+    4: { num:'1.5', title:'Approximation', html:`
+      <div class="topic-title">🔢 1.5 Approximation</div>
+      <div class="note-prompt">
+        <b>💭 Real-life Application</b>
+        <ul class="clean-list">
+          <li>A shopkeeper states: "12 notebooks, ₹23 each."</li>
+          <li>Instead of doing complex 12 × 23 mental math, you mentally calculate 10 × 20 = 200.</li>
+          <li>Because of this quick mental calculation, you carry roughly ₹300. This daily process is known as approximation.</li>
+        </ul>
+      </div>
+      <div class="note-block">
+        <div class="sub-h">📘 Textbook Definition</div>
+        <ul class="clean-list">
+          <li><b>Approximation</b> is the act of expressing a complicated number to its nearest base 10, 100, or 1000.</li>
+          <li>It is deliberately not exact, but it is incredibly fast and highly useful for daily estimations.</li>
+        </ul>
+        <div class="sub-h">Clear Examples</div>
+        <ul class="clean-list">
+          <li>The number <b>4783</b> is commonly approximated to <b>4800</b> (rounded to the nearest 100).</li>
+          <li>The number <b>82</b> is commonly approximated to <b>80</b> (rounded to the nearest 10).</li>
+          <li>The vast population of Chennai is approximated as <b>1 crore</b>, rather than citing exactly 1,04,58,342.</li>
+        </ul>
+        <div class="sub-h highlight-text">🌍 Common Use Cases</div>
+        <ul class="clean-list">
+          <li>General household and business budget planning.</li>
+          <li>Simplifying immensely large statistical data.</li>
+          <li>Executing split-second mental mathematics.</li>
+          <li>Quickly estimating long travel times.</li>
+        </ul>
+      </div>
+    `},
+
+    5: { num:'1.6', title:'Rounding Off', html:`
+      <div class="topic-title">✂️ 1.6 Rounding Off</div>
+      <div class="note-prompt">
+        <b>💭 Why is this needed?</b>
+        <ul class="clean-list">
+          <li>When you divide 22 by 7, your electronic calculator outputs 3.142857142857…</li>
+          <li>It is entirely impractical to write out an endless string of digits for a simple science experiment.</li>
+          <li>Therefore, you round it cleanly down to 3.14 or 3.1, directly depending on the required accuracy.</li>
+        </ul>
+      </div>
+
+      <div class="sub-h">1.6.1 Standard Rules for Rounding Off</div>
+      <div class="note-block">
+        <ul class="clean-list">
+          <li><b>Rule 1:</b>
+            <ul>
+              <li>If the specific digit to be dropped is strictly less than 5 (&lt; 5).</li>
+              <li>You must leave the preceding last digit completely unchanged.</li>
+              <li><i>Example: 7.32 mathematically becomes 7.3 (because 2 is dropped).</i></li>
+            </ul>
+          </li>
+          <li><b>Rule 2:</b>
+            <ul>
+              <li>If the specific digit to be dropped is strictly greater than 5 (&gt; 5).</li>
+              <li>You must actively increase the preceding last digit by exactly 1.</li>
+              <li><i>Example: 7.36 mathematically becomes 7.4 (because 6 forces the 3 to become 4).</i></li>
+            </ul>
+          </li>
+          <li><b>Rule 3:</b>
+            <ul>
+              <li>If the specific digit to be dropped is exactly equal to 5 (= 5).</li>
+              <li>If the preceding digit is an <b>even</b> number, keep it entirely the same (e.g., 7.25 becomes 7.2).</li>
+              <li>If the preceding digit is an <b>odd</b> number, forcibly add 1 to it (e.g., 7.35 becomes 7.4).</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="sub-h highlight-text">💡 Why does the complex odd-even rule exist?</div>
+        <ul class="clean-list">
+          <li>It inherently avoids heavy statistical bias in extremely large datasets.</li>
+          <li>If scientists lazily rounded the number 5 'up' every single time, their final analytical totals would always run artificially higher than the true value.</li>
+        </ul>
+      </div>
+
+      <div class="summary-box">
+        <b>🌍 Real-life Connection</b>
+        If you score exactly 74.5 in an academic exam, teachers traditionally award a 75 (using Rule 2). However, strict global statistics dictate utilizing the odd-even rule instead.
+      </div>
+    `},
+  };
 
   function renderChapterList(){
     const wrap = document.getElementById('chapterListWrap');
@@ -975,7 +1442,7 @@
 
     const wrap = document.getElementById('topicListWrap');
     wrap.innerHTML = ch.topics.map((t, i) => `
-      <div class="topic-row" onclick="go('modes')">
+      <div class="topic-row" onclick="selectTopic(${i})">
         <div class="left">
           <div class="topic-num">${ch.num}.${i+1}</div>
           <div class="nm">${t}</div>
@@ -985,6 +1452,65 @@
     `).join('');
 
     go('topics');
+  }
+
+  function selectTopic(i){
+    activeTopicIdx = i;
+    go('modes');
+  }
+
+  /* ---------- Concept Notes: single-topic swipeable pager ---------- */
+  function renderNotesSlide(idx){
+    const keys = Object.keys(notesData).map(Number).sort((a,b)=>a-b);
+    if(!keys.length) return;
+    if(idx == null || !notesData[idx]) idx = keys[0];
+    activeTopicIdx = idx;
+
+    const entry = notesData[idx];
+    const ch = chapterData[activeChapterIdx] || chapterData[0];
+    document.getElementById('notesEyebrow').textContent = 'Chapter ' + ch.num + ' · ' + entry.num;
+    document.getElementById('notesTopicTitle').textContent = entry.title;
+    document.getElementById('notesSlide').innerHTML = entry.html;
+    document.getElementById('notesSlide').style.animation = 'none';
+    void document.getElementById('notesSlide').offsetWidth;
+    document.getElementById('notesSlide').style.animation = '';
+
+    const dotsWrap = document.getElementById('notesDots');
+    dotsWrap.innerHTML = keys.map(k => `<span class="dot ${k===idx?'active':''}"></span>`).join('');
+
+    const wrap = document.getElementById('notesSlideWrap');
+    if(wrap) wrap.scrollTop = 0;
+  }
+
+  function notesGo(dir){
+    const keys = Object.keys(notesData).map(Number).sort((a,b)=>a-b);
+    const pos = keys.indexOf(activeTopicIdx);
+    const next = keys[pos + dir];
+    if(next === undefined) return;
+    renderNotesSlide(next);
+  }
+
+  // Swipe gesture for Concept Notes (touch)
+  (function setupNotesSwipe(){
+    let touchStartX = null;
+    const target = document.getElementById('notesSlideWrap');
+    if(!target) return;
+    target.addEventListener('touchstart', (e)=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+    target.addEventListener('touchend', (e)=>{
+      if(touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if(Math.abs(dx) > 50){ notesGo(dx < 0 ? 1 : -1); }
+      touchStartX = null;
+    }, {passive:true});
+  })();
+
+  /* ---------- Revision: land on selected topic + auto-scroll ---------- */
+  function scrollRevisionToTopic(idx){
+    const el = document.getElementById('rev-t' + idx);
+    if(!el) return;
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    el.classList.add('flash');
+    setTimeout(()=> el.classList.remove('flash'), 1200);
   }
 
   const screenGroups = [
@@ -1045,29 +1571,24 @@
         scr.scrollTop = 0;
     }
 
-    // Show FAB only on reading-heavy screens
-    const fab = document.getElementById('fab-ask');
-    if(fab) {
-      if (id === 'notes' || id === 'revision') {
-        fab.style.display = 'flex';
-        // subtle pop-in animation
-        fab.style.opacity = '0';
-        setTimeout(() => fab.style.opacity = '1', 100);
-      } else {
-        fab.style.display = 'none';
-        toggleDoubtPanel(false); // Close panel if navigating away
-      }
+    // Concept Notes: land on the selected topic only (swipeable)
+    if(id === 'notes'){
+      renderNotesSlide(activeTopicIdx);
+    }
+
+    // Revision: land on the selected topic, but full scroll stays available
+    if(id === 'revision'){
+      setTimeout(()=> scrollRevisionToTopic(activeTopicIdx), 60);
     }
   }
 
-  // Hybrid Approach: Quick Doubt Bottom Sheet Toggle
   function toggleDoubtPanel(show) {
     document.getElementById('doubt-backdrop').classList.toggle('active', show);
     document.getElementById('doubt-panel').classList.toggle('active', show);
   }
 
   renderChapterList();
-  go('chapters'); // Open chapters first to show the new real data + Topics flow
+  go('chapters'); 
 
   // waveform bars for Short Answer Screen
   const wf = document.getElementById('waveform');
