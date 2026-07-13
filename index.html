@@ -354,9 +354,9 @@ body{
 }
 .topic-row:last-child{ border-bottom:none; }
 .topic-row:active{ background:var(--stamp-10); }
-.topic-row .left{ display:flex; align-items:flex-start; gap:12px; }
-.topic-num{ font-family:var(--mono); font-size:11px; color:var(--ink-45); width:34px; flex:none; padding-top:2px; }
-.topic-row .nm{ font-weight:600; font-size:14px; line-height:1.4; }
+.topic-row .left{ display:flex; align-items:center; gap:12px; }
+.topic-num{ font-family:var(--mono); font-size:11px; color:var(--ink-45); width:34px; flex:none; }
+.topic-row .nm{ font-weight:600; font-size:14.5px; line-height:1.4; }
 .topic-row .pill{ font-family:var(--mono); font-size:9.5px; color:var(--ink-45); margin-top:3px; text-transform:uppercase; letter-spacing:.04em; }
 .topic-chevron{ color:var(--ink-45); font-size:14px; flex:none; }
 
@@ -466,9 +466,6 @@ body{
 .notes-header-line{ display:flex; align-items:baseline; flex-wrap:wrap; gap:6px; flex:1; min-width:0; }
 .notes-header-line .notes-num{ font-family:var(--mono); font-weight:500; font-size:12px; color:var(--ink-45); flex:none; }
 .notes-header-line .notes-title-text{ font-family:var(--disp); font-weight:600; font-size:17px; color:var(--ink); line-height:1.3; text-wrap:balance; }
-.notes-dots{ display:flex; gap:5px; padding-top:8px; flex:none; flex-wrap:wrap; max-width:110px; justify-content:flex-end; }
-.notes-dots .dot{ width:6px; height:6px; border-radius:50%; background:var(--line); }
-.notes-dots .dot.active{ background:var(--stamp); width:16px; border-radius:3px; }
 
 .notes-slide-wrap{
   flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
@@ -616,7 +613,7 @@ body{
 }
 .overlay-backdrop.active{ opacity:1; pointer-events:auto; }
 .bottom-sheet{
-  position:absolute; left:0; right:0; bottom:0; height:72%;
+  position:absolute; left:0; right:0; bottom:0; height:78%;
   background:var(--paper); border-radius:24px 24px 0 0; z-index:210;
   transform:translateY(100%); transition:transform .3s cubic-bezier(.32,.72,0,1);
   display:flex; flex-direction:column; box-shadow:0 -10px 40px rgba(0,0,0,.15);
@@ -624,8 +621,92 @@ body{
 .bottom-sheet.active{ transform:translateY(0); }
 .sheet-handle{ width:40px; height:5px; background:var(--line); border-radius:3px; margin:12px auto; flex:none; }
 .sheet-header{ display:flex; justify-content:space-between; align-items:center; padding:0 20px 14px; border-bottom:1px solid var(--line); flex:none; }
-.sheet-title{ font-family:var(--disp); font-weight:600; font-size:17px; }
+.sheet-title-wrap{ display:flex; align-items:center; gap:10px; }
+.sheet-avatar{ width:36px; height:36px; border-radius:50%; background:var(--highlight); display:flex; align-items:center; justify-content:center; font-size:17px; flex:none; }
+.sheet-title{ font-family:var(--disp); font-weight:600; font-size:16px; line-height:1.2; }
+.sheet-sub{ font-family:var(--mono); font-size:10px; color:var(--ink-45); text-transform:uppercase; letter-spacing:.04em; margin-top:2px; }
 .sheet-close{ background:transparent; border:none; font-size:18px; color:var(--ink-45); cursor:pointer; padding:4px; }
+
+/* ---- Ask Buddy chat ---- */
+.ask-chat-scroll{
+  flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  padding:20px 18px 8px; scrollbar-width:none;
+  display:flex; flex-direction:column; gap:14px;
+}
+.ask-chat-scroll::-webkit-scrollbar{ display:none; }
+
+.abubble{
+  max-width:82%; padding:13px 17px; border-radius:20px; font-size:14px; line-height:1.55;
+  animation:bubbleIn .3s cubic-bezier(.2,.8,.2,1);
+}
+.abubble.ai{
+  align-self:flex-start; background:var(--card); color:var(--ink);
+  border-bottom-left-radius:6px; box-shadow:0 2px 10px rgba(27,42,74,.07);
+}
+.abubble.me{
+  align-self:flex-end; background:var(--ink); color:var(--paper);
+  border-bottom-right-radius:6px;
+}
+.abubble b{ font-weight:700; }
+
+@keyframes bubbleIn{
+  from{ opacity:0; transform:translateY(12px) scale(.97); }
+  to{ opacity:1; transform:translateY(0) scale(1); }
+}
+
+.typing-bubble{
+  align-self:flex-start; background:var(--card); border-radius:20px; border-bottom-left-radius:6px;
+  padding:14px 18px; display:flex; gap:5px; box-shadow:0 2px 10px rgba(27,42,74,.07);
+  animation:bubbleIn .25s ease;
+}
+.typing-bubble span{ width:7px; height:7px; border-radius:50%; background:var(--ink-45); animation:typingBounce 1.2s infinite ease-in-out; }
+.typing-bubble span:nth-child(2){ animation-delay:.15s; }
+.typing-bubble span:nth-child(3){ animation-delay:.3s; }
+@keyframes typingBounce{
+  0%,60%,100%{ transform:translateY(0); opacity:.5; }
+  30%{ transform:translateY(-5px); opacity:1; }
+}
+
+.ask-fullchat-link{ flex:none; padding:2px 18px 10px; text-align:center; }
+.ask-fullchat-link button{
+  background:transparent; border:none; cursor:pointer;
+  font-family:var(--body); font-weight:600; font-size:12px; color:var(--ink-45);
+}
+.ask-fullchat-link button:active{ color:var(--ink); }
+
+/* ---- Composer (ChatGPT-style) ---- */
+.composer{
+  flex:none; display:flex; align-items:center; gap:8px;
+  padding:10px 16px calc(12px + var(--safe-b));
+  background:var(--paper); border-top:1px solid var(--line);
+}
+.composer-plus{
+  width:38px; height:38px; border-radius:50%; flex:none; cursor:pointer;
+  border:1.5px solid var(--line); background:var(--card); color:var(--ink-70);
+  font-size:18px; line-height:1; display:flex; align-items:center; justify-content:center;
+}
+.composer-plus:active{ background:var(--paper-2); }
+.composer-field{ flex:1; min-width:0; }
+.composer-field input{
+  width:100%; border:1.5px solid var(--line); background:var(--card); border-radius:999px;
+  padding:11px 16px; font-family:var(--body); font-size:14px; color:var(--ink);
+}
+.composer-field input:focus{ outline:none; border-color:var(--ink); }
+.composer-field input::placeholder{ color:var(--ink-45); }
+.composer-action{
+  width:40px; height:40px; border-radius:50%; border:none; flex:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--ink); color:var(--paper);
+  transition:background .2s ease, transform .15s ease;
+}
+.composer-action svg{ width:17px; height:17px; transition:opacity .15s ease, transform .15s ease; }
+.composer-action:active{ transform:scale(.9); }
+.composer-action.listening{ background:var(--stamp); animation:micPulse 1s infinite; }
+@keyframes micPulse{
+  0%{ box-shadow:0 0 0 0 var(--stamp-10); }
+  70%{ box-shadow:0 0 0 10px rgba(178,58,46,0); }
+  100%{ box-shadow:0 0 0 0 rgba(178,58,46,0); }
+}
 
 </style>
 </head>
@@ -744,12 +825,11 @@ body{
   <section class="screen" id="screen-topics">
     <header class="app-header">
       <button class="back" onclick="go('chapters')">← Back</button>
-      <div class="title" id="topicsChapterTitle">Chapter</div>
+      <div class="title">Science</div>
       <div class="spacer"></div>
     </header>
     <div class="inner">
-      <div class="eyebrow" id="topicsEyebrow">Science</div>
-      <div class="h1" id="topicsHeading">Topics</div>
+      <div class="h1" id="topicsHeading" style="margin-top:6px;">Chapter</div>
       <div id="topicListWrap"></div>
     </div>
   </section>
@@ -781,7 +861,6 @@ body{
                 <div class="notes-header-line">
                   <span class="notes-num" id="notesEyebrow"></span><span class="notes-title-text" id="notesTopicTitle">Topic</span>
                 </div>
-                <div class="notes-dots" id="notesDots"></div>
               </div>
 
               <div class="notes-slide-wrap" id="notesSlideWrap">
@@ -819,68 +898,28 @@ body{
       <button class="call-cta" onclick="go('call')" aria-label="Start a call">📞</button>
     </header>
     <div class="inner chat-inner">
-      <div class="progress-track">
-        <div class="seg done"></div><div class="seg done"></div><div class="seg done"></div>
+      <div class="progress-track" id="conceptProgressTrack">
+        <div class="seg"></div><div class="seg"></div><div class="seg"></div>
       </div>
 
-      <div class="chat-scroll">
-        <div class="bubble ai">Good question — this one shows up in every exam. Before we break it down: imagine you're a plant stuck in one place all day. How would you get your own food? You can't order from Swiggy 😀</div>
-        <div class="bubble me">I will cook by myself</div>
-        <div class="bubble ai">Exactly! Just like you, plants also cook their own food. This process is called <b>photosynthesis</b>.</div>
-        <div class="bubble ai">Now, what <b>3 things</b> would plants need to cook their food?</div>
-        <div class="bubble me">Sunlight.</div>
-        <div class="bubble ai">Correct! You need energy to cook, and sunlight is free energy ☀️</div>
-        <div class="progress-note">1 / 3 inputs identified</div>
+      <div class="ask-chat-scroll" id="conceptScroll"></div>
 
-        <div class="bubble ai">Now, plants are chefs. They mix ingredients. Sunlight is the stove. What gas from the air do you think is their main ingredient?
-          <span class="hint">Hint: we breathe it out when we exercise.</span>
+      <div class="composer">
+        <button class="composer-plus" title="Attachments (coming soon)">+</button>
+        <div class="composer-field">
+          <input type="text" id="conceptInput" placeholder="Let's understand better…" autocomplete="off"
+            oninput="onConceptInput(this.value)"
+            onkeydown="if(event.key==='Enter'){event.preventDefault(); sendConceptMessage();}">
         </div>
-
-        <div class="bubble me wrong">Oxygen?</div>
-        <div class="nudge-tag">Not quite — one more try</div>
-        <div class="bubble ai nudge">Close, but that's what we breathe <i>in</i>, not out. Think about what happens when you blow air onto a mirror — it fogs up. That gas is the one plants are after.</div>
-        <div class="bubble me wrong">Water vapour?</div>
-        <div class="nudge-tag">Still not it — here's a bigger hint</div>
-        <div class="bubble ai nudge">Good guess, but not this one. It's a gas, it makes fizzy drinks fizzy, and you breathe it <b>out</b> when you exercise. Starts with "carbon..."</div>
-        <div class="bubble me">Carbon dioxide!</div>
-        <div class="bubble ai">Perfect! CO₂ in, O₂ out — that's why plants are called Earth's lungs.</div>
-        <div class="progress-note">2 / 3 inputs identified</div>
-
-        <div class="bubble ai">Last one: the stove and gas aren't enough. A chef needs water too. Plants don't have taps — where do they secretly pull water from?</div>
-        <div class="bubble me">Through their roots.</div>
-        <div class="bubble ai">Nailed it! 🌱 Roots are like the plant's straws.</div>
-        <div class="progress-note">3 / 3 inputs identified</div>
-
-        <div class="bubble ai">Quick check — don't look at your textbook. Can you tell me the <b>three things</b> a plant needs for photosynthesis, in your own words?</div>
-        <div class="bubble me">Sunlight, carbon dioxide from the air, and water from the roots.</div>
-
-        <div class="summary-card">
-          <div class="eyebrow">Summary</div>
-          <p style="font-size:13px; line-height:1.6; margin:6px 0 0;">Plants use <b>sunlight, carbon dioxide and water</b> to produce <b>glucose (food)</b> and release <b>oxygen</b>. This process is called photosynthesis.</p>
-          <div class="correction-note">
-            <div class="pen">✎</div>
-            <p><b>Common exam mistake</b> — many students write "plants make oxygen for humans." That's true, but not the main purpose. In exams, write: <i>"The primary purpose of photosynthesis is to produce glucose for the plant. Oxygen is a by-product."</i></p>
-          </div>
-        </div>
-
-        <div class="bubble ai">Final challenge — if I cover a plant's leaves with black paper for <b>3 days</b>, will photosynthesis happen? Why?</div>
-        <div class="bubble me">No, because the leaves won't receive sunlight.</div>
-
-        <div class="mastery-toast">
-          <div class="stamp-mini">✓</div>
-          <p><b>Mastered!</b> Your Mastery Map is updated. ExamBuddy will remind you to revise this in 2 days.</p>
-        </div>
-
-        <div class="choice-row">
-          <button class="diagram-btn" onclick="go('content')">📊 Show diagram</button>
-          <button class="continue-btn" onclick="go('content')">Continue →</button>
-        </div>
-      </div>
-
-      <div class="chat-input-row">
-        <div class="fake-input">Type your answer…</div>
-        <button class="mic-btn" title="Speak your answer">🎤</button>
-        <button class="send-btn" title="Send">➤</button>
+        <button class="composer-action" id="conceptActionBtn" onclick="conceptActionClick()" title="Voice / Send">
+          <svg id="conceptMicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="5" y1="13" x2="5" y2="15"/><line x1="9" y1="9" x2="9" y2="19"/>
+            <line x1="13" y1="6" x2="13" y2="22"/><line x1="17" y1="10" x2="17" y2="18"/><line x1="21" y1="12" x2="21" y2="16"/>
+          </svg>
+          <svg id="conceptSendIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
       </div>
     </div>
   </section>
@@ -993,19 +1032,38 @@ body{
   <div class="bottom-sheet" id="doubt-panel">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-      <div class="sheet-title">Ask Buddy</div>
+      <div class="sheet-title-wrap">
+        <div class="sheet-avatar">🤔</div>
+        <div>
+          <div class="sheet-title">Ask Buddy</div>
+          <div class="sheet-sub">Your friendly study tutor</div>
+        </div>
+      </div>
       <button class="sheet-close" onclick="toggleDoubtPanel(false)">✕</button>
     </div>
-    <div class="chat-scroll" style="flex:1; padding-top:16px;">
-      <div class="bubble ai">I'm right here! Got a question about what you're reading? Just ask 💡</div>
+
+    <div class="ask-chat-scroll" id="doubtScroll"></div>
+
+    <div class="ask-fullchat-link">
+      <button onclick="toggleDoubtPanel(false); go('concept')">💬 Teach me →</button>
     </div>
-    <div style="padding:0 18px 10px;">
-      <button class="header-action-btn" style="width:100%; justify-content:center;" onclick="toggleDoubtPanel(false); go('concept')">💬 Start a full guided chat</button>
-    </div>
-    <div class="chat-input-row" style="border-top:none;">
-      <div class="fake-input">Type your doubt…</div>
-      <button class="mic-btn">🎤</button>
-      <button class="send-btn">➤</button>
+
+    <div class="composer">
+      <button class="composer-plus" title="Attachments (coming soon)">+</button>
+      <div class="composer-field">
+        <input type="text" id="doubtInput" placeholder="Ask your doubts…" autocomplete="off"
+          oninput="onDoubtInput(this.value)"
+          onkeydown="if(event.key==='Enter'){event.preventDefault(); sendDoubtMessage();}">
+      </div>
+      <button class="composer-action" id="doubtActionBtn" onclick="doubtActionClick()" title="Voice / Send">
+        <svg id="doubtMicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="5" y1="13" x2="5" y2="15"/><line x1="9" y1="9" x2="9" y2="19"/>
+          <line x1="13" y1="6" x2="13" y2="22"/><line x1="17" y1="10" x2="17" y2="18"/><line x1="21" y1="12" x2="21" y2="16"/>
+        </svg>
+        <svg id="doubtSendIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -17724,6 +17782,7 @@ function go(id, opts){
   if (id === 'search')       { document.getElementById('searchInput').focus(); }
   if (id === 'chats')        renderChats();
   if (id === 'testResults')  renderTestResults();
+  if (id === 'concept')      resetConceptChat();
 
   updateBottomNav(id);
 }
@@ -17942,28 +18001,17 @@ function renderChapterList(){
 function openTopics(idx){
   activeChapterIdx = idx;
   const ch = chapterData[idx];
-  const chNotes = notesData[idx] || {};
 
-  document.getElementById('topicsChapterTitle').textContent = 'Chapter ' + ch.num;
-  document.getElementById('topicsEyebrow').textContent      = 'Science · Chapter ' + ch.num;
-  document.getElementById('topicsHeading').textContent      = ch.name;
+  document.getElementById('topicsHeading').textContent = parseInt(ch.num, 10) + ' - ' + ch.name;
 
-  document.getElementById('topicListWrap').innerHTML = ch.topics.map((t, i) => {
-    const entry = chNotes[i];
-    const n = entry ? pagesOf(entry).length : 0;
-    const pill = n ? `${n} note${n > 1 ? 's' : ''}` : 'notes coming soon';
-    return `
+  document.getElementById('topicListWrap').innerHTML = ch.topics.map((t, i) => `
       <div class="topic-row" onclick="selectTopic(${i})">
         <div class="left">
           <div class="topic-num">${ch.num}.${i+1}</div>
-          <div>
-            <div class="nm">${t}</div>
-            <div class="pill">${pill}</div>
-          </div>
+          <div class="nm">${t}</div>
         </div>
         <div class="topic-chevron">→</div>
-      </div>`;
-  }).join('');
+      </div>`).join('');
 
   go('topics');
 }
@@ -17982,7 +18030,6 @@ function renderNotesSlide(pageIdx){
   if (!entry){
     document.getElementById('notesEyebrow').textContent    = '';
     document.getElementById('notesTopicTitle').textContent = 'Coming soon';
-    document.getElementById('notesDots').innerHTML         = '';
     document.getElementById('notesCount').textContent      = '–';
     slide.innerHTML = `<div class="note-block"><div class="sub-h">📝 Notes coming soon</div>
       <p class="muted" style="margin:0;">Concept notes for this topic are being prepared.</p></div>`;
@@ -18001,9 +18048,6 @@ function renderNotesSlide(pageIdx){
   dedupeMainTopicTitle(slide, page);
   markEmojiListItems(slide);
   slide.style.animation = 'none'; void slide.offsetWidth; slide.style.animation = '';
-
-  document.getElementById('notesDots').innerHTML =
-    pages.map((p, i) => `<span class="dot ${i === pageIdx ? 'active' : ''}"></span>`).join('');
 
   const flat = getChapterFlatPages();
   const pos  = flat.findIndex(f => f.topicIdx === activeTopicIdx && f.pageIdx === activePageIdx);
@@ -18083,6 +18127,283 @@ function scrollRevisionToTopic(idx){
 function toggleDoubtPanel(show){
   document.getElementById('doubt-backdrop').classList.toggle('active', show);
   document.getElementById('doubt-panel').classList.toggle('active', show);
+  if (show) resetDoubtChat();
+}
+
+const doubtScript = [
+  ["Excellent topic! This concept is frequently asked in exams, so understanding it well will help you score better.", "Before we break it down, imagine you're a plant stuck in one spot all day. How would <i>you</i> get your own food?", "You can't order from Swiggy 😀"],
+  ["Exactly! Just like that, plants also cook their own food. This process is called <b>photosynthesis</b>.", "Now — what do you think a plant needs to \"cook\" with? Take a guess."],
+  ["Nice thinking — sunlight is one of them ☀️ You need energy to cook, and sunlight is free energy.", "There's also a gas from the air involved. Any guesses on the gas?"],
+  ["Close, but that's what we breathe <i>in</i>, not out. Think about blowing air onto a mirror — it fogs up. That gas is the one plants are after 😉"],
+  ["That's it — <b>carbon dioxide</b>! 🎉", "So we've got sunlight + CO₂. Plants don't have taps though — where do you think they secretly pull water from?"],
+  ["Nailed it — <b>roots</b> are basically the plant's straws! 🌱", "So: sunlight + CO₂ + water → photosynthesis. Say it back to me in your own words — you've basically got it already."],
+  ["Perfect explanation 👏 You clearly understand this one. Got another doubt, or ready to head back to your notes?"]
+];
+let doubtScriptIdx  = 0;
+let doubtTypingBusy = false;
+
+function resetDoubtChat(){
+  const scroll = document.getElementById('doubtScroll');
+  scroll.innerHTML = '';
+  doubtScriptIdx  = 0;
+  doubtTypingBusy = false;
+  const input = document.getElementById('doubtInput');
+  input.value = '';
+  onDoubtInput('');
+  appendDoubtBubble("I'm right here! Got a question about what you're reading? Just ask 💡", 'ai');
+}
+
+function onDoubtInput(val){
+  const micIcon  = document.getElementById('doubtMicIcon');
+  const sendIcon = document.getElementById('doubtSendIcon');
+  const hasText  = val.trim().length > 0;
+  micIcon.style.display  = hasText ? 'none' : '';
+  sendIcon.style.display = hasText ? '' : 'none';
+}
+
+function doubtActionClick(){
+  const input = document.getElementById('doubtInput');
+  if (input.value.trim().length > 0) sendDoubtMessage();
+  else startDoubtVoiceCapture();
+}
+
+function startDoubtVoiceCapture(){
+  const input = document.getElementById('doubtInput');
+  const btn   = document.getElementById('doubtActionBtn');
+  if (btn.classList.contains('listening')) return;
+
+  btn.classList.add('listening');
+  input.placeholder = 'Listening…';
+  setTimeout(() => {
+    btn.classList.remove('listening');
+    input.placeholder = 'Ask your doubts…';
+    input.value = 'Why do plants need sunlight?';
+    onDoubtInput(input.value);
+    input.focus();
+  }, 1400);
+}
+
+function sendDoubtMessage(){
+  if (doubtTypingBusy) return;
+  const input = document.getElementById('doubtInput');
+  const text  = input.value.trim();
+  if (!text) return;
+
+  appendDoubtBubble(escapeHtml(text), 'me');
+  input.value = '';
+  onDoubtInput('');
+
+  showDoubtTyping();
+  const replies = doubtScript[doubtScriptIdx % doubtScript.length];
+  doubtScriptIdx++;
+  doubtTypingBusy = true;
+
+  setTimeout(() => {
+    hideDoubtTyping();
+    replies.forEach((r, i) => {
+      setTimeout(() => {
+        appendDoubtBubble(r, 'ai');
+        if (i === replies.length - 1) doubtTypingBusy = false;
+      }, i * 550);
+    });
+  }, 900 + Math.random() * 400);
+}
+
+function appendDoubtBubble(html, who){
+  const scroll = document.getElementById('doubtScroll');
+  const div = document.createElement('div');
+  div.className = 'abubble ' + who;
+  div.innerHTML = html;
+  scroll.appendChild(div);
+  scroll.scrollTo({ top: scroll.scrollHeight, behavior:'smooth' });
+}
+
+function showDoubtTyping(){
+  const scroll = document.getElementById('doubtScroll');
+  const div = document.createElement('div');
+  div.className = 'typing-bubble';
+  div.id = 'doubtTypingBubble';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  scroll.appendChild(div);
+  scroll.scrollTo({ top: scroll.scrollHeight, behavior:'smooth' });
+}
+
+function hideDoubtTyping(){
+  const el = document.getElementById('doubtTypingBubble');
+  if (el) el.remove();
+}
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ---------------- Concept Clarity chat ---------------- */
+const conceptOpener = [
+  "Excellent topic! This concept is frequently asked in exams, so understanding it well will help you score better.",
+  "Before we break it down, imagine you're a plant stuck in one spot all day. How would <i>you</i> get your own food?",
+  "You can't order from Swiggy 😀"
+];
+
+const conceptSummaryCard = `<div class="summary-card">
+  <div class="eyebrow">Summary</div>
+  <p style="font-size:13px; line-height:1.6; margin:6px 0 0;">Plants use <b>sunlight, carbon dioxide and water</b> to produce <b>glucose (food)</b> and release <b>oxygen</b>. This process is called photosynthesis.</p>
+  <div class="correction-note">
+    <div class="pen">✎</div>
+    <p><b>Common exam mistake</b> — many students write "plants make oxygen for humans." That's true, but not the main purpose. In exams, write: <i>"The primary purpose of photosynthesis is to produce glucose for the plant. Oxygen is a by-product."</i></p>
+  </div>
+</div>`;
+
+const conceptMasteryToast = `<div class="mastery-toast">
+  <div class="stamp-mini">✓</div>
+  <p><b>Mastered!</b> Your Mastery Map is updated. ExamBuddy will remind you to revise this in 2 days.</p>
+</div>`;
+
+const conceptScript = [
+  ["Exactly! Just like you, plants also cook their own food. This process is called <b>photosynthesis</b>.",
+   "Now, what <b>3 things</b> would plants need to cook their food?"],
+  ["Correct instinct! You need energy to cook, and sunlight is free energy ☀️",
+   {progress:1},
+   "Now, plants are chefs. They mix ingredients. Sunlight is the stove. What gas from the air do you think is their main ingredient? <span class=\"hint\">Hint: we breathe it out when we exercise.</span>"],
+  ["Perfect! CO₂ in, O₂ out — that's why plants are called Earth's lungs.",
+   {progress:2},
+   "Last one: the stove and gas aren't enough. A chef needs water too. Plants don't have taps — where do they secretly pull water from?"],
+  ["Nailed it! 🌱 Roots are like the plant's straws.",
+   {progress:3},
+   "Quick check — don't look at your textbook. Can you tell me the <b>three things</b> a plant needs for photosynthesis, in your own words?"],
+  [{raw: conceptSummaryCard},
+   "Final challenge — if I cover a plant's leaves with black paper for <b>3 days</b>, will photosynthesis happen? Why?"],
+  [{raw: conceptMasteryToast},
+   "Awesome work! 🎉 Got another doubt on this topic, or ready to head back to your notes?"],
+  ["Good thinking — tell me a bit more about what's still unclear and we'll work through it together."]
+];
+let conceptScriptIdx  = 0;
+let conceptTypingBusy = false;
+
+function resetConceptChat(){
+  const scroll = document.getElementById('conceptScroll');
+  scroll.innerHTML = '';
+  conceptScriptIdx  = 0;
+  conceptTypingBusy = false;
+  updateConceptProgress(0);
+
+  const input = document.getElementById('conceptInput');
+  input.value = '';
+  onConceptInput('');
+
+  conceptOpener.forEach((line, i) => {
+    setTimeout(() => appendConceptItem(line), i * 550);
+  });
+}
+
+function updateConceptProgress(n){
+  document.querySelectorAll('#conceptProgressTrack .seg').forEach((seg, i) => {
+    seg.classList.toggle('done', i < n);
+  });
+}
+
+function onConceptInput(val){
+  const micIcon  = document.getElementById('conceptMicIcon');
+  const sendIcon = document.getElementById('conceptSendIcon');
+  const hasText  = val.trim().length > 0;
+  micIcon.style.display  = hasText ? 'none' : '';
+  sendIcon.style.display = hasText ? '' : 'none';
+}
+
+function conceptActionClick(){
+  const input = document.getElementById('conceptInput');
+  if (input.value.trim().length > 0) sendConceptMessage();
+  else startConceptVoiceCapture();
+}
+
+function startConceptVoiceCapture(){
+  const input = document.getElementById('conceptInput');
+  const btn   = document.getElementById('conceptActionBtn');
+  if (btn.classList.contains('listening')) return;
+
+  btn.classList.add('listening');
+  input.placeholder = 'Listening…';
+  setTimeout(() => {
+    btn.classList.remove('listening');
+    input.placeholder = "Let's understand better…";
+    input.value = 'I think it needs sunlight';
+    onConceptInput(input.value);
+    input.focus();
+  }, 1400);
+}
+
+function sendConceptMessage(){
+  if (conceptTypingBusy) return;
+  const input = document.getElementById('conceptInput');
+  const text  = input.value.trim();
+  if (!text) return;
+
+  appendConceptBubble(escapeHtml(text), 'me');
+  input.value = '';
+  onConceptInput('');
+
+  showConceptTyping();
+  const beat = conceptScript[conceptScriptIdx % conceptScript.length];
+  conceptScriptIdx++;
+  conceptTypingBusy = true;
+
+  setTimeout(() => {
+    hideConceptTyping();
+    beat.forEach((item, i) => {
+      setTimeout(() => {
+        appendConceptItem(item);
+        if (i === beat.length - 1) conceptTypingBusy = false;
+      }, i * 550);
+    });
+  }, 900 + Math.random() * 400);
+}
+
+function appendConceptBubble(html, who){
+  const scroll = document.getElementById('conceptScroll');
+  const div = document.createElement('div');
+  div.className = 'abubble ' + who;
+  div.innerHTML = html;
+  scroll.appendChild(div);
+  scroll.scrollTo({ top: scroll.scrollHeight, behavior:'smooth' });
+}
+
+function appendConceptItem(item){
+  const scroll = document.getElementById('conceptScroll');
+
+  if (typeof item === 'string'){
+    appendConceptBubble(item, 'ai');
+    return;
+  }
+  if (item.progress != null){
+    updateConceptProgress(item.progress);
+    const note = document.createElement('div');
+    note.className = 'progress-note';
+    note.textContent = item.progress + ' / 3 inputs identified';
+    scroll.appendChild(note);
+    scroll.scrollTo({ top: scroll.scrollHeight, behavior:'smooth' });
+    return;
+  }
+  if (item.raw){
+    const wrap = document.createElement('div');
+    wrap.innerHTML = item.raw;
+    wrap.style.animation = 'bubbleIn .3s cubic-bezier(.2,.8,.2,1)';
+    scroll.appendChild(wrap);
+    scroll.scrollTo({ top: scroll.scrollHeight, behavior:'smooth' });
+  }
+}
+
+function showConceptTyping(){
+  const scroll = document.getElementById('conceptScroll');
+  const div = document.createElement('div');
+  div.className = 'typing-bubble';
+  div.id = 'conceptTypingBubble';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  scroll.appendChild(div);
+  scroll.scrollTo({ top: scroll.scrollHeight, behavior:'smooth' });
+}
+
+function hideConceptTyping(){
+  const el = document.getElementById('conceptTypingBubble');
+  if (el) el.remove();
 }
 
 /* ---------------- Decorative waveforms ---------------- */
