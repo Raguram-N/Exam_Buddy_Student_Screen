@@ -1036,7 +1036,7 @@ body{
         <div class="sheet-avatar">🤔</div>
         <div>
           <div class="sheet-title">Ask Buddy</div>
-          <div class="sheet-sub">Your friendly study tutor</div>
+          <div class="sheet-sub">Your 24/7 study partner</div>
         </div>
       </div>
       <button class="sheet-close" onclick="toggleDoubtPanel(false)">✕</button>
@@ -18131,13 +18131,12 @@ function toggleDoubtPanel(show){
 }
 
 const doubtScript = [
-  ["Excellent topic! This concept is frequently asked in exams, so understanding it well will help you score better.", "Before we break it down, imagine you're a plant stuck in one spot all day. How would <i>you</i> get your own food?", "You can't order from Swiggy 😀"],
-  ["Exactly! Just like that, plants also cook their own food. This process is called <b>photosynthesis</b>.", "Now — what do you think a plant needs to \"cook\" with? Take a guess."],
-  ["Nice thinking — sunlight is one of them ☀️ You need energy to cook, and sunlight is free energy.", "There's also a gas from the air involved. Any guesses on the gas?"],
-  ["Close, but that's what we breathe <i>in</i>, not out. Think about blowing air onto a mirror — it fogs up. That gas is the one plants are after 😉"],
-  ["That's it — <b>carbon dioxide</b>! 🎉", "So we've got sunlight + CO₂. Plants don't have taps though — where do you think they secretly pull water from?"],
-  ["Nailed it — <b>roots</b> are basically the plant's straws! 🌱", "So: sunlight + CO₂ + water → photosynthesis. Say it back to me in your own words — you've basically got it already."],
-  ["Perfect explanation 👏 You clearly understand this one. Got another doubt, or ready to head back to your notes?"]
+  ["<b>Photosynthesis</b> is the process plants use to make their own food, using sunlight, carbon dioxide and water.", "Want the exam-definition wording, or a quick real-life example? Just ask 👇"],
+  ["It happens mainly in the leaves, inside tiny structures called <b>chloroplasts</b> — that's what makes leaves green (chlorophyll)."],
+  ["Plants take in <b>carbon dioxide (CO₂)</b> and release <b>oxygen (O₂)</b> as a by-product."],
+  ["Water is pulled up from the soil through the <b>roots</b>, then travels to the leaves through tiny tubes called xylem."],
+  ["Exam tip: always say <b>glucose is the main product</b> — oxygen is just a by-product, not the purpose. Markers specifically look for that line."],
+  ["One-line recap: <b>Sunlight + CO₂ + Water → Glucose + Oxygen</b> (using chlorophyll). That's the full equation.", "Anything else you want a quick answer on?"]
 ];
 let doubtScriptIdx  = 0;
 let doubtTypingBusy = false;
@@ -18150,7 +18149,7 @@ function resetDoubtChat(){
   const input = document.getElementById('doubtInput');
   input.value = '';
   onDoubtInput('');
-  appendDoubtBubble("I'm right here! Got a question about what you're reading? Just ask 💡", 'ai');
+  appendDoubtBubble("Ask me anything — I'll give you a quick, straight-to-the-point answer 👍", 'ai');
 }
 
 function onDoubtInput(val){
@@ -18204,9 +18203,9 @@ function sendDoubtMessage(){
       setTimeout(() => {
         appendDoubtBubble(r, 'ai');
         if (i === replies.length - 1) doubtTypingBusy = false;
-      }, i * 550);
+      }, i * 350);
     });
-  }, 900 + Math.random() * 400);
+  }, 450 + Math.random() * 250);
 }
 
 function appendDoubtBubble(html, who){
