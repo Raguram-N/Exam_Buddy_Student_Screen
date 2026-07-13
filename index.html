@@ -876,11 +876,9 @@ body{
           </div>
         </div>
 
-        <!-- Pane: Revision (continuous chapter scroll, anchored to topic) -->
+        <!-- Pane: Notes (continuous chapter scroll, anchored to topic) -->
         <div class="content-pane" id="paneRevision">
           <div class="inner">
-            <div class="eyebrow" id="revisionEyebrow">Chapter 1</div>
-            <div class="h1" id="revisionChapterTitle" style="margin-bottom:2px;">Measurement</div>
             <div id="revisionContent"></div>
           </div>
         </div>
@@ -17730,6 +17728,7 @@ const chapterData = [
 let activeChapterIdx = 0;
 let activeTopicIdx   = 0;
 let activePageIdx    = 0;
+let contentShowingIntro = false;
 
 const screens = ['login','home','chapters','topics','content','concept','call','mcq','short','search','profile','chats','testResults'];
 let currentLearningMode = 'notes'; /* tracks whichever tab — 'notes' (Concept Notes) / 'revision' (Revision) — was last open */
@@ -17778,7 +17777,7 @@ function go(id, opts){
     renderContentHeader();
     renderNotesSlide(activePageIdx);
     renderRevisionScreen();
-    setTimeout(() => scrollRevisionToTopic(activeTopicIdx), 80);
+    setTimeout(() => scrollRevisionToCurrent(), 80);
   }
   if (id === 'search')       { document.getElementById('searchInput').focus(); }
   if (id === 'chats')        renderChats();
@@ -17797,7 +17796,7 @@ function openContent(tab){
 /* ---------------- Content screen: Concept Notes ⇄ Revision ---------------- */
 function renderContentHeader(){
   const ch = chapterData[activeChapterIdx];
-  document.getElementById('contentTitle').textContent = (ch && ch.name) || '';
+  document.getElementById('contentTitle').textContent = ch ? (parseInt(ch.num, 10) + '. ' + ch.name) : '';
 }
 
 function switchContentTab(tab, opts){
@@ -17818,7 +17817,7 @@ function switchContentTab(tab, opts){
     track.classList.toggle('pos-1', tab === 'revision');
   }
 
-  if (tab === 'revision') setTimeout(() => scrollRevisionToTopic(activeTopicIdx), 80);
+  if (tab === 'revision') setTimeout(() => scrollRevisionToCurrent(), 80);
   updateBottomNav('content');
 }
 
@@ -17904,9 +17903,10 @@ function runSearch(query){
 }
 
 function searchOpenTopic(chapterIdx, topicIdx){
-  activeChapterIdx = chapterIdx;
-  activeTopicIdx   = topicIdx;
-  activePageIdx    = 0;
+  activeChapterIdx     = chapterIdx;
+  activeTopicIdx       = topicIdx;
+  activePageIdx        = (topicIdx === 0) ? 1 : 0;
+  contentShowingIntro = false;
   go('content');
 }
 
@@ -18005,7 +18005,16 @@ function openTopics(idx){
 
   document.getElementById('topicsHeading').textContent = parseInt(ch.num, 10) + ' - ' + ch.name;
 
-  document.getElementById('topicListWrap').innerHTML = ch.topics.map((t, i) => `
+  const introRow = `
+      <div class="topic-row" onclick="selectIntro()">
+        <div class="left">
+          <div class="topic-num">${ch.num}.0</div>
+          <div class="nm">Introduction</div>
+        </div>
+        <div class="topic-chevron">→</div>
+      </div>`;
+
+  const topicRows = ch.topics.map((t, i) => `
       <div class="topic-row" onclick="selectTopic(${i})">
         <div class="left">
           <div class="topic-num">${ch.num}.${i+1}</div>
@@ -18014,12 +18023,26 @@ function openTopics(idx){
         <div class="topic-chevron">→</div>
       </div>`).join('');
 
+  document.getElementById('topicListWrap').innerHTML = introRow + topicRows;
+
   go('topics');
 }
 
+/* Topic 0's Concept Notes pages start with a nested "Introduction" page
+   (pages[0]) followed by the topic's real content (pages[1+]). Tapping a
+   topic in the list should always land on its real content, never the
+   intro — the intro is only reached via its own "X.0 Introduction" row. */
 function selectTopic(i){
-  activeTopicIdx = i;
-  activePageIdx  = 0;
+  activeTopicIdx      = i;
+  activePageIdx        = (i === 0) ? 1 : 0;
+  contentShowingIntro = false;
+  go('content');
+}
+
+function selectIntro(){
+  activeTopicIdx      = 0;
+  activePageIdx        = 0;
+  contentShowingIntro = true;
   go('content');
 }
 
@@ -18076,7 +18099,8 @@ function notesGo(dir){
   let pos = flat.findIndex(f => f.topicIdx === activeTopicIdx && f.pageIdx === activePageIdx);
   if (pos === -1) pos = 0;
   pos = (pos + dir + flat.length) % flat.length;
-  activeTopicIdx = flat[pos].topicIdx;
+  activeTopicIdx      = flat[pos].topicIdx;
+  contentShowingIntro = (flat[pos].topicIdx === 0 && flat[pos].pageIdx === 0);
   renderNotesSlide(flat[pos].pageIdx);
 }
 
@@ -18092,8 +18116,6 @@ document.addEventListener('keydown', e => {
 /* ---------------- Revision: continuous scroll + per-topic anchors ---------------- */
 function renderRevisionScreen(){
   const ch = chapterData[activeChapterIdx] || chapterData[0];
-  document.getElementById('revisionEyebrow').textContent      = 'Chapter ' + ch.num;
-  document.getElementById('revisionChapterTitle').textContent = ch.name;
 
   const chRev = (typeof revisionData !== 'undefined' ? revisionData[activeChapterIdx] : null) || {};
   const wrap  = document.getElementById('revisionContent');
@@ -18107,6 +18129,17 @@ function renderRevisionScreen(){
 
   wrap.innerHTML = `<div style="margin-top:8px;">${pieces.join('<hr class="topic-div">')}</div>`;
   markEmojiListItems(wrap);
+}
+
+/* Scrolls Revision to match whatever is showing on the Concept Notes side —
+   the very top of the chapter for the Introduction, or the topic's anchor. */
+function scrollRevisionToCurrent(){
+  if (contentShowingIntro){
+    const inner = document.querySelector('#paneRevision .inner');
+    if (inner) inner.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  scrollRevisionToTopic(activeTopicIdx);
 }
 
 function scrollRevisionToTopic(idx){
