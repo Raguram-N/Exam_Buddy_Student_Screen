@@ -17778,6 +17778,7 @@ function go(id, opts){
     renderContentHeader();
     renderNotesSlide(activePageIdx);
     renderRevisionScreen();
+    setTimeout(() => scrollRevisionToTopic(activeTopicIdx), 80);
   }
   if (id === 'search')       { document.getElementById('searchInput').focus(); }
   if (id === 'chats')        renderChats();
