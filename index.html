@@ -188,6 +188,64 @@ body{
 .list-row .list-val{ color:var(--ink-45); font-size:13.5px; display:flex; align-items:center; gap:4px; }
 .list-row .arrow{ color:var(--ink-45); font-size:15px; }
 
+/* ---- Subject Completion, Chapters & Topics (progress screens) ---- */
+.subj-summary{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:2px; margin-bottom:14px;
+  font-family:var(--mono); font-size:11px; color:var(--ink-45); letter-spacing:.02em;
+}
+.subj-summary b{ color:var(--ink); font-family:var(--body); font-size:13px; font-weight:700; }
+
+.pct-badge{ font-family:var(--mono); font-weight:600; font-size:13px; }
+.pct-badge.low{ color:var(--stamp); }
+.pct-badge.mid{ color:#B08A2E; }
+.pct-badge.high{ color:var(--good); }
+
+.subj-row{
+  display:flex; align-items:center; gap:12px;
+  padding:14px 2px; border-bottom:1px solid var(--line); cursor:pointer;
+}
+.subj-row .ic{
+  width:34px; height:34px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center; font-size:15px;
+}
+.subj-row .ic.good-chip{ background:var(--good-10); }
+.subj-row .ic.sky-chip{ background:var(--sky-10); }
+.subj-row .ic.plum-chip{ background:var(--plum-10); }
+.subj-row .ic.stamp-chip{ background:var(--stamp-10); }
+.subj-row .nm{ flex:1; min-width:0; font-weight:600; font-size:14.5px; }
+.subj-row .arrow{ color:var(--ink-45); font-size:14px; flex:none; }
+
+.ct-row{
+  display:flex; align-items:center; gap:10px;
+  padding:13px 2px; border-bottom:1px solid var(--line);
+}
+.ct-dot{ width:9px; height:9px; border-radius:50%; flex:none; }
+.ct-dot.done{ background:var(--good); }
+.ct-dot.pending{ background:var(--stamp); }
+.ct-row .nm{ flex:1; min-width:0; font-size:14px; }
+.ct-row .status-lab{ font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-45); flex:none; }
+
+.empty-note{ padding:16px 2px; font-size:12.5px; color:var(--ink-45); }
+
+/* ============================ NOTIFICATIONS ============================ */
+.notif-item{
+  display:flex; gap:12px; padding:14px 12px; border-radius:12px; margin-bottom:8px;
+  cursor:pointer; border:1px solid transparent;
+}
+.notif-item.unread{ background:var(--stamp-10); border-color:rgba(178,58,46,.15); }
+.notif-item.read{ background:transparent; }
+.notif-item .n-ic{
+  width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; font-size:16px; flex:none;
+}
+.notif-item .n-body{ flex:1; min-width:0; }
+.notif-item .n-top{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
+.notif-item .n-title{ font-weight:700; font-size:13.5px; display:flex; align-items:center; gap:6px; }
+.notif-item .n-dot{ width:6px; height:6px; border-radius:50%; background:var(--stamp); flex:none; }
+.notif-item .n-time{ font-family:var(--mono); font-size:10px; color:var(--ink-45); flex:none; }
+.notif-item .n-msg{ font-size:12.5px; color:var(--ink-70); line-height:1.5; margin-top:3px; }
+
 .btn-outline-danger{
   width:100%; margin-top:24px; background:transparent; color:var(--stamp);
   border:1.5px solid var(--stamp); font-family:var(--body); font-weight:700; font-size:15px;
@@ -277,14 +335,37 @@ body{
   font-family:var(--disp); font-weight:600; font-size:16px;
 }
 .bell{
-  width:36px; height:36px; border-radius:50%; border:1.5px solid var(--line);
-  display:flex; align-items:center; justify-content:center; position:relative; font-size:14px;
+  width:34px; height:34px; border:none; background:transparent;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; cursor:pointer; color:var(--ink); padding:0;
 }
-.bell::after{ content:''; position:absolute; top:5px; right:6px; width:7px; height:7px; border-radius:50%; background:var(--stamp); }
+.bell svg{ width:22px; height:22px; }
+.bell-dot{
+  position:absolute; top:5px; right:6px; width:7px; height:7px; border-radius:50%;
+  background:var(--stamp); border:1.5px solid var(--paper); display:none;
+}
+.bell-dot.show{ display:block; }
 
-.welcome-card{ margin-top:16px; background:var(--ink); color:var(--paper); border-radius:16px; padding:18px; }
-.welcome-card .eyebrow{ color:var(--highlight); }
-.welcome-card h3{ font-family:var(--disp); font-weight:600; font-size:20px; margin:6px 0 10px; }
+.welcome-card{
+  margin-top:16px; position:relative; overflow:hidden;
+  background:var(--card); border:1.5px solid var(--line); border-radius:18px;
+  padding:22px 20px;
+}
+.welcome-card-glow{
+  position:absolute; top:-34px; right:-34px; width:110px; height:110px;
+  border-radius:50%; background:var(--highlight); opacity:.4; pointer-events:none;
+}
+.welcome-top{ display:flex; align-items:center; gap:8px; margin-bottom:8px; position:relative; }
+.welcome-wave{ font-size:18px; line-height:1; flex:none; }
+.welcome-card .eyebrow{
+  color:var(--ink-45); font-family:var(--mono); font-size:11px;
+  text-transform:uppercase; letter-spacing:.05em;
+}
+.welcome-card h3{
+  position:relative; font-family:var(--disp); font-weight:600; font-size:23px;
+  line-height:1.2; margin:0 0 6px; color:var(--ink);
+}
+.welcome-sub{ position:relative; font-size:13px; color:var(--ink-70); line-height:1.5; margin:0; }
 .streak-row{ display:flex; gap:20px; margin-top:6px; }
 .streak-item .num{ font-family:var(--mono); font-size:18px; font-weight:600; }
 .streak-item .lab{ font-family:var(--mono); font-size:9.5px; opacity:.65; text-transform:uppercase; }
@@ -748,30 +829,23 @@ body{
             <div class="muted">Class 8 · Section B</div>
           </div>
         </div>
-        <div class="bell">🔔</div>
+        <button class="bell" id="homeBellBtn" onclick="go('notifications')" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9a6 6 0 0 1 12 0c0 3.5 1 5 2 6H4c1-1 2-2.5 2-6Z"/>
+            <path d="M10 19a2 2 0 0 0 4 0"/>
+          </svg>
+          <span class="bell-dot" id="homeBellDot"></span>
+        </button>
       </div>
 
       <div class="welcome-card">
-        <div class="eyebrow">Good morning</div>
+        <div class="welcome-card-glow"></div>
+        <div class="welcome-top">
+          <span class="welcome-wave">👋</span>
+          <div class="eyebrow">Good Morning</div>
+        </div>
         <h3>Ready for today's session?</h3>
-        <div class="streak-row">
-          <div class="streak-item"><div class="num">12</div><div class="lab">Day streak</div></div>
-          <div class="streak-item"><div class="num">68%</div><div class="lab">Science mastery</div></div>
-          <div class="streak-item"><div class="num">4</div><div class="lab">Due today</div></div>
-        </div>
-      </div>
-
-      <div class="notif-strip">
-        <div class="dot-red"></div>
-        <div><b>Measurement</b> chapter test is due tomorrow — revise today to stay ahead.</div>
-      </div>
-
-      <div class="teacher-strip" onclick="go('chapters')">
-        <div class="tavatar">P</div>
-        <div>
-          <span class="ttag">Assigned by Ms. Priya</span>
-          <div><b>Notes</b> — Chapter 1: Measurement, due by Friday</div>
-        </div>
+        <p class="welcome-sub">Pick up where you left off, or start a fresh chapter.</p>
       </div>
 
       <div class="section-lab">Your subjects</div>
@@ -779,26 +853,18 @@ body{
         <div class="subject-card" onclick="go('chapters')">
           <div class="ic good-chip">🌿</div>
           <div class="nm">Science</div>
-          <div class="prog-bar"><div class="prog-fill" style="width:68%"></div></div>
-          <div class="prog-lab">68% mastered</div>
         </div>
         <div class="subject-card">
           <div class="ic sky-chip">📐</div>
           <div class="nm">Mathematics</div>
-          <div class="prog-bar"><div class="prog-fill" style="width:41%"></div></div>
-          <div class="prog-lab">41% mastered</div>
         </div>
         <div class="subject-card">
           <div class="ic plum-chip">🏛️</div>
           <div class="nm">Social Science</div>
-          <div class="prog-bar"><div class="prog-fill" style="width:55%"></div></div>
-          <div class="prog-lab">55% mastered</div>
         </div>
         <div class="subject-card">
           <div class="ic stamp-chip">✏️</div>
           <div class="nm">English</div>
-          <div class="prog-bar"><div class="prog-fill" style="width:74%"></div></div>
-          <div class="prog-lab">74% mastered</div>
         </div>
       </div>
     </div>
@@ -812,11 +878,6 @@ body{
       <div class="spacer"></div>
     </header>
     <div class="inner">
-      <div class="ring-legend">
-        <span><i class="dot low"></i>Just started</span>
-        <span><i class="dot mid"></i>Getting there</span>
-        <span><i class="dot high"></i>Mastered</span>
-      </div>
       <div id="chapterListWrap"></div>
     </div>
   </section>
@@ -829,9 +890,7 @@ body{
       <div class="spacer"></div>
     </header>
     <div class="inner">
-      <div class="h2" id="topicsHeading" style="margin-top:6px;font-size:20px;font-weight:600;line-height:1.3;color:#d32f2f;">
-  Chapter
-</div>
+      <div class="h1" id="topicsHeading" style="margin-top:6px; color:var(--stamp);">Chapter</div>
       <div id="topicListWrap"></div>
     </div>
   </section>
@@ -1085,6 +1144,18 @@ body{
   </section>
 
   <!-- ═══════════════════ PROFILE ═══════════════════ -->
+  <!-- ═══════════════════ NOTIFICATIONS ═══════════════════ -->
+  <section class="screen" id="screen-notifications">
+    <header class="app-header">
+      <button class="back" onclick="go('home')">← Back</button>
+      <div class="title">Notifications</div>
+      <div class="spacer"></div>
+    </header>
+    <div class="inner">
+      <div id="notificationsWrap"></div>
+    </div>
+  </section>
+
   <section class="screen" id="screen-profile">
     <header class="app-header">
       <button class="back" onclick="go('home')">← Back</button>
@@ -1100,12 +1171,13 @@ body{
 
       <div class="profile-stats">
         <div class="stat-card"><div class="num">12</div><div class="lab">Day streak</div></div>
-        <div class="stat-card"><div class="num">59%</div><div class="lab">Overall mastery</div></div>
+        <div class="stat-card"><div class="num" id="profileOverallPct">45%</div><div class="lab">Overall completion</div></div>
         <div class="stat-card"><div class="num">86</div><div class="lab">Topics done</div></div>
       </div>
 
       <div class="section-lab">Practice</div>
       <div class="list-group">
+        <div class="list-row" onclick="go('subjectCompletion')"><span>Subject Completion</span><span class="arrow">→</span></div>
         <div class="list-row" onclick="go('testResults')"><span>Test Results</span><span class="arrow">→</span></div>
         <div class="list-row" onclick="go('chats')"><span>Your chats</span><span class="arrow">→</span></div>
       </div>
@@ -1118,6 +1190,43 @@ body{
       </div>
 
       <button class="btn-outline-danger" onclick="go('login')">Log out</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SUBJECT COMPLETION ═══════════════════ -->
+  <section class="screen" id="screen-subjectCompletion">
+    <header class="app-header">
+      <button class="back" onclick="go('profile')">← Back</button>
+      <div class="title">Subject Completion</div>
+      <div class="spacer"></div>
+    </header>
+    <div class="inner">
+      <div class="subj-summary"><span>4 subjects in progress</span><b id="scOverallPct">45% overall</b></div>
+      <div id="subjectCompletionListWrap"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SUBJECT → CHAPTERS ═══════════════════ -->
+  <section class="screen" id="screen-subjectChapters">
+    <header class="app-header">
+      <button class="back" onclick="go('subjectCompletion')">← Back</button>
+      <div class="title" id="scChaptersTitle">Subject</div>
+      <div class="spacer"></div>
+    </header>
+    <div class="inner">
+      <div id="subjectChaptersWrap"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ CHAPTER → TOPICS (completion) ═══════════════════ -->
+  <section class="screen" id="screen-chapterTopics">
+    <header class="app-header">
+      <button class="back" onclick="go('subjectChapters')">← Back</button>
+      <div class="title" id="ctTitle">Chapter</div>
+      <div class="spacer"></div>
+    </header>
+    <div class="inner">
+      <div id="chapterTopicsWrap"></div>
     </div>
   </section>
 
@@ -17732,7 +17841,7 @@ let activeTopicIdx   = 0;
 let activePageIdx    = 0;
 let contentShowingIntro = false;
 
-const screens = ['login','home','chapters','topics','content','concept','call','mcq','short','search','profile','chats','testResults'];
+const screens = ['login','home','chapters','topics','content','concept','call','mcq','short','search','profile','chats','testResults','subjectCompletion','subjectChapters','chapterTopics','notifications'];
 let currentLearningMode = 'notes'; /* tracks whichever tab — 'notes' (Concept Notes) / 'revision' (Revision) — was last open */
 const navStack = [];
 
@@ -17785,6 +17894,12 @@ function go(id, opts){
   if (id === 'chats')        renderChats();
   if (id === 'testResults')  renderTestResults();
   if (id === 'concept')      resetConceptChat();
+  if (id === 'profile')            refreshOverallPctDisplays();
+  if (id === 'subjectCompletion')  { refreshOverallPctDisplays(); renderSubjectCompletionList(); }
+  if (id === 'subjectChapters')    renderSubjectChapters();
+  if (id === 'chapterTopics')      renderChapterTopics();
+  if (id === 'notifications')      renderNotifications();
+  updateBellDot();
 
   updateBottomNav(id);
 }
@@ -17855,6 +17970,7 @@ function updateBottomNav(activeId){
     search:  'navSearch',
     mcq:     'navTest', short: 'navTest',
     profile: 'navProfile', chats: 'navProfile', testResults: 'navProfile',
+    subjectCompletion: 'navProfile', subjectChapters: 'navProfile', chapterTopics: 'navProfile',
     content: 'navMode',
   };
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -17986,6 +18102,75 @@ window.addEventListener('popstate', () => {
 });
 
 /* ---------------- Chapter list ---------------- */
+/* ---------------- Notifications ---------------- */
+/* Reverse-chronological — newest first. Each optional `action` is what
+   running the notification's "go to relevant activity" tap does; entries
+   without one (e.g. general announcements) simply mark as read in place. */
+const notificationsData = [
+  {
+    type:'announcement', emoji:'📢', time:'2h ago', unread:true,
+    title:'New announcement from Ms. Priya',
+    msg:'Unit test on Measurement has been moved to Monday.'
+  },
+  {
+    type:'pending', emoji:'⏳', time:'5h ago', unread:true,
+    title:'Pending chapter',
+    msg:'Force and Pressure is still incomplete — 42% done.',
+    action:() => openTopics(1)
+  },
+  {
+    type:'study', emoji:'📚', time:'Yesterday', unread:true,
+    title:'Study reminder',
+    msg:"You haven't started Light yet — start whenever you're ready.",
+    action:() => openTopics(2)
+  },
+  {
+    type:'revision', emoji:'🔄', time:'Yesterday', unread:false,
+    title:'Time to revise',
+    msg:"It's been a while since you revised Measurement — a quick recap could help.",
+    action:() => { activeChapterIdx = 0; activeTopicIdx = 0; activePageIdx = 0; openContent('revision'); }
+  },
+  {
+    type:'test', emoji:'📝', time:'2 days ago', unread:false,
+    title:'Upcoming test',
+    msg:'Knowledge Tester: Measurement quiz opens tomorrow.',
+    action:() => go('mcq')
+  }
+];
+
+function renderNotifications(){
+  document.getElementById('notificationsWrap').innerHTML = notificationsData.map((n, i) => `
+    <div class="notif-item ${n.unread ? 'unread' : 'read'}" onclick="openNotification(${i})">
+      <div class="n-ic">${n.emoji}</div>
+      <div class="n-body">
+        <div class="n-top">
+          <div class="n-title">${n.unread ? '<span class="n-dot"></span>' : ''}${n.title}</div>
+          <div class="n-time">${n.time}</div>
+        </div>
+        <div class="n-msg">${n.msg}</div>
+      </div>
+    </div>`).join('');
+}
+
+function openNotification(i){
+  const n = notificationsData[i];
+  if (!n) return;
+  n.unread = false;
+  updateBellDot();
+
+  if (n.action){
+    n.action();
+  } else {
+    renderNotifications();
+  }
+}
+
+function updateBellDot(){
+  const hasUnread = notificationsData.some(n => n.unread);
+  const dot = document.getElementById('homeBellDot');
+  if (dot) dot.classList.toggle('show', hasUnread);
+}
+
 function renderChapterList(){
   document.getElementById('chapterListWrap').innerHTML = chapterData.map((ch, idx) => `
     <div class="chapter-row" onclick="openTopics(${idx})">
@@ -17996,7 +18181,104 @@ function renderChapterList(){
           <div class="sub">${ch.topics.length} topics</div>
         </div>
       </div>
-      <div class="mastery-ring ${ch.tier}">${ch.mastery}%</div>
+      <div class="topic-chevron">→</div>
+    </div>`).join('');
+}
+
+/* ---------------- Profile: Subject Completion ---------------- */
+/* Single source of truth for subject/overall completion — used by the
+   Profile stat card, the Subject Completion list, and its summary line,
+   so the same number is never shown differently in two places. */
+function getSubjectCompletionData(){
+  const sciencePct = Math.round(chapterData.reduce((s, c) => s + c.mastery, 0) / chapterData.length);
+  const subjects = [
+    { key:'science', name:'Science',        icon:'🌿', chip:'good-chip',  pct:sciencePct, chapters:chapterData },
+    { key:'maths',   name:'Mathematics',    icon:'📐', chip:'sky-chip',   pct:41,         chapters:null },
+    { key:'social',  name:'Social Science', icon:'🏛️', chip:'plum-chip',  pct:55,         chapters:null },
+    { key:'english', name:'English',        icon:'✏️', chip:'stamp-chip', pct:74,         chapters:null }
+  ];
+  const overall = Math.round(subjects.reduce((s, x) => s + x.pct, 0) / subjects.length);
+  return { subjects, overall };
+}
+
+function pctTier(pct){
+  if (pct >= 67) return 'high';
+  if (pct >= 34) return 'mid';
+  return 'low';
+}
+
+function refreshOverallPctDisplays(){
+  const { overall } = getSubjectCompletionData();
+  const a = document.getElementById('profileOverallPct');
+  const c = document.getElementById('scOverallPct');
+  if (a) a.textContent = overall + '%';
+  if (c) c.textContent = overall + '% overall';
+}
+
+/* ---------------- Subject Completion list ---------------- */
+function renderSubjectCompletionList(){
+  const { subjects } = getSubjectCompletionData();
+  document.getElementById('subjectCompletionListWrap').innerHTML = subjects.map(s => `
+    <div class="subj-row" onclick="openSubjectChapters('${s.key}')">
+      <div class="ic ${s.chip}">${s.icon}</div>
+      <div class="nm">${s.name}</div>
+      <div class="pct-badge ${pctTier(s.pct)}">${s.pct}%</div>
+      <div class="arrow">→</div>
+    </div>`).join('');
+}
+
+let progressSubjectKey = 'science';
+let progressChapterIdx = 0;
+
+function openSubjectChapters(key){
+  progressSubjectKey = key;
+  go('subjectChapters');
+}
+
+function renderSubjectChapters(){
+  const { subjects } = getSubjectCompletionData();
+  const subject = subjects.find(s => s.key === progressSubjectKey) || subjects[0];
+  document.getElementById('scChaptersTitle').textContent = subject.name;
+
+  const wrap = document.getElementById('subjectChaptersWrap');
+  if (!subject.chapters){
+    wrap.innerHTML = `<div class="empty-note">Chapter-wise breakdown coming soon for ${subject.name}.</div>`;
+    return;
+  }
+
+  wrap.innerHTML = subject.chapters.map((ch, idx) => `
+    <div class="subj-row" onclick="openChapterTopics(${idx})">
+      <div class="ic ${subject.chip}" style="font-family:var(--mono); font-size:11px; font-weight:600;">${ch.num}</div>
+      <div class="nm">${ch.name}</div>
+      <div class="pct-badge ${pctTier(ch.mastery)}">${ch.mastery}%</div>
+      <div class="arrow">→</div>
+    </div>`).join('');
+}
+
+/* Topic-level completion isn't separately tracked in this prototype, so it's
+   derived proportionally from the chapter's own mastery % — e.g. a chapter
+   at 74% shows roughly three-quarters of its topics as done. */
+function getTopicCompletion(chapterIdx){
+  const ch = chapterData[chapterIdx];
+  const doneCount = Math.round((ch.mastery / 100) * ch.topics.length);
+  return ch.topics.map((t, i) => i < doneCount);
+}
+
+function openChapterTopics(idx){
+  progressChapterIdx = idx;
+  go('chapterTopics');
+}
+
+function renderChapterTopics(){
+  const ch = chapterData[progressChapterIdx];
+  document.getElementById('ctTitle').textContent = ch.num + '. ' + ch.name;
+
+  const done = getTopicCompletion(progressChapterIdx);
+  document.getElementById('chapterTopicsWrap').innerHTML = ch.topics.map((t, i) => `
+    <div class="ct-row">
+      <div class="ct-dot ${done[i] ? 'done' : 'pending'}"></div>
+      <div class="nm">${ch.num}.${i+1} ${t}</div>
+      <div class="status-lab">${done[i] ? 'Done' : 'Pending'}</div>
     </div>`).join('');
 }
 
