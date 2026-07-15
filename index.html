@@ -379,6 +379,11 @@ body{
 .chapter-num{ font-family:var(--mono); font-size:11px; color:var(--ink-45); width:22px; flex:none; }
 .chapter-row .nm{ font-weight:600; font-size:14.5px; line-height:1.35; }
 .chapter-row .sub{ font-size:11.5px; color:var(--ink-45); margin-top:2px; }
+.chapter-row-right{ display:flex; align-items:center; gap:8px; flex:none; }
+.chapter-completed-lab{
+  font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.04em;
+  color:var(--ink-45);
+}
 .mastery-ring{
   width:38px; height:38px; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
@@ -528,7 +533,8 @@ body{
   background:transparent; border:1.5px solid var(--line); color:var(--ink);
 }
 .nb-btn.primary{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
-.nb-btn:disabled{ opacity:.35; }
+.nb-btn.primary.complete{ background:var(--good); border-color:var(--good); }
+.nb-btn:disabled{ opacity:.35; cursor:not-allowed; }
 .nb-count{ font-family:var(--mono); font-size:10px; color:var(--ink-45); }
 
 /* ============================ CONTENT SCREEN (Concept ⇄ Revision) ============================ */
@@ -653,6 +659,35 @@ body{
   opacity:0; pointer-events:none; transition:opacity .3s ease;
 }
 .overlay-backdrop.active{ opacity:1; pointer-events:auto; }
+
+/* ============================ CONFIRM DIALOG ============================ */
+.confirm-dialog{
+  position:absolute; left:50%; top:50%; width:82%; max-width:340px;
+  transform:translate(-50%,-50%) scale(.92); z-index:240;
+  background:var(--paper); border-radius:18px; padding:22px 20px 18px;
+  box-shadow:0 14px 40px rgba(0,0,0,.22);
+  opacity:0; pointer-events:none; transition:opacity .22s ease, transform .22s ease;
+}
+.confirm-dialog.active{ opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1); }
+.confirm-title{ font-family:var(--disp); font-weight:600; font-size:17px; color:var(--ink); margin-bottom:8px; }
+.confirm-msg{ font-size:13.5px; color:var(--ink-70); line-height:1.55; margin-bottom:20px; }
+.confirm-actions{ display:flex; gap:10px; }
+.confirm-btn{
+  flex:1; padding:11px 0; border-radius:10px; font-family:var(--body); font-weight:700; font-size:13.5px; cursor:pointer;
+}
+.confirm-btn.no{ background:transparent; border:1.5px solid var(--line); color:var(--ink); }
+.confirm-btn.yes{ background:var(--good); border:1.5px solid var(--good); color:var(--paper); }
+.confirm-btn:active{ opacity:.85; }
+
+/* ============================ TOAST ============================ */
+.toast{
+  position:absolute; left:50%; bottom:calc(var(--navbar-h) + 16px); transform:translateX(-50%) translateY(8px);
+  background:var(--ink); color:var(--paper); font-size:12.5px; font-weight:600;
+  padding:11px 18px; border-radius:999px; box-shadow:0 8px 24px rgba(0,0,0,.2);
+  z-index:250; opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease;
+  white-space:nowrap;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 .bottom-sheet{
   position:absolute; left:0; right:0; bottom:0; height:78%;
   background:var(--paper); border-radius:24px 24px 0 0; z-index:210;
@@ -1085,6 +1120,19 @@ body{
       </button>
     </div>
   </div>
+
+  <!-- ═══════════════════ COMPLETE CHAPTER — CONFIRM DIALOG ═══════════════════ -->
+  <div class="overlay-backdrop" id="cc-backdrop" onclick="closeCompleteChapterConfirm()"></div>
+  <div class="confirm-dialog" id="cc-dialog">
+    <div class="confirm-title" id="ccTitle">Mark Chapter as Completed?</div>
+    <div class="confirm-msg" id="ccMsg">Shall I mark this chapter as completed?</div>
+    <div class="confirm-actions">
+      <button class="confirm-btn no" onclick="closeCompleteChapterConfirm()">No</button>
+      <button class="confirm-btn yes" onclick="confirmCompleteChapter()">Yes</button>
+    </div>
+  </div>
+
+  <div class="toast" id="app-toast"></div>
 
   <!-- ═══════════════════ SEARCH ═══════════════════ -->
   <section class="screen" id="screen-search">
@@ -17813,6 +17861,7 @@ function go(id, opts){
     renderRevisionScreen();
     setTimeout(() => scrollRevisionToCurrent(), 80);
   }
+  if (id === 'chapters')      renderChapterList();
   if (id === 'search')       { document.getElementById('searchInput').focus(); }
   if (id === 'chats')        renderChats();
   if (id === 'testResults')  renderTestResults();
@@ -18090,7 +18139,9 @@ function updateBellDot(){
 }
 
 function renderChapterList(){
-  document.getElementById('chapterListWrap').innerHTML = chapterData.map((ch, idx) => `
+  document.getElementById('chapterListWrap').innerHTML = chapterData.map((ch, idx) => {
+    const done = isChapterCompleted(idx);
+    return `
     <div class="chapter-row" onclick="openTopics(${idx})">
       <div class="left">
         <div class="chapter-num">${ch.num}</div>
@@ -18099,8 +18150,13 @@ function renderChapterList(){
           <div class="sub">${ch.topics.length} topics</div>
         </div>
       </div>
-      <div class="topic-chevron">→</div>
-    </div>`).join('');
+      <div class="chapter-row-right">
+        ${done
+          ? '<span class="chapter-completed-lab">Completed</span>'
+          : '<div class="topic-chevron">→</div>'}
+      </div>
+    </div>`;
+  }).join('');
 }
 
 /* ---------------- Topic list ---------------- */
@@ -18162,6 +18218,7 @@ function renderNotesSlide(pageIdx){
     document.getElementById('notesCount').textContent      = '–';
     slide.innerHTML = `<div class="note-block"><div class="sub-h">📝 Notes coming soon</div>
       <p class="muted" style="margin:0;">Concept notes for this topic are being prepared.</p></div>`;
+    updateNotesNextButton(false);
     return;
   }
 
@@ -18182,7 +18239,79 @@ function renderNotesSlide(pageIdx){
   const pos  = flat.findIndex(f => f.topicIdx === activeTopicIdx && f.pageIdx === activePageIdx);
   document.getElementById('notesCount').textContent = (pos + 1) + ' / ' + flat.length;
 
+  updateNotesNextButton(pos === flat.length - 1);
+
   document.getElementById('notesSlideWrap').scrollTop = 0;
+}
+
+/* On the final page of the chapter's Concept Notes, swap "Next" for a
+   "Completed" action — unless the chapter is already marked done, in which
+   case show a disabled Next button instead of re-prompting. */
+function updateNotesNextButton(isLastPage){
+  const btn = document.getElementById('notesNext');
+  if (!btn) return;
+
+  if (isLastPage && isChapterCompleted(activeChapterIdx)){
+    btn.textContent = 'Next →';
+    btn.classList.remove('complete');
+    btn.disabled = true;
+    btn.onclick = null;
+  } else if (isLastPage){
+    btn.textContent = '✅ Completed';
+    btn.classList.add('complete');
+    btn.disabled = false;
+    btn.onclick = openCompleteChapterConfirm;
+  } else {
+    btn.textContent = 'Next →';
+    btn.classList.remove('complete');
+    btn.disabled = false;
+    btn.onclick = () => notesGo(1);
+  }
+}
+
+/* ---------------- Chapter completion (persisted locally) ---------------- */
+function getCompletedChapters(){
+  try { return JSON.parse(localStorage.getItem('eb_completed_chapters') || '[]'); }
+  catch (e) { return []; }
+}
+
+function isChapterCompleted(idx){
+  return getCompletedChapters().includes(idx);
+}
+
+function markChapterCompleted(idx){
+  const arr = getCompletedChapters();
+  if (!arr.includes(idx)) arr.push(idx);
+  localStorage.setItem('eb_completed_chapters', JSON.stringify(arr));
+}
+
+function openCompleteChapterConfirm(){
+  const ch = chapterData[activeChapterIdx];
+  document.getElementById('ccMsg').textContent =
+    `Shall I mark "Chapter ${parseInt(ch.num, 10)} – ${ch.name}" as completed?`;
+  document.getElementById('cc-backdrop').classList.add('active');
+  document.getElementById('cc-dialog').classList.add('active');
+}
+
+function closeCompleteChapterConfirm(){
+  document.getElementById('cc-backdrop').classList.remove('active');
+  document.getElementById('cc-dialog').classList.remove('active');
+}
+
+function confirmCompleteChapter(){
+  markChapterCompleted(activeChapterIdx);
+  closeCompleteChapterConfirm();
+  renderChapterList();
+  showToast('✅ Chapter marked as completed.');
+}
+
+let toastTimer = null;
+function showToast(msg){
+  const el = document.getElementById('app-toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
 }
 
 /* Flatten every note page in the chapter so Prev/Next flow across topics too */
