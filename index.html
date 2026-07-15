@@ -794,7 +794,7 @@ body{
   <section class="screen active" id="screen-login">
     <div class="inner login-inner">
       <div class="brandmark">DAV <span class="dot">·</span>Public School</div>
-      <div class="brand-line">24/7 study partner</div>
+      <div class="brand-line">your 24/7 study partner</div>
 
       <div class="field">
         <label>User ID</label>
@@ -1090,7 +1090,7 @@ body{
         <div class="sheet-avatar">🤔</div>
         <div>
           <div class="sheet-title">Ask Buddy</div>
-          <div class="sheet-sub">Any time, Any where</div>
+          <div class="sheet-sub">Your 24/7 study partner</div>
         </div>
       </div>
       <button class="sheet-close" onclick="toggleDoubtPanel(false)">✕</button>
@@ -1099,7 +1099,7 @@ body{
     <div class="ask-chat-scroll" id="doubtScroll"></div>
 
     <div class="ask-fullchat-link">
-      <button onclick="toggleDoubtPanel(false); go('concept')">💬 Teach me this topic →</button>
+      <button onclick="toggleDoubtPanel(false); go('concept')">💬 Teach me →</button>
     </div>
 
     <div class="composer">
@@ -18417,7 +18417,7 @@ function resetDoubtChat(){
   const input = document.getElementById('doubtInput');
   input.value = '';
   onDoubtInput('');
-  appendDoubtBubble("👋 Hey, Aditi! How can I help you?", 'ai');
+  appendDoubtBubble("Ask me anything — I'll give you a quick, straight-to-the-point answer 👍", 'ai');
 }
 
 function onDoubtInput(val){
