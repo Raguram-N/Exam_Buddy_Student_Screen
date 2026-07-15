@@ -351,6 +351,16 @@ body{
 
 .subject-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 .subject-card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; cursor:pointer; }
+
+.fab-ask{
+  position:absolute; right:18px; bottom:20px; z-index:35;
+  background:var(--paper); border:1.5px solid var(--line); color:var(--ink);
+  font-family:var(--body); font-weight:600; font-size:12.5px;
+  padding:11px 16px; border-radius:999px; cursor:pointer;
+  display:flex; align-items:center; gap:5px;
+  box-shadow:0 6px 18px rgba(27,42,74,.18);
+}
+.fab-ask:active{ border-color:var(--ink); background:var(--card); }
 .subject-card:active{ border-color:var(--ink); transform:scale(.98); }
 .subject-card .ic{ font-size:19px; width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; }
 .subject-card .ic.good-chip{ background:var(--good-10); }
@@ -863,6 +873,8 @@ body{
         </div>
       </div>
     </div>
+
+    <button class="fab-ask" onclick="toggleDoubtPanel(true)" aria-label="Ask Buddy">🤔 Ask</button>
   </section>
 
   <!-- ═══════════════════ CHAPTERS ═══════════════════ -->
@@ -1090,7 +1102,7 @@ body{
         <div class="sheet-avatar">🤔</div>
         <div>
           <div class="sheet-title">Ask Buddy</div>
-          <div class="sheet-sub">Your 24/7 study partner</div>
+          <div class="sheet-sub">Any time, Anywhere</div>
         </div>
       </div>
       <button class="sheet-close" onclick="toggleDoubtPanel(false)">✕</button>
@@ -1124,7 +1136,7 @@ body{
   <!-- ═══════════════════ COMPLETE CHAPTER — CONFIRM DIALOG ═══════════════════ -->
   <div class="overlay-backdrop" id="cc-backdrop" onclick="closeCompleteChapterConfirm()"></div>
   <div class="confirm-dialog" id="cc-dialog">
-    <div class="confirm-title" id="ccTitle">Mark Chapter as Completed?</div>
+    <div class="confirm-title">Hey, <b id="ccName">Student</b>!</div>
     <div class="confirm-msg" id="ccMsg">Shall I mark this chapter as completed?</div>
     <div class="confirm-actions">
       <button class="confirm-btn no" onclick="closeCompleteChapterConfirm()">No</button>
@@ -17807,6 +17819,10 @@ const chapterData = [
 ];
 
 /* ---------------- App state ---------------- */
+/* Single source of truth for the logged-in student's name — swap this out
+   for real session/profile data once auth is wired up. */
+const studentFirstName = 'Aditi';
+
 let activeChapterIdx = 0;
 let activeTopicIdx   = 0;
 let activePageIdx    = 0;
@@ -18287,6 +18303,7 @@ function markChapterCompleted(idx){
 
 function openCompleteChapterConfirm(){
   const ch = chapterData[activeChapterIdx];
+  document.getElementById('ccName').textContent = studentFirstName;
   document.getElementById('ccMsg').textContent =
     `Shall I mark "Chapter ${parseInt(ch.num, 10)} – ${ch.name}" as completed?`;
   document.getElementById('cc-backdrop').classList.add('active');
@@ -18399,6 +18416,7 @@ function toggleDoubtPanel(show){
 }
 
 const doubtScript = [
+  ["<b>Parallax Error</b> is the wrong reading you get because your eye is not directly in line with the measurement scale.", "For example, looking at a ruler from an angle can make the same length look shorter or longer than it really is."],
   ["<b>Photosynthesis</b> is the process plants use to make their own food, using sunlight, carbon dioxide and water.", "Want the exam-definition wording, or a quick real-life example? Just ask 👇"],
   ["It happens mainly in the leaves, inside tiny structures called <b>chloroplasts</b> — that's what makes leaves green (chlorophyll)."],
   ["Plants take in <b>carbon dioxide (CO₂)</b> and release <b>oxygen (O₂)</b> as a by-product."],
@@ -18417,7 +18435,7 @@ function resetDoubtChat(){
   const input = document.getElementById('doubtInput');
   input.value = '';
   onDoubtInput('');
-  appendDoubtBubble("Ask me anything — I'll give you a quick, straight-to-the-point answer 👍", 'ai');
+  appendDoubtBubble(`👋 Hey, ${studentFirstName}! How can I help you?`, 'ai');
 }
 
 function onDoubtInput(val){
